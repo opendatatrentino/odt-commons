@@ -16,6 +16,7 @@
 package eu.trentorise.opendata.commons.test;
 
 
+import com.google.common.collect.ImmutableList;
 import eu.trentorise.opendata.commons.BuildInfo;
 import eu.trentorise.opendata.commons.OdtUtils;
 import java.util.Locale;
@@ -55,7 +56,7 @@ public class UtilsTest {
     @Test
     public void testChecker(){
         try {
-            OdtUtils.checkNotEmpty(null, "my string");
+            OdtUtils.checkNotEmpty((String) null, "my string");
             Assert.fail();
         } catch (NullPointerException ex){
             
@@ -63,6 +64,29 @@ public class UtilsTest {
         try {
             OdtUtils.checkNonEmpty("", "my string");
             Assert.fail();
+        } catch (IllegalArgumentException ex){
+            
+        }
+        
+        try {
+            OdtUtils.checkNotEmpty(ImmutableList.of(), "my string");
+            Assert.fail();
+        } catch (IllegalArgumentException ex){
+            
+        }
+        
+        OdtUtils.checkNotEmpty(ImmutableList.of("a"), "my string");
+        
+        
+    }
+    
+    @Test
+    public void testIdParser(){
+        
+        assertEquals(1, OdtUtils.parseNumericalId("", "1"));
+        assertEquals(1, OdtUtils.parseNumericalId("a", "a1"));
+        try {
+            OdtUtils.parseNumericalId("", "");
         } catch (IllegalArgumentException ex){
             
         }

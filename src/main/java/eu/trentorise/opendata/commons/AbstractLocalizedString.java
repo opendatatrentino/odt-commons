@@ -41,4 +41,8 @@ abstract class AbstractLocalizedString {
         return Locale.ROOT;
     }
 
+    public static LocalizedString of(String string){
+        return LocalizedString.of(string, Locale.ROOT);
+    }
+    
 }

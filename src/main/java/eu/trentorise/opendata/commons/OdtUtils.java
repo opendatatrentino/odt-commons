@@ -15,9 +15,11 @@
  */
 package eu.trentorise.opendata.commons;
 
+import com.google.common.base.Preconditions;
 import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -26,7 +28,7 @@ import javax.annotation.Nullable;
 /**
  * Utility funtions shared by Open Data in Trentino projects.
  *
- * @author David Leoni
+  * @author David Leoni <david.leoni@unitn.it>
  */
 public class OdtUtils {
 
@@ -160,21 +162,21 @@ public class OdtUtils {
      * @return the non-dirty URL that was validated
      * 
      */
-    public static String checkNotDirtyUrl(String URL) {
+    public static String checkNotDirtyUrl(String URL, String prependedErrorMessage) {
         if (URL == null) {
-            throw new IllegalArgumentException("Found null URL!");
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found null URL!");
         }
         if (URL.length() == 0) {
-            throw new IllegalArgumentException("Found empty URL!");
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty URL!");
         }
 
         if (URL.toLowerCase().equals("null")) {
-            throw new IllegalArgumentException("Found URL with string \"" + URL + "\" as content!");
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found URL with string \"" + URL + "\" as content!");
         }
         
         // todo delete this is a too radical checker...
         if (URL.toLowerCase().endsWith("/null")) {
-            throw new IllegalArgumentException("Found URL ending with /\"null\": " + URL);
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found URL ending with /\"null\": " + URL);
         }
         
         return URL;
@@ -185,27 +187,43 @@ public class OdtUtils {
      * Checks if provided string is non null and non empty . If not, throws
      * NullPointerException or IllegalArgumentException
      *
-     * @param errorMessage the exception message to use if the check fails; will
+     * @param prependedErrorMessage the exception message to use if the check fails; will
      * be converted to a string using String.valueOf(Object)
      * 
      * @return the non-empty string that was validated
      */
-    public static String checkNotEmpty(String string, @Nullable String errorMessage) {
-        checkNotNull(string, errorMessage);
+    public static String checkNotEmpty(String string, @Nullable String prependedErrorMessage) {
+        checkNotNull(string, prependedErrorMessage);
         if (string.length() == 0) {
-            throw new EmptyException(String.valueOf(errorMessage));
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty string." );
         }
         return string;
     }
+    
+    /**
+     *
+     * Checks if provided collection is non null and non empty . If not, throws
+     * NullPointerException or IllegalArgumentException
+     *
+     * @param prependedErrorMessage the exception message to use if the check fails; will
+     * be converted to a string using String.valueOf(Object)
+     *      
+     */
+    public static void checkNotEmpty(Collection coll, @Nullable String prependedErrorMessage) {
+        checkNotNull(coll, prependedErrorMessage);
+        if (coll.isEmpty()) {
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection." );
+        }        
+    }    
 
     /**
      * @deprecated use {@link #checkNotEmpty} instead Checks if provided string
      * is non null and non empty . If not, throws IllegalArgumentException
      */
-    public static void checkNonEmpty(String string, String stringName) {
-        checkNotNull(string);
+    public static void checkNonEmpty(String string, String prependedErrorMessage) {
+        checkNotNull(string, prependedErrorMessage);
         if (string.length() == 0) {
-            throw new IllegalArgumentException("Parameter " + stringName + " has zero length!");
+            throw new IllegalArgumentException("Parameter " + prependedErrorMessage + " has zero length!");
         }
     }
 
@@ -269,4 +287,34 @@ public class OdtUtils {
                 .build();
     }
 
+    /**
+     * Parses an URL having a numeric ID after the provided prefix, i.e. for prefix '/concepts/' and url 
+     * http://entitypedia.org/concepts/14324 returns 14324
+     *
+     * @throws IllegalArgumentException on invalid URL 
+     */
+    public static long parseNumericalId(String prefix, String URL) {
+
+        checkNotNull(prefix, "prefix can't be null!");        
+        Preconditions.checkArgument(URL != null, "URL can't be null!");
+        Preconditions.checkArgument(URL.length() > 0 , "URL can't be empty!");
+        
+        String s;
+        if (prefix.length() > 0) {
+            int pos = URL.indexOf(prefix) + prefix.length();
+            if (pos == -1) {
+                throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + URL);
+            }
+            s = URL.substring(pos);
+        } else {
+            s = URL;
+        }
+        try {
+            return Long.parseLong(s);
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + URL, ex);
+        }
+
+    }
+    
 }
