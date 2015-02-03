@@ -19,16 +19,16 @@ package eu.trentorise.opendata.commons;
  * @author David Leoni <david.leoni@unitn.it>
  */
 public class NotFoundException extends RuntimeException {
-
+    
     public NotFoundException(Exception ex) {
         super(ex);
     }
 
-    public NotFoundException(String s, Exception ex) {
-        super(s, ex);
+    public NotFoundException(String msg, Exception ex) {
+        super(msg, ex);
     }
 
-    public NotFoundException(String s) {
-        super(s);
+    public NotFoundException(String msg) {
+        super(msg);
     }
 }

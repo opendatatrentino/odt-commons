@@ -53,9 +53,9 @@
         
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <traceprov.findbugs.version>
+        <odt-commons.findbugs.version>
             [2.0.1, 3.0.0]
-        </traceprov.findbugs.version>
+        </odt-commons.findbugs.version>
         <netbeans.hint.license>apache20</netbeans.hint.license>
         
     </properties>
@@ -278,13 +278,13 @@
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
-            <version>${traceprov.findbugs.version}</version>
+            <version>${odt-commons.findbugs.version}</version>
         </dependency>
     
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>annotations</artifactId>
-            <version>${traceprov.findbugs.version}</version>
+            <version>${odt-commons.findbugs.version}</version>
         </dependency> 
         
             
@@ -296,7 +296,7 @@
             <optional>true</optional>
         </dependency>    
         
-        <!--
+        <!-- no need for this if we specify findbugs and guava 
         <dependency>
             <groupId>org.immutables</groupId>
             <artifactId>value</artifactId>

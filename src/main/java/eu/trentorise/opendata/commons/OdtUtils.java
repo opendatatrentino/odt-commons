@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 /**
  * Utility funtions shared by Open Data in Trentino projects.
  *
-  * @author David Leoni <david.leoni@unitn.it>
+ * @author David Leoni <david.leoni@unitn.it>
  */
 public class OdtUtils {
 
@@ -152,7 +152,6 @@ public class OdtUtils {
         return tempUrl;
     }
 
-    
     /**
      * Checks if provided URL is to be considered 'dirty'. Method may use some
      * heristics to detect i.e. the string "null" inside the url.
@@ -160,7 +159,7 @@ public class OdtUtils {
      * @param URL the URL to check
      * @throws IllegalArgumentException if provided URL fails validation.
      * @return the non-dirty URL that was validated
-     * 
+     *
      */
     public static String checkNotDirtyUrl(String URL, String prependedErrorMessage) {
         if (URL == null) {
@@ -173,48 +172,48 @@ public class OdtUtils {
         if (URL.toLowerCase().equals("null")) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found URL with string \"" + URL + "\" as content!");
         }
-        
+
         // todo delete this is a too radical checker...
         if (URL.toLowerCase().endsWith("/null")) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found URL ending with /\"null\": " + URL);
         }
-        
+
         return URL;
     }
-    
+
     /**
      *
      * Checks if provided string is non null and non empty . If not, throws
      * NullPointerException or IllegalArgumentException
      *
-     * @param prependedErrorMessage the exception message to use if the check fails; will
-     * be converted to a string using String.valueOf(Object)
-     * 
+     * @param prependedErrorMessage the exception message to use if the check
+     * fails; will be converted to a string using String.valueOf(Object)
+     *
      * @return the non-empty string that was validated
      */
     public static String checkNotEmpty(String string, @Nullable String prependedErrorMessage) {
         checkNotNull(string, prependedErrorMessage);
         if (string.length() == 0) {
-            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty string." );
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty string.");
         }
         return string;
     }
-    
+
     /**
      *
      * Checks if provided collection is non null and non empty . If not, throws
      * NullPointerException or IllegalArgumentException
      *
-     * @param prependedErrorMessage the exception message to use if the check fails; will
-     * be converted to a string using String.valueOf(Object)
-     *      
+     * @param prependedErrorMessage the exception message to use if the check
+     * fails; will be converted to a string using String.valueOf(Object)
+     *
      */
     public static void checkNotEmpty(Collection coll, @Nullable String prependedErrorMessage) {
         checkNotNull(coll, prependedErrorMessage);
         if (coll.isEmpty()) {
-            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection." );
-        }        
-    }    
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection.");
+        }
+    }
 
     /**
      * @deprecated use {@link #checkNotEmpty} instead Checks if provided string
@@ -228,9 +227,8 @@ public class OdtUtils {
     }
 
     /**
-     * @deprecated Use
-     *  com.​google.​common.​base.​Preconditions#checkNotNull instead
-     * Checks if provided object is non null. If not, throws
+     * @deprecated Use com.​google.​common.​base.​Preconditions#checkNotNull
+     * instead Checks if provided object is non null. If not, throws
      * IllegalArgumentException
      */
     public static void checkNonNull(Object obj, String objName) {
@@ -260,6 +258,9 @@ public class OdtUtils {
      * Parses file at {@link #BUILD_PROPERTIES_PATH} of the jar holding the
      * provided class.
      *
+     * @param clazz A class used for locating the build info file, which should
+     * be in the root of the class resources.
+     *
      * @throws eu.​trentorise.​opendata.​traceprov.​TraceProvException if file
      * is not found.
      */
@@ -288,17 +289,18 @@ public class OdtUtils {
     }
 
     /**
-     * Parses an URL having a numeric ID after the provided prefix, i.e. for prefix '/concepts/' and url 
-     * http://entitypedia.org/concepts/14324 returns 14324
+     * Parses an URL having a numeric ID after the provided prefix, i.e. for
+     * prefix '/concepts/' and url http://entitypedia.org/concepts/14324 returns
+     * 14324
      *
-     * @throws IllegalArgumentException on invalid URL 
+     * @throws IllegalArgumentException on invalid URL
      */
     public static long parseNumericalId(String prefix, String URL) {
 
-        checkNotNull(prefix, "prefix can't be null!");        
+        checkNotNull(prefix, "prefix can't be null!");
         Preconditions.checkArgument(URL != null, "URL can't be null!");
-        Preconditions.checkArgument(URL.length() > 0 , "URL can't be empty!");
-        
+        Preconditions.checkArgument(URL.length() > 0, "URL can't be empty!");
+
         String s;
         if (prefix.length() > 0) {
             int pos = URL.indexOf(prefix) + prefix.length();
@@ -311,10 +313,11 @@ public class OdtUtils {
         }
         try {
             return Long.parseLong(s);
-        } catch (NumberFormatException ex) {
+        }
+        catch (NumberFormatException ex) {
             throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + URL, ex);
         }
 
     }
-    
+
 }

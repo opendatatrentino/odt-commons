@@ -28,7 +28,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 /**
  * Represents a dictionary of a string that may have translations in several
- languages. There can also be multiple strings for the same language, in this
+ * languages. There can also be multiple strings for the same language, in this
  * case the first one is the preferred. Never pass null objects to methods, use
  * empty objects (such as empty String "", unknown Locale {@link Locale#ROOT},
  * etc...) instead.
@@ -43,7 +43,7 @@ public final class Dict {
 
     private ImmutableListMultimap<Locale, String> strings;
 
-    private Dict() {       
+    private Dict() {
         strings = ImmutableListMultimap.of();
     }
 
@@ -66,13 +66,13 @@ public final class Dict {
         return ret;
     }
 
-    /** 
+    /**
      * Returns the underlying multimap dictionary.
      */
-    public ImmutableListMultimap<Locale, String> asMultimap(){
+    public ImmutableListMultimap<Locale, String> asMultimap() {
         return strings;
     }
-    
+
     /**
      * Constructs a Dict with with the provided string(s). Strings will be under
      * unknown locale {@link Locale#ROOT}.
@@ -114,7 +114,7 @@ public final class Dict {
      *
      * @param locale the language of the desired translation
      * @return the strings in the given locale if present. If no string is
- present an empty list is returned.
+     * present an empty list is returned.
      *
      * @see #string(java.util.Locale)
      */
@@ -132,7 +132,7 @@ public final class Dict {
      *
      * @param locale the language of the desired translation
      * @return the string in the given locale if present. If no string is
- present the empty string is returned.
+     * present the empty string is returned.
      */
     public String string(Locale locale) {
         List<String> rets = strings(locale);
@@ -188,7 +188,7 @@ public final class Dict {
         return false;
     }
 
-    /*
+    /**
      * Returns the first non empty string in the
      * given locale. If it can't find it, an empty string is returned.
      */
@@ -209,19 +209,19 @@ public final class Dict {
         }
         return "";
     }
-   
+
     /**
      *
      * Tries its best to return a meaningful string in one of the provided
- languages.
+     * languages.
      *
      * @return A string in the first available language from the list of
- provided locales. If no translation is available, in order, defaults to
- English and then whatever it can find in the list of translations. Empty
- strings are discarded. If no valid translation is available at all,
- returns {@link LocalizedString#of()}.
-     */        
-    public LocalizedString anyString(Iterable<Locale> locales) {       
+     * provided locales. If no translation is available, in order, defaults to
+     * English and then whatever it can find in the list of translations. Empty
+     * strings are discarded. If no valid translation is available at all,
+     * returns {@link LocalizedString#of()}.
+     */
+    public LocalizedString anyString(Iterable<Locale> locales) {
         Preconditions.checkNotNull(locales);
 
         for (Locale loc : locales) {
@@ -245,29 +245,29 @@ public final class Dict {
         return LocalizedString.of();
 
     }
-    
+
     /**
      *
      * Tries its best to return a meaningful string in one of the provided
- languages. For more details, see {@link #anyString(java.util.Locale...)}
+     * languages. For more details, see {@link #anyString(java.util.Locale...)}
      *
-     */    
-    public LocalizedString anyString(Locale... locales) {                       
+     */
+    public LocalizedString anyString(Locale... locales) {
         return anyString(Arrays.asList(locales));
-        
-    }    
-    
+
+    }
+
     /**
      *
      * Tries its best to produce a meaningful string in one of the provided
- languages
+     * languages
      *
      * @deprecated use {@link #anyString(java.util.Locale...) } instead
      * @return A string in the first available language from the list of
- provided locales. If no translation is available, in order, defaults to
- English and then whatever it can find in the list of translations. Empty
- strings are discarded. If no valid translation is available at all,
- returns {@link LocalizedString#of()}.
+     * provided locales. If no translation is available, in order, defaults to
+     * English and then whatever it can find in the list of translations. Empty
+     * strings are discarded. If no valid translation is available at all,
+     * returns {@link LocalizedString#of()}.
      */
     public LocalizedString prettyString(Locale... locales) {
         Preconditions.checkNotNull(locales);
@@ -305,7 +305,7 @@ public final class Dict {
     public Dict with(Locale locale, String... strings) {
         return Dict.builder().putAll(this).putAll(locale, strings).build();
     }
-    
+
     /**
      *
      * Returns a new dictionary with provided array of strings with the same
@@ -316,7 +316,7 @@ public final class Dict {
      */
     public Dict with(String... strings) {
         return Dict.builder().putAll(this).putAll(Locale.ROOT, strings).build();
-    }    
+    }
 
     /**
      *
@@ -330,20 +330,21 @@ public final class Dict {
     public Dict with(Locale locale, Iterable<String> strings) {
         return Dict.builder().putAll(this).putAll(locale, strings).build();
     }
-    
+
     /**
      *
-     * Returns a new dictionary which is the result of merging this dictionary with the provided one..
-     * New locales and strings follow any existing locales and strings.
-     * 
+     * Returns a new dictionary which is the result of merging this dictionary
+     * with the provided one.. New locales and strings follow any existing
+     * locales and strings.
+     *
      */
     public Dict with(Dict dict) {
         return Dict.builder().putAll(this).putAll(dict).build();
-    }    
+    }
 
     /**
      * Returns a string with msg padded with white spaces from the left until
- maxLength is reached
+     * maxLength is reached
      *
      * @param msg the message to pad with spaces
      * @param maxLength length after which msg is truncated
@@ -389,15 +390,18 @@ public final class Dict {
             return this;
         }
 
+        /**
+         * Returns an immutable dictionary.         
+         */
         public Dict build() {
             return new Dict(this);
         }
 
-        /*
+        /**
          * Stores a collection of values with the same locale in the built dictionary.
          *
          * @param locale the locale of the string
-         * @param string the string in the given locale
+         * @param strings strings in the given locale
          * @return {@code this} builder for chained invocation
          */
         public Builder putAll(Locale locale, Iterable<String> strings) {
@@ -418,7 +422,7 @@ public final class Dict {
 
         /**
          * Stores another dictionary's entries in the built dictionary. New
- locales and strings follow any existing locales and strings.
+         * locales and strings follow any existing locales and strings.
          */
         public Builder putAll(Dict dict) {
             stringsBuilder.putAll(dict.strings);

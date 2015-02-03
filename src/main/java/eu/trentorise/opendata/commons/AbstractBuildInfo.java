@@ -15,7 +15,6 @@
  */
 package eu.trentorise.opendata.commons;
 
-import eu.trentorise.opendata.commons.BuilderStyle;
 import org.immutables.value.Value;
 
 /**
@@ -33,7 +32,6 @@ public abstract class AbstractBuildInfo {
     public String getVersion() {
         return "";
     }
-
 
     /**
      * i.e. David Leoni
@@ -59,7 +57,6 @@ public abstract class AbstractBuildInfo {
         return "";
     }
 
-
     /**
      * i.e. git commit SHA, i.e. bdd5c2c75e6438da0d23ac8f2368f9e9cacf2087
      */
@@ -68,13 +65,18 @@ public abstract class AbstractBuildInfo {
         return "";
     }
 
-    /* i.e. https://github.com/opendatatrentino/traceprov */
+    /**
+     * Returns the source repository url, i.e.
+     * https://github.com/opendatatrentino/traceprov
+     */
     @Value.Default
     public String getScmUrl() {
         return "";
-    }    
-    
-    /* i.e. 1421246376174 */
+    }
+
+    /**
+     * Returns the timestamp, i.e. 1421246376174
+     */
     @Value.Default
     public String getTimestamp() {
         return "";
