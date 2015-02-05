@@ -156,29 +156,29 @@ public class OdtUtils {
      * Checks if provided URL is to be considered 'dirty'. Method may use some
      * heristics to detect i.e. the string "null" inside the url.
      *
-     * @param URL the URL to check
+     * @param url the URL to check
      * @throws IllegalArgumentException if provided URL fails validation.
      * @return the non-dirty URL that was validated
      *
      */
-    public static String checkNotDirtyUrl(String URL, String prependedErrorMessage) {
-        if (URL == null) {
+    public static String checkNotDirtyUrl(String url, String prependedErrorMessage) {
+        if (url == null) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found null URL!");
         }
-        if (URL.length() == 0) {
+        if (url.length() == 0) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty URL!");
         }
 
-        if (URL.toLowerCase().equals("null")) {
-            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found URL with string \"" + URL + "\" as content!");
+        if (url.equalsIgnoreCase("null")) {
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found URL with string \"" + url + "\" as content!");
         }
 
         // todo delete this is a too radical checker...
-        if (URL.toLowerCase().endsWith("/null")) {
-            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found URL ending with /\"null\": " + URL);
+        if (url.toLowerCase().endsWith("/null")) {
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found URL ending with /\"null\": " + url);
         }
 
-        return URL;
+        return url;
     }
 
     /**
@@ -295,27 +295,27 @@ public class OdtUtils {
      *
      * @throws IllegalArgumentException on invalid URL
      */
-    public static long parseNumericalId(String prefix, String URL) {
+    public static long parseNumericalId(String prefix, String url) {
 
         checkNotNull(prefix, "prefix can't be null!");
-        Preconditions.checkArgument(URL != null, "URL can't be null!");
-        Preconditions.checkArgument(URL.length() > 0, "URL can't be empty!");
+        Preconditions.checkArgument(url != null, "URL can't be null!");
+        Preconditions.checkArgument(url.length() > 0, "URL can't be empty!");
 
         String s;
         if (prefix.length() > 0) {
-            int pos = URL.indexOf(prefix) + prefix.length();
+            int pos = url.indexOf(prefix) + prefix.length();
             if (pos == -1) {
-                throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + URL);
+                throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + url);
             }
-            s = URL.substring(pos);
+            s = url.substring(pos);
         } else {
-            s = URL;
+            s = url;
         }
         try {
             return Long.parseLong(s);
         }
         catch (NumberFormatException ex) {
-            throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + URL, ex);
+            throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + url, ex);
         }
 
     }
