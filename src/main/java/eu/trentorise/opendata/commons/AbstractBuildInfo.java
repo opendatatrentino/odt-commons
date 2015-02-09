@@ -31,8 +31,8 @@ public abstract class AbstractBuildInfo {
     @Value.Default
     public String getVersion() {
         return "";
-    }
-
+    }        
+       
     /**
      * i.e. David Leoni
      */

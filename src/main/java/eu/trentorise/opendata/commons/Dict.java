@@ -19,6 +19,8 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -189,8 +191,8 @@ public final class Dict {
     }
 
     /**
-     * Returns the first non empty string in the
-     * given locale. If it can't find it, an empty string is returned.
+     * Returns the first non empty string in the given locale. If it can't find
+     * it, an empty string is returned.
      */
     public String nonEmptyString(Locale locale) {
         Preconditions.checkNotNull(locale);
@@ -391,14 +393,15 @@ public final class Dict {
         }
 
         /**
-         * Returns an immutable dictionary.         
+         * Returns an immutable dictionary.
          */
         public Dict build() {
             return new Dict(this);
         }
 
         /**
-         * Stores a collection of values with the same locale in the built dictionary.
+         * Stores a collection of values with the same locale in the built
+         * dictionary.
          *
          * @param locale the locale of the string
          * @param strings strings in the given locale
@@ -489,4 +492,12 @@ public final class Dict {
         return sb.toString();
     }
 
+    /**
+     * Returns a Dict with a copy of a Guava Multimap
+     */
+    public static Dict of(Multimap<Locale, String> multimap) {
+        Dict ret = new Dict();
+        ret.strings = ImmutableListMultimap.<Locale, String>copyOf(multimap);
+        return ret;
+    }
 }
