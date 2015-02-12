@@ -91,7 +91,7 @@ public final class Dict {
      *
      * @param strings a non-null list of non-null strings
      */
-    public static Dict of(List<String> strings) {
+    public static Dict of(Iterable<String> strings) {
         return of(Locale.ROOT, strings);
     }
 
@@ -101,7 +101,7 @@ public final class Dict {
      * @param strings a non-null list of non-null strings
      * @param locale if locale is unknown use {@link Locale#ROOT}
      */
-    public static Dict of(Locale locale, List<String> strings) {
+    public static Dict of(Locale locale, Iterable<String> strings) {
         Dict ret = new Dict();
         ret.strings = ImmutableListMultimap.<Locale, String>builder().putAll(locale, strings).build();
         return ret;
@@ -230,18 +230,18 @@ public final class Dict {
             Preconditions.checkNotNull(loc);
             String t = nonEmptyString(loc);
             if (!t.isEmpty()) {
-                return LocalizedString.of(t, loc);
+                return LocalizedString.of(loc, t);
             }
         }
         String t = nonEmptyString(Locale.ENGLISH);
         if (!t.isEmpty()) {
-            return LocalizedString.of(t, Locale.ENGLISH);
+            return LocalizedString.of(Locale.ENGLISH, t);
         }
 
         for (Locale loc : locales()) {
             String other = nonEmptyString(loc);
             if (!other.isEmpty()) {
-                return LocalizedString.of(other, loc);
+                return LocalizedString.of(loc, other);
             }
         }
         return LocalizedString.of();
@@ -278,18 +278,18 @@ public final class Dict {
             Preconditions.checkNotNull(loc);
             String t = nonEmptyString(loc);
             if (!t.isEmpty()) {
-                return LocalizedString.of(t, loc);
+                return LocalizedString.of(loc, t);
             }
         }
         String t = nonEmptyString(Locale.ENGLISH);
         if (!t.isEmpty()) {
-            return LocalizedString.of(t, Locale.ENGLISH);
+            return LocalizedString.of(Locale.ENGLISH, t );
         }
 
         for (Locale loc : locales()) {
             String other = nonEmptyString(loc);
             if (!other.isEmpty()) {
-                return LocalizedString.of(other, loc);
+                return LocalizedString.of(loc, other);
             }
         }
         return LocalizedString.of();
@@ -500,4 +500,38 @@ public final class Dict {
         ret.strings = ImmutableListMultimap.<Locale, String>copyOf(multimap);
         return ret;
     }
+
+    public static Dict ofDicts(Iterable<Dict> dicts) {
+        Dict.Builder retb = Dict.builder();
+        for (Dict st : dicts) {
+            retb.putAll(st);
+        }
+        return retb.build();
+    }
+
+    /**
+     * Returns a dictionary made out of the provided localized strings
+     */
+    public static Dict ofLocalizedStrings(Iterable<LocalizedString> localizedStrings) {
+        Dict.Builder dictb = Dict.builder();
+        for (LocalizedString st : localizedStrings) {
+            dictb.putAll(st.getLocale(), st.getString());
+        }
+        return dictb.build();
+    }
+
+    /**
+     * Returns the dictionary as a list of localized strings
+     */
+    public ImmutableList<LocalizedString> asLocalizedStrings() {
+        ImmutableList.Builder<LocalizedString> retb = ImmutableList.builder();
+
+        for (Locale locale : locales()) {
+            for (String s : strings(locale)) {
+                retb.add(LocalizedString.of(locale, s));
+            }
+        }
+        return retb.build();
+    }
+
 }

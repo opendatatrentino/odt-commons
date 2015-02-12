@@ -154,7 +154,7 @@ public class OdtUtils {
 
     /**
      * Checks if provided URL is to be considered 'dirty'. Method may use some
-     * heristics to detect i.e. the string "null" inside the url.
+     * heuristics to detect i.e. the string "null" inside the url.
      *
      * @param url the URL to check
      * @throws IllegalArgumentException if provided URL fails validation.

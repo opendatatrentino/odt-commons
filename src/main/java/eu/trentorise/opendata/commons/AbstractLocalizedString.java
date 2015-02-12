@@ -26,12 +26,6 @@ import org.immutables.value.Value;
 @SimpleStyle
 abstract class AbstractLocalizedString {
 
-    @Value.Default
-    @Value.Parameter
-    public String getString() {
-        return "";
-    }
-
     /**
      * Default locale is {@link Locale#ROOT}
      */
@@ -41,8 +35,14 @@ abstract class AbstractLocalizedString {
         return Locale.ROOT;
     }
 
-    public static LocalizedString of(String string){
-        return LocalizedString.of(string, Locale.ROOT);
+    @Value.Default
+    @Value.Parameter
+    public String getString() {
+        return "";
     }
-    
+
+    public static LocalizedString of(String string) {
+        return LocalizedString.of(Locale.ROOT, string);
+    }
+
 }

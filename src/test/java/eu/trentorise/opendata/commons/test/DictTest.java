@@ -18,6 +18,7 @@ package eu.trentorise.opendata.commons.test;
 import eu.trentorise.opendata.commons.Dict;
 import eu.trentorise.opendata.commons.LocalizedString;
 import java.util.Locale;
+import org.immutables.value.internal.google.common.collect.ImmutableList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -48,13 +49,16 @@ public class DictTest {
         Dict dict = Dict.of("a");
         assertEquals(dict.string(Locale.ROOT), "a");        
     }
-    
+               
     @Test
     public void testDict() {
         assertTrue(Dict.of().isEmpty());
         assertTrue(Dict.of("").isEmpty());
         assertFalse(Dict.of("hello").isEmpty());
 
+        assertEquals(ImmutableList.of("a", "a", "b"),
+                     Dict.builder().putAll("a").putAll("a","b").build().strings(Locale.ROOT));
+        
         Dict dict = Dict.builder()
                 .putAll(Locale.FRENCH, "A")
                 .putAll(Locale.ITALIAN, "b")
@@ -64,7 +68,7 @@ public class DictTest {
         assertTrue(dict.contains("a"));
         assertTrue(dict.contains("B"));
 
-        assertEquals(LocalizedString.of("c", Locale.ENGLISH),
+        assertEquals(LocalizedString.of(Locale.ENGLISH, "c"),
                      dict.anyString(Locale.CHINESE));
         
         assertEquals(LocalizedString.of(), Dict.of().anyString(Locale.ITALIAN));
@@ -72,13 +76,10 @@ public class DictTest {
         assertEquals(Dict.of("b", "b"),
                      Dict.builder().putAll(Dict.of("b")).putAll(Dict.of("b")).build());
 
-        
-                
+                        
         assertEquals(Dict.builder().putAll(Dict.of(Locale.GERMAN, "b")).putAll(Dict.of(Locale.ITALIAN, "a")).build(),
                      Dict.builder().putAll(Dict.of(Locale.ITALIAN, "a")).putAll(Dict.of(Locale.GERMAN, "b")).build()
-        );
-        
-        
+        );                
         
     }
     
