@@ -15,6 +15,7 @@
  */
 package eu.trentorise.opendata.commons;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import org.immutables.value.Value;
 
@@ -26,8 +27,10 @@ import org.immutables.value.Value;
  */
 @Value.Immutable
 @SimpleStyle
-public abstract class AbstractSemVersion {
+public abstract class AbstractSemVersion implements Serializable {
 
+    private static final long serialVersionUID = 1L;    
+    
     @Value.Parameter
     @Value.Default
     public int getMajor() {

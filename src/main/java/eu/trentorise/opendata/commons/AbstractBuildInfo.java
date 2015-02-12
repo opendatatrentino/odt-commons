@@ -15,6 +15,7 @@
  */
 package eu.trentorise.opendata.commons;
 
+import java.io.Serializable;
 import org.immutables.value.Value;
 
 /**
@@ -23,8 +24,10 @@ import org.immutables.value.Value;
  */
 @Value.Immutable
 @BuilderStyle
-public abstract class AbstractBuildInfo {
+public abstract class AbstractBuildInfo implements Serializable {
 
+    private static final long serialVersionUID = 1L;    
+    
     /**
      * i.e. 1.0
      */

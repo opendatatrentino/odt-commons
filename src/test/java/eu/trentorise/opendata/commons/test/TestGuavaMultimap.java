@@ -38,8 +38,13 @@ public class TestGuavaMultimap {
          Multimap map = LinkedListMultimap.create();
          map.put("a", 1);
          map.put("a", 2);
+         map.putAll("b",ImmutableList.of(1,2));
+         map.putAll("b",ImmutableList.of(3,4));
          assertEquals(ImmutableList.of(1,2), 
                       map.get("a"));
+         assertEquals(ImmutableList.of(1,2,3,4), 
+                      map.get("b"));
+         
     }
     
     @Test

@@ -57,12 +57,12 @@ public class DictTest {
         assertFalse(Dict.of("hello").isEmpty());
 
         assertEquals(ImmutableList.of("a", "a", "b"),
-                     Dict.builder().putAll("a").putAll("a","b").build().strings(Locale.ROOT));
+                     Dict.builder().put("a").put("a","b").build().strings(Locale.ROOT));
         
         Dict dict = Dict.builder()
-                .putAll(Locale.FRENCH, "A")
-                .putAll(Locale.ITALIAN, "b")
-                .putAll(Locale.ENGLISH, "c")
+                .put(Locale.FRENCH, "A")
+                .put(Locale.ITALIAN, "b")
+                .put(Locale.ENGLISH, "c")
                 .build();
 
         assertTrue(dict.contains("a"));
@@ -74,18 +74,18 @@ public class DictTest {
         assertEquals(LocalizedString.of(), Dict.of().anyString(Locale.ITALIAN));
 
         assertEquals(Dict.of("b", "b"),
-                     Dict.builder().putAll(Dict.of("b")).putAll(Dict.of("b")).build());
+                     Dict.builder().put(Dict.of("b")).put(Dict.of("b")).build());
 
                         
-        assertEquals(Dict.builder().putAll(Dict.of(Locale.GERMAN, "b")).putAll(Dict.of(Locale.ITALIAN, "a")).build(),
-                     Dict.builder().putAll(Dict.of(Locale.ITALIAN, "a")).putAll(Dict.of(Locale.GERMAN, "b")).build()
+        assertEquals(Dict.builder().put(Dict.of(Locale.GERMAN, "b")).put(Dict.of(Locale.ITALIAN, "a")).build(),
+                     Dict.builder().put(Dict.of(Locale.ITALIAN, "a")).put(Dict.of(Locale.GERMAN, "b")).build()
         );                
         
     }
     
     @Test
     public void testNonEmpty(){
-        Dict dict = Dict.builder().putAll(Locale.FRENCH, "", "a").build();
+        Dict dict = Dict.builder().put(Locale.FRENCH, "", "a").build();
         assertEquals("a", dict.nonEmptyString(Locale.FRENCH));        
     }
     

@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -39,8 +40,10 @@ import javax.annotation.concurrent.NotThreadSafe;
  */
 @ParametersAreNonnullByDefault
 @Immutable
-public final class Dict {
+public final class Dict implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     private static final Dict INSTANCE = new Dict();
 
     private ImmutableListMultimap<Locale, String> strings;
@@ -105,6 +108,13 @@ public final class Dict {
         Dict ret = new Dict();
         ret.strings = ImmutableListMultimap.<Locale, String>builder().putAll(locale, strings).build();
         return ret;
+    }
+
+    /**
+     * Constructs a Dict with the provided localized string
+     */
+    public static Dict of(LocalizedString localizedString) {
+        return Dict.of(localizedString.getLocale(), localizedString.getString());
     }
 
     private Dict(Builder dictBuilder) {
@@ -283,7 +293,7 @@ public final class Dict {
         }
         String t = nonEmptyString(Locale.ENGLISH);
         if (!t.isEmpty()) {
-            return LocalizedString.of(Locale.ENGLISH, t );
+            return LocalizedString.of(Locale.ENGLISH, t);
         }
 
         for (Locale loc : locales()) {
@@ -305,7 +315,7 @@ public final class Dict {
      *
      */
     public Dict with(Locale locale, String... strings) {
-        return Dict.builder().putAll(this).putAll(locale, strings).build();
+        return Dict.builder().put(this).put(locale, strings).build();
     }
 
     /**
@@ -317,7 +327,7 @@ public final class Dict {
      *
      */
     public Dict with(String... strings) {
-        return Dict.builder().putAll(this).putAll(Locale.ROOT, strings).build();
+        return Dict.builder().put(this).put(Locale.ROOT, strings).build();
     }
 
     /**
@@ -330,7 +340,7 @@ public final class Dict {
      *
      */
     public Dict with(Locale locale, Iterable<String> strings) {
-        return Dict.builder().putAll(this).putAll(locale, strings).build();
+        return Dict.builder().put(this).put(locale, strings).build();
     }
 
     /**
@@ -341,7 +351,7 @@ public final class Dict {
      *
      */
     public Dict with(Dict dict) {
-        return Dict.builder().putAll(this).putAll(dict).build();
+        return Dict.builder().put(this).put(dict).build();
     }
 
     /**
@@ -381,13 +391,14 @@ public final class Dict {
 
         /**
          * Stores an array of values with the same locale in the built
-         * dictionary.
+         * dictionary. Strings will be appended to existing ones for the same
+         * locale.
          *
          * @param locale the locale of the string
          * @param strings the string in the given locale
          * @return {@code this} builder for chained invocation
          */
-        public Builder putAll(Locale locale, String... strings) {
+        public Builder put(Locale locale, String... strings) {
             stringsBuilder.putAll(locale, strings);
             return this;
         }
@@ -401,24 +412,26 @@ public final class Dict {
 
         /**
          * Stores a collection of values with the same locale in the built
-         * dictionary.
+         * dictionary. Strings will be appended to existing ones for the same
+         * locale.
          *
          * @param locale the locale of the string
          * @param strings strings in the given locale
          * @return {@code this} builder for chained invocation
          */
-        public Builder putAll(Locale locale, Iterable<String> strings) {
+        public Builder put(Locale locale, Iterable<String> strings) {
             stringsBuilder.putAll(locale, strings);
             return this;
         }
 
         /**
          * Stores a collection of values with default locale {@link Locale#ROOT}
-         * in the built dictionary.
+         * in the built dictionary. Strings will be appended to existing ones for the same
+         * locale.
          *
          * @return {@code this} builder for chained invocation
          */
-        public Builder putAll(String... strings) {
+        public Builder put(String... strings) {
             stringsBuilder.putAll(Locale.ROOT, strings);
             return this;
         }
@@ -427,7 +440,7 @@ public final class Dict {
          * Stores another dictionary's entries in the built dictionary. New
          * locales and strings follow any existing locales and strings.
          */
-        public Builder putAll(Dict dict) {
+        public Builder put(Dict dict) {
             stringsBuilder.putAll(dict.strings);
             return this;
         }
@@ -504,7 +517,7 @@ public final class Dict {
     public static Dict ofDicts(Iterable<Dict> dicts) {
         Dict.Builder retb = Dict.builder();
         for (Dict st : dicts) {
-            retb.putAll(st);
+            retb.put(st);
         }
         return retb.build();
     }
@@ -515,7 +528,7 @@ public final class Dict {
     public static Dict ofLocalizedStrings(Iterable<LocalizedString> localizedStrings) {
         Dict.Builder dictb = Dict.builder();
         for (LocalizedString st : localizedStrings) {
-            dictb.putAll(st.getLocale(), st.getString());
+            dictb.put(st.getLocale(), st.getString());
         }
         return dictb.build();
     }

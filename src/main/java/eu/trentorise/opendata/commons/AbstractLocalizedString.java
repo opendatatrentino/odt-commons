@@ -15,6 +15,7 @@
  */
 package eu.trentorise.opendata.commons;
 
+import java.io.Serializable;
 import java.util.Locale;
 import org.immutables.value.Value;
 
@@ -24,8 +25,10 @@ import org.immutables.value.Value;
  */
 @Value.Immutable
 @SimpleStyle
-abstract class AbstractLocalizedString {
+abstract class AbstractLocalizedString implements Serializable {
 
+    private static final long serialVersionUID = 1L;    
+    
     /**
      * Default locale is {@link Locale#ROOT}
      */
