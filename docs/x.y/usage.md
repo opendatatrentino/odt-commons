@@ -4,7 +4,7 @@ WARNING: WORK IN PROGRESS - THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. RELEA
 ________________
 
 
-This #{version} release offers basic utilities classes shared by some Open Data in Trentino projects.
+This #{version} release is just for testing docs and release system.
 
 
 This is a custom image for this version: <img href="img/test-img.png"/>
