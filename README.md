@@ -5,7 +5,7 @@ Java utilities common to several Open Data in Trentino projects.
 
 **Project status**: Developing 0.3.0, see [project issues](https://github.com/opendatatrentino/odt-commons/issues)
 
-**Usage**: see [the website](http://opendatatrentino.github.io/odt-commons)
+**Usage**: Project is not published yet, so [existing usage documentation](docs/index.md) is subject to change. 
 
 **License**: business-friendly [Apache License v2.0](https://github.com/opendatatrentino/odt-commons/blob/master/LICENSE.txt)
 
@@ -14,7 +14,6 @@ Java utilities common to several Open Data in Trentino projects.
 ##### Features
 
 Contains basic facilities to manage logging, exceptions, building info and immutability.
-
 ##### Projects using this API
 
 * [Jackan](https://github.com/opendatatrentino/jackan): client for accessing opendata catalogs
