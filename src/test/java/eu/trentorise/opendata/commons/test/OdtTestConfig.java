@@ -18,7 +18,7 @@ package eu.trentorise.opendata.commons.test;
 import eu.trentorise.opendata.commons.OdtConfig;
 
 /**
- * So we can test OdtConfig abstract class
+ * So we can test OdtConfig class
  * @author David Leoni
  */
 final class OdtTestConfig extends OdtConfig {
