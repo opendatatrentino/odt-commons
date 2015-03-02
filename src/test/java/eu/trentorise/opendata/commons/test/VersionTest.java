@@ -34,18 +34,21 @@ public class VersionTest {
         assertEquals(2, sv1.getMinor());
         assertEquals(3, sv1.getPatch());
         assertEquals("", sv1.getPreReleaseVersion());
+        assertEquals(sv1, SemVersion.of(sv1.toString()));
         
         SemVersion sv2 = SemVersion.of("1.2.3-bla");
         assertEquals(1, sv2.getMajor());
         assertEquals(2, sv2.getMinor());
         assertEquals(3, sv2.getPatch());
         assertEquals("bla", sv2.getPreReleaseVersion());
+        assertEquals(sv2, SemVersion.of(sv2.toString()));
         
         SemVersion sv3 = SemVersion.of("1.2.3-");
         assertEquals(1, sv3.getMajor());
         assertEquals(2, sv3.getMinor());
         assertEquals(3, sv3.getPatch());
         assertEquals("", sv3.getPreReleaseVersion());
+        assertEquals(sv3, SemVersion.of(sv3.toString()));        
         
         try {
             SemVersion.of("");

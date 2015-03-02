@@ -16,7 +16,6 @@
 package eu.trentorise.opendata.commons;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import org.immutables.value.Value;
 
 /**
@@ -29,8 +28,8 @@ import org.immutables.value.Value;
 @SimpleStyle
 public abstract class AbstractSemVersion implements Serializable {
 
-    private static final long serialVersionUID = 1L;    
-    
+    private static final long serialVersionUID = 1L;
+
     @Value.Parameter
     @Value.Default
     public int getMajor() {
@@ -58,10 +57,11 @@ public abstract class AbstractSemVersion implements Serializable {
     /**
      * Parses a string of the form x.y.z or x.y.z-p, with x,y,z being numbers
      * and p any string.
-     * @throws  IllegalArgumentException on parsing error.
+     *
+     * @throws IllegalArgumentException on parsing error.
      */
     public static SemVersion of(String string) {
-        
+
         String[] tokens = string.split("\\.");
         if (tokens.length != 3) {
             throw new IllegalArgumentException("Couldn't find three numbers separated by dots in version string " + string);
@@ -91,5 +91,19 @@ public abstract class AbstractSemVersion implements Serializable {
         z = Integer.parseInt(zString);
 
         return SemVersion.of(x, y, z, p);
+    }
+
+    /**
+     * Returns a parseable string represention of the semantic version, like
+     * i.e. 1.2.3-SNAPSHOT
+     */
+    @Override
+    public String toString() {
+        String ret = "" + getMajor() + "." + getMinor() + "." + getPatch();
+        if (getPreReleaseVersion().length() > 0) {
+            return ret + "-" + getPreReleaseVersion();
+        } else {
+            return ret;
+        }
     }
 }
