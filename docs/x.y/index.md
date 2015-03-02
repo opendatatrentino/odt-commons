@@ -1,7 +1,8 @@
 
+<p class="odtdoc-to-strip">
 WARNING: WORK IN PROGRESS - THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. RELEASE DOCS ARE ON THE PROJECT WEBSITE
+</p>
 
-________________
 
 
 This #{version} release is just for testing docs and release system.
