@@ -9,8 +9,8 @@ This #{version} release is just for testing docs and release system.
 
 This is a custom image for this version: <img href="img/test-img.png"/>
 
-This is an image for all versions: <img href="../img/test-img.png"/>
-![This is an image for all versions:](../img/test-img.png?raw=true)
+This is an image for all versions: <img href="../img/odt-commons-logo-200px.png"/>
+![This is an image for all versions:](../img/odt-commons-logo-200px.png?raw=true)
 
 
 ### Usage
