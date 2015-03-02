@@ -14,6 +14,8 @@ This is an image for all versions: <img src="../img/odt-commons-logo-200px.png" 
 link to other md file as markdown: [link](other-file)
 link to other md file as html: <a href="other-file">link</a>
 
+Great discovery: links withou extension don't work...
+
 
 ### Usage
 
