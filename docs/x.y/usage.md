@@ -10,6 +10,7 @@ This #{version} release is just for testing docs and release system.
 This is a custom image for this version: <img href="img/test-img.png"/>
 
 This is an image for all versions: <img href="../img/test-img.png"/>
+![This is an image for all versions:](../img/test-img.png?raw=true)
 
 
 ### Usage
@@ -29,6 +30,9 @@ In case updates are available, version numbers follows <a href="http://semver.or
 #### Get the dataset list of dati.trentino.it:
 
 Test code can be found in <a href="#../../src/test/java/eu/trentorise/opendata/commons/test" target="_blank">in test directory</a> todo review
+
+Test code can be found in [in test directory!](../../src/test/java/eu/trentorise/opendata/commons/test) todo review
+
 
 ```
     Some code
