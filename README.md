@@ -5,9 +5,11 @@ Java utilities common to several Open Data in Trentino projects.
 
 **Project status**: Developing 0.3.0, see [project issues](https://github.com/opendatatrentino/odt-commons/issues)
 
-**Usage**: see [the wiki](https://github.com/opendatatrentino/odt-commons/wiki)
+**Usage**: see [the website](http://opendatatrentino.github.io/odt-commons)
 
 **License**: business-friendly [Apache License v2.0](https://github.com/opendatatrentino/odt-commons/blob/master/LICENSE.txt)
+
+**Contributing**: see [the wiki](https://github.com/opendatatrentino/odt-commons/wiki)
 
 ##### Features
 
@@ -17,7 +19,7 @@ Contains basic facilities to manage logging, exceptions, building info and immut
 
 * [Jackan](https://github.com/opendatatrentino/jackan): client for accessing opendata catalogs
 * [OpenDataRise](https://github.com/opendatatrentino/OpenDataRise): power tool to cleanse and semantify open data, based on Refine
-* [SemText](https://github.com/opendatatrentino/semtext): Semantic text implementation
+* [SemText](https://github.com/opendatatrentino/semtext): simple format to represent semantically enriched text 
 
 ##### Credits:
 

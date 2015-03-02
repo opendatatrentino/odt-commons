@@ -245,8 +245,8 @@
         <url>${scmUrl}</url>
         <connection>scm:git:${scmUrl}.git</connection>
         <developerConnection>scm:git:${scmUrl}.git</developerConnection>        
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
     
     <issueManagement>
         <system>Github</system>
