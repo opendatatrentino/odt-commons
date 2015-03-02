@@ -29,7 +29,7 @@ In case updates are available, version numbers follows <a href="http://semver.or
 
 #### Get the dataset list of dati.trentino.it:
 
-Test code can be found in <a href="#../../src/test/java/eu/trentorise/opendata/commons/test" target="_blank">in test directory</a> todo review
+Test code can be found in <a href="../../src/test/java/eu/trentorise/opendata/commons/test" target="_blank">in test directory</a> todo review
 
 Test code can be found in [in test directory!](../../src/test/java/eu/trentorise/opendata/commons/test) todo review
 
