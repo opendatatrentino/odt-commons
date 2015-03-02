@@ -5,9 +5,9 @@ Java utilities common to several Open Data in Trentino projects.
 
 **Project status**: Developing 0.3.0, see [project issues](https://github.com/opendatatrentino/odt-commons/issues)
 
-**Usage**: Project is not published yet, so [usage docs](docs/index.md) are subject to change. 
-
 **License**: business-friendly [Apache License v2.0](https://github.com/opendatatrentino/odt-commons/blob/master/LICENSE.txt)
+
+**Usage**: Project is not published yet, so [usage docs](docs/x.y/index.md) are subject to change. 
 
 **Contributing**: see [the wiki](https://github.com/opendatatrentino/odt-commons/wiki)
 
