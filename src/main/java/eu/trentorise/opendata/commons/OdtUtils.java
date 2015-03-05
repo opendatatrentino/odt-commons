@@ -278,13 +278,13 @@ public class OdtUtils {
             }
         }
         return BuildInfo.builder()
-                .withBuildJdk(props.getProperty("build-jdk", ""))
-                .withBuiltBy(props.getProperty("built-by", ""))
-                .withCreatedBy(props.getProperty("created-by", ""))
-                .withGitSha(props.getProperty("git-sha", ""))
-                .withScmUrl(props.getProperty("scm-url", ""))
-                .withTimestamp(props.getProperty("timestamp", ""))
-                .withVersion(props.getProperty("version", ""))
+                .setBuildJdk(props.getProperty("build-jdk", ""))
+                .setBuiltBy(props.getProperty("built-by", ""))
+                .setCreatedBy(props.getProperty("created-by", ""))
+                .setGitSha(props.getProperty("git-sha", ""))
+                .setScmUrl(props.getProperty("scm-url", ""))
+                .setTimestamp(props.getProperty("timestamp", ""))
+                .setVersion(props.getProperty("version", ""))
                 .build();
     }
 

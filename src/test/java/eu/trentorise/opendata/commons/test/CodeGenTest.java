@@ -41,7 +41,7 @@ public class CodeGenTest {
 
         assertEquals("", fat.getProp2());
 
-        assertEquals("a", FatClass.builder().withProp2("a").build().getProp2());
+        assertEquals("a", FatClass.builder().setProp2("a").build().getProp2());
 
         assertEquals("b", fat.withProp2("b").getProp2());
         

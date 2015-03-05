@@ -28,10 +28,10 @@ import org.immutables.value.Value;
  *
  * This annotation will configure
  * <a href="http://immutables.github.io/">Immutables</a> to expect the annotated
- * class to have bean style getters. The generated builder will have withers
- * methods. Also, generated immutable objects will all have an empty object
- * retrievable with a method of the form ImmutableMyClass.of(). Immutable class
- * will have same visibility as the abstract one.
+ * class to have bean style getters and setters. Also, generated immutable
+ * objects will all have an empty object retrievable with a method of the form
+ * ImmutableMyClass.of(). Immutable class will have same visibility as the
+ * abstract one.
  *
  * NOTE: Annotated abstract class name MUST begin with 'Abstract'.
  *
@@ -39,7 +39,7 @@ import org.immutables.value.Value;
  * @see SimpleStyle
  */
 @Value.Style(get = {"is*", "get*"},
-        init = "with*",
+        init = "set*",
         typeAbstract = {"Abstract*"},
         typeImmutable = "",
         defaults = @Value.Immutable(singleton = true))
