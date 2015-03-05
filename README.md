@@ -3,14 +3,6 @@ Odt Commons API
 
 Java utilities common to several Open Data in Trentino projects. 
 
-**Project status**: Developing 0.3.0, see [project issues](https://github.com/opendatatrentino/odt-commons/issues)
-
-**License**: business-friendly [Apache License v2.0](https://github.com/opendatatrentino/odt-commons/blob/master/LICENSE.txt)
-
-**Usage**: Project is not published yet, so [usage docs](docs/x.y/index.md) are subject to change. 
-
-**Contributing**: see [the wiki](https://github.com/opendatatrentino/odt-commons/wiki)
-
 ##### Features
 
 Contains basic facilities to manage 
@@ -19,6 +11,14 @@ Contains basic facilities to manage
 * exceptions
 * building info
 * immutability
+
+**Project status**: Developing 0.3.0, see [project issues](https://github.com/opendatatrentino/odt-commons/issues)
+
+**License**: business-friendly [Apache License v2.0](https://github.com/opendatatrentino/odt-commons/blob/master/LICENSE.txt)
+
+**Usage**: Project is not published yet, so [usage docs](docs) are subject to change. 
+
+**Contributing**: see [the wiki](https://github.com/opendatatrentino/odt-commons/wiki)
 
 ##### Projects using this API
 
