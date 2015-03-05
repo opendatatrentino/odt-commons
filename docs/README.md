@@ -4,7 +4,7 @@ RELEASE DOCS ARE ON THE PROJECT WEBSITE
 </p>
 
 
-### Usage
+### Maven
 
 Odt Commons is available on Maven Central. To use it, put this in the dependencies section of your _pom.xml_:
 
@@ -18,11 +18,11 @@ Odt Commons is available on Maven Central. To use it, put this in the dependenci
 
 In case updates are available, version numbers follows <a href="http://semver.org/" target="_blank">semantic versioning</a> rules.
 
-#### The API
+### The API
 
 Most objects in odt-commons are immutable, and make heavy use of <a href="https://code.google.com/p/guava-libraries/wiki/ImmutableCollectionsExplained" target="_blank"> Guava immutable collections </a>. In odt-commons, wherever you see a class called 'AbstractSomething', there will always be an immutable class 'Something' implementing it. 
 
-##### Building objects
+#### Building objects
 
 Immutable classes don't have public constructors, they only have factory methods called _of()_. 
 

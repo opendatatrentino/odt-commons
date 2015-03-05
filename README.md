@@ -1,11 +1,4 @@
-Odt Commons API
-====
-
-Java utilities common to several Open Data in Trentino projects. 
-
-##### Features
-
-Contains basic facilities to manage 
+Java utilities common to several Open Data in Trentino projects. Contains basic facilities to manage:
 
 * logging
 * exceptions
@@ -20,12 +13,12 @@ Contains basic facilities to manage
 
 **Contributing**: see [the wiki](https://github.com/opendatatrentino/odt-commons/wiki)
 
-##### Projects using this API
+**Projects using this API**
 
 * [Jackan](https://github.com/opendatatrentino/jackan): client for accessing opendata catalogs
 * [OpenDataRise](https://github.com/opendatatrentino/OpenDataRise): power tool to cleanse and semantify open data, based on Refine
 * [SemText](https://github.com/opendatatrentino/semtext): simple format to represent semantically enriched text 
 
-##### Credits:
+**Credits:
 
 * David Leoni - DISI at University of Trento - david.leoni@unitn.it
