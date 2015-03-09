@@ -43,7 +43,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 public final class Dict implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     private static final Dict INSTANCE = new Dict();
 
     private ImmutableListMultimap<Locale, String> strings;
@@ -308,7 +308,7 @@ public final class Dict implements Serializable {
     /**
      *
      * Returns a new dictionary with provided array of strings with the same
-     * locale.
+     * locale. Strings will be appended to existing ones for the same locale.
      *
      * @param locale the locale of the strings
      * @param strings the strings in the given locale
@@ -321,7 +321,8 @@ public final class Dict implements Serializable {
     /**
      *
      * Returns a new dictionary with provided array of strings with the same
-     * locale unknown locale {@link Locale#ROOT}.
+     * locale unknown locale {@link Locale#ROOT}. Strings will be appended to
+     * existing ones with unknown locale.
      *
      * @param strings the strings in the given locale
      *
@@ -333,7 +334,7 @@ public final class Dict implements Serializable {
     /**
      *
      * Returns a new dictionary with provided array of strings with the same
-     * locale.
+     * locale. Strings will be appended to existing ones for the same locale.
      *
      * @param locale the locale of the strings
      * @param strings the strings in the given locale
@@ -346,7 +347,7 @@ public final class Dict implements Serializable {
     /**
      *
      * Returns a new dictionary which is the result of merging this dictionary
-     * with the provided one.. New locales and strings follow any existing
+     * with the provided one. New locales and strings follow any existing
      * locales and strings.
      *
      */
@@ -426,8 +427,8 @@ public final class Dict implements Serializable {
 
         /**
          * Stores a collection of values with default locale {@link Locale#ROOT}
-         * in the built dictionary. Strings will be appended to existing ones for the same
-         * locale.
+         * in the built dictionary. Strings will be appended to existing ones
+         * for the same locale.
          *
          * @return {@code this} builder for chained invocation
          */
