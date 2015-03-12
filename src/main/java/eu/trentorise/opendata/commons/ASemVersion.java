@@ -26,7 +26,7 @@ import org.immutables.value.Value;
  */
 @Value.Immutable
 @SimpleStyle
-public abstract class AbstractSemVersion implements Serializable {
+public abstract class ASemVersion implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

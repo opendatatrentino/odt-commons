@@ -1,5 +1,5 @@
-/*
- * Copyright 2015 Trento Rise.
+/* 
+ * Copyright 2015 Trento Rise  (trentorise.eu) 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package eu.trentorise.opendata.commons.test.codegen;
+package eu.trentorise.opendata.commons;
 
-import eu.trentorise.opendata.commons.BuilderStyle;
+import java.io.Serializable;
+import java.util.Locale;
 import org.immutables.value.Value;
 
 /**
@@ -23,22 +24,28 @@ import org.immutables.value.Value;
  * @author David Leoni
  */
 @Value.Immutable
-@BuilderStyle
-public abstract class AbstractFatClass {
+@SimpleStyle
+abstract class ALocalizedString implements Serializable {
 
+    private static final long serialVersionUID = 1L;    
+    
     /**
-     * Has Parameter annotation so it ends up in the generated of()
+     * Default locale is {@link Locale#ROOT}
      */
-    @Value.Parameter   
     @Value.Default
-    public int getProp1(){
-        return 0;
-    };
-
     @Value.Parameter
+    public Locale getLocale() {
+        return Locale.ROOT;
+    }
+
     @Value.Default
-    public String getProp2() {
+    @Value.Parameter
+    public String getString() {
         return "";
     }
-;
+
+    public static LocalizedString of(String string) {
+        return LocalizedString.of(Locale.ROOT, string);
+    }
+
 }

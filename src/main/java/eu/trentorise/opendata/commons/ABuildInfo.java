@@ -24,7 +24,7 @@ import org.immutables.value.Value;
  */
 @Value.Immutable
 @BuilderStyle
-public abstract class AbstractBuildInfo implements Serializable {
+public abstract class ABuildInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;    
     

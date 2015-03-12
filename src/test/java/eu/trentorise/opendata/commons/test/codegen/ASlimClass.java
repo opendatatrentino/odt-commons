@@ -1,5 +1,5 @@
-/* 
- * Copyright 2015 Trento Rise  (trentorise.eu) 
+/*
+ * Copyright 2015 Trento Rise.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,39 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package eu.trentorise.opendata.commons;
+package eu.trentorise.opendata.commons.test.codegen;
 
-import java.io.Serializable;
-import java.util.Locale;
+import eu.trentorise.opendata.commons.SimpleStyle;
 import org.immutables.value.Value;
 
 /**
+ * Simple immutable classes without builder will have public generated classes even if their
+ * abstract class has package visibility.
  *
  * @author David Leoni
  */
 @Value.Immutable
 @SimpleStyle
-abstract class AbstractLocalizedString implements Serializable {
+abstract class ASlimClass {
 
-    private static final long serialVersionUID = 1L;    
-    
-    /**
-     * Default locale is {@link Locale#ROOT}
-     */
-    @Value.Default
     @Value.Parameter
-    public Locale getLocale() {
-        return Locale.ROOT;
-    }
+    @Value.Default
+    public int getProp1(){
+        return 0;
+    };
 
-    @Value.Default
     @Value.Parameter
-    public String getString() {
+    @Value.Default
+    public String getProp2() {
         return "";
     }
-
-    public static LocalizedString of(String string) {
-        return LocalizedString.of(Locale.ROOT, string);
-    }
-
+;
 }

@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 import org.immutables.value.Value;
 
 /**
- * Annotated abstract class (let's suppose it's named AbstractMyClass) will be
+ * Annotated abstract class (let's suppose it's named AMyClass) will be
  * used as template for generating a corresponding immutable class named
  * MyClass. Annotated class is supposed to have few fields, thus no builder will
  * be generated. Immutable class will have public visibility.
@@ -31,16 +31,16 @@ import org.immutables.value.Value;
  * <a href="http://immutables.github.io/">Immutables</a> to expect the annotated
  * class to have bean style getters. The generated builder will have bean style
  * setters. Also, generated immutable objects will all have an empty object
- * retrievable with a method of the form ImmutableMyClass.of().
+ * retrievable with a method of the form MyClass.of().
  *
- * NOTE: Annotated abstract class name MUST begin with 'Abstract'.
+ * <b>NOTE:</b> Annotated abstract class name MUST begin with 'A'.
  *
  * @author David Leoni
  * @see SimpleStyle
  */
 @Value.Style(get = {"is*", "get*"},
         init = "set*",
-        typeAbstract = {"Abstract*"},
+        typeAbstract = {"A*"},
         typeImmutable = "",
         defaults = @Value.Immutable(singleton = true,
                 builder = false,

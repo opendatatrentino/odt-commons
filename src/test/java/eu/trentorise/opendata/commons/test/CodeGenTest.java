@@ -15,7 +15,7 @@
  */
 package eu.trentorise.opendata.commons.test;
 
-import eu.trentorise.opendata.commons.test.codegen.AbstractFatClass;
+import eu.trentorise.opendata.commons.test.codegen.AFatClass;
 import eu.trentorise.opendata.commons.test.codegen.FatClass;
 import eu.trentorise.opendata.commons.test.codegen.SlimClass;
 import org.junit.Test;
@@ -36,7 +36,7 @@ public class CodeGenTest {
     @Test
     public void testCodeGen() {
         
-        AbstractFatClass absFat; 
+        AFatClass absFat; 
         FatClass fat = FatClass.of();
 
         assertEquals("", fat.getProp2());

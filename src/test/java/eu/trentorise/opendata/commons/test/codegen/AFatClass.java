@@ -15,20 +15,21 @@
  */
 package eu.trentorise.opendata.commons.test.codegen;
 
-import eu.trentorise.opendata.commons.SimpleStyle;
+import eu.trentorise.opendata.commons.BuilderStyle;
 import org.immutables.value.Value;
 
 /**
- * Simple immutable classes without builder will have public generated classes even if their
- * abstract class has package visibility.
  *
  * @author David Leoni
  */
 @Value.Immutable
-@SimpleStyle
-abstract class AbstractSlimClass {
+@BuilderStyle
+public abstract class AFatClass {
 
-    @Value.Parameter
+    /**
+     * Has Parameter annotation so it ends up in the generated of()
+     */
+    @Value.Parameter   
     @Value.Default
     public int getProp1(){
         return 0;
