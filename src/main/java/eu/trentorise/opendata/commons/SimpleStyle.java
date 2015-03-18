@@ -29,8 +29,7 @@ import org.immutables.value.Value;
  *
  * This annotation will configure
  * <a href="http://immutables.github.io/">Immutables</a> to expect the annotated
- * class to have bean style getters. The generated builder will have bean style
- * setters. Also, generated immutable objects will all have an empty object
+ * class to have bean style getters. Also, generated immutable objects will all have an empty object
  * retrievable with a method of the form MyClass.of().
  *
  * <b>NOTE:</b> Annotated abstract class name MUST begin with 'A'.

@@ -30,7 +30,7 @@ abstract class ALocalizedString implements Serializable {
     private static final long serialVersionUID = 1L;    
     
     /**
-     * Default locale is {@link Locale#ROOT}
+     * Returns the locale of the string. Default locale is {@link Locale#ROOT}
      */
     @Value.Default
     @Value.Parameter
@@ -38,12 +38,19 @@ abstract class ALocalizedString implements Serializable {
         return Locale.ROOT;
     }
 
+    /**
+     * Returns the string.
+     */
     @Value.Default
     @Value.Parameter
     public String getString() {
         return "";
     }
 
+    /**
+     * Returns a LocalizedString with default locale {@link Locale#ROOT}
+     * @param string a non-null string.
+     */
     public static LocalizedString of(String string) {
         return LocalizedString.of(Locale.ROOT, string);
     }

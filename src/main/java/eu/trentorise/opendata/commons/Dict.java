@@ -19,7 +19,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -483,11 +482,12 @@ public final class Dict implements Serializable {
      */
     @Override
     public String toString() {
+        final int PADDING = 10;
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
         sb.append("{\n");
         for (Locale loc : strings.keySet()) {
-            sb.append(padLeft(loc.toString(), 10))
+            sb.append(padLeft(loc.toString(), PADDING))
                     .append(": [");
             boolean first = true;
             for (String t : strings.get(loc)) {

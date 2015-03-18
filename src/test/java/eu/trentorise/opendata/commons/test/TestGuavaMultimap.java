@@ -23,6 +23,7 @@ import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 
 /**
  * 
@@ -30,9 +31,11 @@ import static org.junit.Assert.*;
  */
 public class TestGuavaMultimap {
     
-    public TestGuavaMultimap() {
-    }
-    
+    @BeforeClass
+    public static  void setUpClass() {        
+        OdtTestConfig.of().loadLogConfig();
+    }    
+            
     @Test
     public void testListMultimap(){
          Multimap map = LinkedListMultimap.create();

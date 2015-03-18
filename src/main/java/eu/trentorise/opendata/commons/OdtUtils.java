@@ -32,8 +32,11 @@ import javax.annotation.Nullable;
  */
 public class OdtUtils {
 
-    private static final Logger LOGGER = Logger.getLogger(OdtUtils.class.getName());
+    private static final Logger LOG = Logger.getLogger(OdtUtils.class.getName());
 
+    /**
+     * Odt Commons build properties path.
+     */
     public static final String BUILD_PROPERTIES_PATH = "odt.commons.build.properties";
 
     /**
@@ -75,7 +78,7 @@ public class OdtUtils {
     public static Locale languageTagToLocale(String str) {
 
         if (str == null) {
-            LOGGER.warning("Found null locale, returning Locale.ROOT");
+            LOG.warning("Found null locale, returning Locale.ROOT");
             return Locale.ROOT;
         }
         int len = str.length();
@@ -113,13 +116,14 @@ public class OdtUtils {
     }
 
     /**
-     *
+     * Converts a Java locale to a String.
+     * 
      * @see #languageTagToLocale(java.lang.String) fo the inverse operation
      *
      */
     public static String localeToLanguageTag(Locale locale) {
         if (locale == null) {
-            LOGGER.warning("Found null locale, returning empty string (which corresponds to Locale.ROOT)");
+            LOG.warning("Found null locale, returning empty string (which corresponds to Locale.ROOT)");
             return "";
         }
         return locale.getLanguage();
@@ -141,7 +145,7 @@ public class OdtUtils {
     }
 
     /**
-     * Removes all trailing slash at the end of the provided url.
+     * Returns the provided url with all trailing slash at the end removed.
      */
     public static String removeTrailingSlash(String url) {
         checkNonNull(url, "url");
@@ -154,14 +158,17 @@ public class OdtUtils {
 
     /**
      * Checks if provided URL is to be considered 'dirty'. Method may use some
-     * heuristics to detect i.e. the string "null" inside the url.
+     * heuristics to detect oddities, like i.e. the string "null" inside the
+     * url.
      *
      * @param url the URL to check
+     * @param prependedErrorMessage the exception message to use if the check
+     * fails; will be converted to a string using String.valueOf(Object)
      * @throws IllegalArgumentException if provided URL fails validation.
      * @return the non-dirty URL that was validated
      *
      */
-    public static String checkNotDirtyUrl(String url, String prependedErrorMessage) {
+    public static String checkNotDirtyUrl(String url, @Nullable Object prependedErrorMessage) {
         if (url == null) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found null URL!");
         }
@@ -191,7 +198,7 @@ public class OdtUtils {
      *
      * @return the non-empty string that was validated
      */
-    public static String checkNotEmpty(String string, @Nullable String prependedErrorMessage) {
+    public static String checkNotEmpty(String string, @Nullable Object prependedErrorMessage) {
         checkNotNull(string, prependedErrorMessage);
         if (string.length() == 0) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty string.");
@@ -208,7 +215,7 @@ public class OdtUtils {
      * fails; will be converted to a string using String.valueOf(Object)
      *
      */
-    public static void checkNotEmpty(Collection coll, @Nullable String prependedErrorMessage) {
+    public static void checkNotEmpty(Collection coll, @Nullable Object prependedErrorMessage) {
         checkNotNull(coll, prependedErrorMessage);
         if (coll.isEmpty()) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection.");
@@ -219,10 +226,10 @@ public class OdtUtils {
      * @deprecated use {@link #checkNotEmpty} instead Checks if provided string
      * is non null and non empty . If not, throws IllegalArgumentException
      */
-    public static void checkNonEmpty(String string, String prependedErrorMessage) {
-        checkNotNull(string, prependedErrorMessage);
+    public static void checkNonEmpty(String string, @Nullable String parameterName) {
+        checkNotNull(string, parameterName);
         if (string.length() == 0) {
-            throw new IllegalArgumentException("Parameter " + prependedErrorMessage + " has zero length!");
+            throw new IllegalArgumentException("Parameter " + parameterName + " has zero length!");
         }
     }
 
@@ -238,9 +245,9 @@ public class OdtUtils {
     }
 
     /**
-     * Checks if provided string is non null and non empty .
+     * Returns true if provided string is non null and non empty .
      */
-    public static boolean isNotEmpty(String string) {
+    public static boolean isNotEmpty(@Nullable String string) {
         return string == null
                 || string.length() == 0;
     }

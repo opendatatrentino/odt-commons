@@ -48,6 +48,9 @@ public abstract class ASemVersion implements Serializable {
         return 0;
     }
 
+    /** 
+     * Returns the prerelease version, (i.e. alphanumerical string such as SNAPSHOT, RC1, alpha, ....)
+     */
     @Value.Parameter
     @Value.Default
     public String getPreReleaseVersion() {
@@ -72,7 +75,7 @@ public abstract class ASemVersion implements Serializable {
         String p;
         x = Integer.parseInt(tokens[0]);
         y = Integer.parseInt(tokens[1]);
-        int minusIndex = tokens[2].indexOf("-");
+        int minusIndex = tokens[2].indexOf('-');
         String zString;
 
         if (minusIndex == -1) {

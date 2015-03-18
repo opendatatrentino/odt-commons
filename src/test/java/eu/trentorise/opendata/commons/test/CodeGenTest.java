@@ -29,7 +29,7 @@ import org.junit.BeforeClass;
 public class CodeGenTest {
     
     @BeforeClass
-    public static void setUpClass() {        
+    public static  void setUpClass() {        
         OdtTestConfig.of().loadLogConfig();
     }
 

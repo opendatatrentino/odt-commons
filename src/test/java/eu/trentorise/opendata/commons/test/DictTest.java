@@ -15,10 +15,13 @@
  */
 package eu.trentorise.opendata.commons.test;
 
+import com.google.common.collect.Multimap;
 import eu.trentorise.opendata.commons.Dict;
 import eu.trentorise.opendata.commons.LocalizedString;
+import java.util.Arrays;
 import java.util.Locale;
 import org.immutables.value.internal.google.common.collect.ImmutableList;
+import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -95,6 +98,74 @@ public class DictTest {
         assertNotEquals(Dict.of("b").with("a"), Dict.of("a","b"));
         assertEquals(Dict.of("a").with(Locale.ITALIAN, "b"), Dict.of(Locale.ITALIAN, "b").with("a"));
         assertNotEquals(Dict.of(Locale.ENGLISH, "a").with(Locale.ITALIAN, "b"), Dict.of(Locale.ITALIAN, "b").with("a"));
+    }
+    @Test
+    public void testNullHostility(){
+        
+        try {
+            Dict.of((String) null);
+            Assert.fail("Should not arrive here!");
+        } catch(NullPointerException ex){
+            
+        }
+               
+        try {
+            Dict.of((LocalizedString) null);
+            Assert.fail("Should not arrive here!");
+        } catch(NullPointerException ex){
+            
+        }
+        
+        try {
+            Dict.of((Multimap) null);
+            Assert.fail("Should not arrive here!");
+        } catch(NullPointerException ex){
+            
+        }
+        
+        try {
+            Dict.of((String) null);
+            Assert.fail("Should not arrive here!");
+        } catch(NullPointerException ex){
+            
+        }
+        
+        try {            
+            Dict.of(Locale.ITALIAN, Arrays.asList((String) null));
+            Assert.fail("Should not arrive here!");
+        } catch(NullPointerException ex){
+            
+        }
+
+        
+        try {
+            Dict.of().with((String) null);
+            Assert.fail("Should not arrive here!");
+        } catch(NullPointerException ex){
+            
+        }
+
+        try {
+            Dict.of().with((Locale) null);
+            Assert.fail("Should not arrive here!");
+        } catch(NullPointerException ex){
+            
+        }
+        
+        try {
+            Dict.of().with(Locale.FRENCH, "", null);
+            Assert.fail("Should not arrive here!");
+        } catch(NullPointerException ex){
+            
+        }  
+        
+        try {
+            Dict.builder().put((String) null);
+            Assert.fail("Should not arrive here!");
+        } catch(NullPointerException ex){
+            
+        }        
+        
     }
     
     

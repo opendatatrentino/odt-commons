@@ -30,7 +30,7 @@ import org.junit.Test;
  *
  * @author David Leoni
  */
-public class UtilsTest {
+public class OdtUtilsTest {
     
     @BeforeClass
     public static void setUpClass() {        

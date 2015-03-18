@@ -16,7 +16,8 @@
 package eu.trentorise.opendata.commons;
 
 /**
- *
+ * Generic Odt Commons runtime exception
+ * 
  * @author David Leoni
  */
 public class OdtException extends RuntimeException {

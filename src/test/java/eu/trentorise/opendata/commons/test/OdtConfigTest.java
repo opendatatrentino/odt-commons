@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Trento Rise  (trentorise.eu) 
+ * Copyright 2015 Trento Rise.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,27 @@
  */
 package eu.trentorise.opendata.commons.test;
 
-import eu.trentorise.opendata.commons.OdtConfig;
+import eu.trentorise.opendata.commons.BuildInfo;
+import static org.junit.Assert.assertTrue;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
- * So we can test OdtConfig class
+ *
  * @author David Leoni
  */
-final class OdtTestConfig extends OdtConfig {
+public class OdtConfigTest {
 
-    private static final OdtTestConfig INSTANCE = new OdtTestConfig();
-
-    private OdtTestConfig(){
-        super();        
+    @BeforeClass
+    public static void setUpClass() {
+        OdtTestConfig.of().loadLogConfig();
     }
 
-    /**
-     * Creates an instance of OdtTextConfig.
-     */
-    public static OdtTestConfig of() {
-        return INSTANCE;
+    @Test
+    public void testConfig() {
+        BuildInfo buildInfo = OdtTestConfig.of().getBuildInfo();
+        assertTrue(buildInfo.getScmUrl().length() > 0);
+        assertTrue(buildInfo.getVersion().length() > 0);
+        assertTrue(OdtTestConfig.of().isLoggingConfigured());
     }
-
 }

@@ -22,16 +22,16 @@ import java.lang.annotation.Target;
 import org.immutables.value.Value;
 
 /**
- * Annotated abstract class (let's suppose it's named AMyClass) will be
- * used as template for generating a corresponding immutable class named
- * MyClass, along with a builder to create instances of it.
+ * Annotated abstract class (let's suppose it's named AMyClass) will be used as
+ * template for generating a corresponding immutable class named MyClass, along
+ * with a builder to create instances of it.
  *
  * This annotation will configure
  * <a href="http://immutables.github.io/">Immutables</a> to expect the annotated
- * class to have bean style getters and setters. Also, generated immutable
- * objects will all have an empty object retrievable with a method of the form
- * MyClass.of(). Immutable class will have same visibility as the
- * abstract one.
+ * class to have bean style getters. Also, generated immutable objects will all
+ * have an empty object retrievable with a method of the form MyClass.of().
+ * Immutable class will have same visibility as the abstract one. The generated
+ * builder will have bean-style setters.
  *
  * <b>NOTE:</b> Annotated abstract class name MUST begin with 'A'.
  *
