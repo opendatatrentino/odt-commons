@@ -33,7 +33,7 @@ import org.junit.Test;
  *
  * @author David Leoni
  */
-public class DictTest {
+public class MultilingualStringsTest {
 
     @BeforeClass
     public static void setUpClass() {        
@@ -168,5 +168,38 @@ public class DictTest {
         
     }
     
+    
+    @Test
+    public void example1(){
+        
+        // Generally, there are only factory methods starting with 'of' and no 'new' constructor:                
+        LocalizedString myLocalizedString = LocalizedString.of(Locale.ITALIAN, "ciao");
+        
+        // Default language is always Locale.ROOT:
+        LocalizedString localizedString = LocalizedString.of("string with unknwon language");
+        
+        assert Locale.ROOT.equals(localizedString.getLocale());
+        
+        // we are null hostile:
+        try {
+            LocalizedString.of(null);
+        } catch(NullPointerException ex){
+            
+        }
+        
+        // factory method for a Dict:
+        Dict.of(Locale.ENGLISH, "hello", "my friend");
+        
+        // Dict builder:
+        Dict myDict = Dict.builder().put(Locale.ENGLISH, "hello")
+                                    .put(Locale.ENGLISH, "hello again")
+                                    .put(Locale.ITALIAN, "ciao")
+                                    .build();
+        
+        assert "hello".equals(myDict.string(Locale.ENGLISH));
+        assert "hello again".equals(myDict.strings(Locale.ENGLISH).get(1)); 
+        assert "ciao".equals(myDict.string(Locale.ITALIAN)); 
+                
+    }
     
 }

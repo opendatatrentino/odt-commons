@@ -1,10 +1,15 @@
-<p class="odtdoc-to-strip">
-WARNING: WORK IN PROGRESS - THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. <br/>
-RELEASE DOCS ARE ON THE PROJECT WEBSITE
+<p class="jedoc-to-strip">
+WARNING: THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. <br/>
+RELEASE DOCS ARE ON THE <a href="http://opendatatrentino.github.io/odt-commons/" target="_blank">PROJECT WEBSITE</a>
 </p>
 
+Odt Commons implements basic utilities for
 
-todo put first release description
+* logging
+* building info
+* versioning
+* multilingual strings such as `LocalizedString` and `Dict`
+
 
 ### Maven
 
@@ -14,21 +19,59 @@ Odt Commons is available on Maven Central. To use it, put this in the dependenci
     <dependency>
         <groupId>eu.trentorise.opendata</groupId>
         <artifactId>odt-commons</artifactId>
-        <version>#{version}</version>            
+        <version>#{version}</version>
     </dependency>
 ```
 
 In case updates are available, version numbers follows <a href="http://semver.org/" target="_blank">semantic versioning</a> rules.
 
-### The API
+### Building objects
 
-Most objects in odt-commons are immutable, and make heavy use of <a href="https://code.google.com/p/guava-libraries/wiki/ImmutableCollectionsExplained" target="_blank"> Guava immutable collections </a>. In odt-commons, wherever you see an abstract class called 'ASomething', there will always be an immutable class 'Something' implementing it. 
+Most objects in odt-commons are immutable, and make heavy use of <a href="https://code.google.com/p/guava-libraries/wiki/ImmutableCollectionsExplained" target="_blank"> Guava immutable collections </a>. In odt-commons, wherever you see an abstract class called 'ASomething', there will always be an immutable class 'Something' implementing it.
 
-#### Building objects
 
-Immutable classes don't have public constructors, they only have factory methods called _of()_. 
 
-Todo put examples.
+Immutable classes don't have public constructors, they only have factory methods starting with _of()_:
+
+```
+	LocalizedString myLocalizedString = LocalizedString.of(Locale.ITALIAN, "ciao");
+```
+
+Default language is always `Locale.ROOT`:
+```
+	LocalizedString localizedString = LocalizedString.of("string with unknwon language");
+
+	assert Locale.ROOT.equals(localizedString.getLocale());
+```
+
+Generally, we are null hostile:
+
+```
+    try {
+        LocalizedString.of(null);
+    } catch(NullPointerException ex){
+
+    }
+```
+
+
+Dicts are immutable multimaps with builders. Factory method for a `Dict`:
+```
+    Dict.of(Locale.ENGLISH, "hello", "my friend");
+```
+
+Building a `Dict`:
+```
+    Dict myDict = Dict.builder().put(Locale.ENGLISH, "hello")
+                                .put(Locale.ENGLISH, "hello again")
+                                .put(Locale.ITALIAN, "ciao")
+                                .build();
+
+    assert "hello".equals(myDict.string(Locale.ENGLISH));
+    assert "hello again".equals(myDict.strings(Locale.ENGLISH).get(1)); 
+    assert "ciao".equals(myDict.string(Locale.ITALIAN)); 
+
+```
 
 
 ### Logging

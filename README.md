@@ -1,3 +1,8 @@
+<p class="jedoc-to-strip">
+WARNING: THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. <br/>
+RELEASE DOCS ARE ON THE <a href="http://opendatatrentino.github.io/odt-commons/" target="_blank">PROJECT WEBSITE</a>
+</p>
+
 Java utilities common to several Open Data in Trentino projects. Contains basic facilities to manage:
 
 * logging
