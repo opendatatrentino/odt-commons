@@ -14,6 +14,7 @@ Odt Commons implements basic utilities for
 ### Maven
 
 Odt Commons is available on Maven Central. To use it, put this in the dependencies section of your _pom.xml_:
+todo
 
 ```
     <dependency>
@@ -27,21 +28,22 @@ In case updates are available, version numbers follows <a href="http://semver.or
 
 ### Building objects
 
-Most objects in odt-commons are immutable, and make heavy use of <a href="https://code.google.com/p/guava-libraries/wiki/ImmutableCollectionsExplained" target="_blank"> Guava immutable collections </a>. In odt-commons, wherever you see an abstract class called 'ASomething', there will always be an immutable class 'Something' implementing it.
+Most objects in odt-commons are immutable, and make heavy use of <a href="https://code.google.com/p/guava-libraries/wiki/ImmutableCollectionsExplained" target="_blank"> Guava immutable collections </a>. In odt-commons, wherever you see an abstract class called `ASomething`, there will always be an immutable class `Something` implementing it.
 
 
 
 Immutable classes don't have public constructors, they only have factory methods starting with _of()_:
 
 ```
-	LocalizedString myLocalizedString = LocalizedString.of(Locale.ITALIAN, "ciao");
+    LocalizedString myLocalizedString = LocalizedString.of(Locale.ITALIAN, "ciao");
 ```
 
 Default language is always `Locale.ROOT`:
-```
-	LocalizedString localizedString = LocalizedString.of("string with unknwon language");
 
-	assert Locale.ROOT.equals(localizedString.getLocale());
+```
+    LocalizedString localizedString = LocalizedString.of("string with unknwon language");
+
+    assert Locale.ROOT.equals(localizedString.getLocale());
 ```
 
 Generally, we are null hostile:
@@ -56,11 +58,13 @@ Generally, we are null hostile:
 
 
 Dicts are immutable multimaps with builders. Factory method for a `Dict`:
+
 ```
     Dict.of(Locale.ENGLISH, "hello", "my friend");
 ```
 
 Building a `Dict`:
+
 ```
     Dict myDict = Dict.builder().put(Locale.ENGLISH, "hello")
                                 .put(Locale.ENGLISH, "hello again")

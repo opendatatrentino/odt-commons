@@ -3,27 +3,30 @@ WARNING: THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. <br/>
 RELEASE DOCS ARE ON THE <a href="http://opendatatrentino.github.io/odt-commons/" target="_blank">PROJECT WEBSITE</a>
 </p>
 
+#### About
+
 Java utilities common to several Open Data in Trentino projects. Contains basic facilities to manage:
 
 * logging
 * exceptions
 * building info
-* immutability
+* multilingual strings
 
-**Project status**: Developing 0.3.0, see [project issues](https://github.com/opendatatrentino/odt-commons/issues)
+Usage: See [docs](docs)
 
-**License**: business-friendly [Apache License v2.0](https://github.com/opendatatrentino/odt-commons/blob/master/LICENSE.txt)
+Roadmap: See [project milestones](../../milestones)
 
-**Usage**: Project is not published yet, so [usage docs](docs) are subject to change. 
+License: business-friendly [Apache License v2.0](LICENSE.txt)
 
-**Contributing**: see [the wiki](https://github.com/opendatatrentino/odt-commons/wiki)
+Contributing: See [the wiki](../../wiki)
 
-**Projects using this API**
 
-* [Jackan](https://github.com/opendatatrentino/jackan): client for accessing opendata catalogs
-* [OpenDataRise](https://github.com/opendatatrentino/OpenDataRise): power tool to cleanse and semantify open data, based on Refine
-* [SemText](https://github.com/opendatatrentino/semtext): simple format to represent semantically enriched text 
+#### Projects using this API
 
-**Credits:
+* <a href="http://opendatatrentino.github.io/jackan" target="_blank"> Jackan </a>: client for accessing opendata catalogs
+* <a href="https://github.com/opendatatrentino/OpenDataRise" target="_blank"> OpenDataRise</a>: a power tool to cleanse and semantify open data, based on Refine
+* <a href="http://opendatatrentino.github.io/semtext" target="_blank">SemText</a>: simple format to represent semantically enriched text
+
+#### Credits
 
 * David Leoni - DISI at University of Trento - david.leoni@unitn.it

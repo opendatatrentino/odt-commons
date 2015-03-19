@@ -117,7 +117,7 @@ public class OdtUtils {
 
     /**
      * Converts a Java locale to a String.
-     * 
+     *
      * @see #languageTagToLocale(java.lang.String) fo the inverse operation
      *
      */
@@ -163,7 +163,8 @@ public class OdtUtils {
      *
      * @param url the URL to check
      * @param prependedErrorMessage the exception message to use if the check
-     * fails; will be converted to a string using String.valueOf(Object)
+     * fails; will be converted to a string using String.valueOf(Object) and
+     * prepended to more specific error messages.
      * @throws IllegalArgumentException if provided URL fails validation.
      * @return the non-dirty URL that was validated
      *
@@ -194,7 +195,8 @@ public class OdtUtils {
      * NullPointerException or IllegalArgumentException
      *
      * @param prependedErrorMessage the exception message to use if the check
-     * fails; will be converted to a string using String.valueOf(Object)
+     * fails; will be converted to a string using String.valueOf(Object) and
+     * prepended to more specific error messages.
      *
      * @return the non-empty string that was validated
      */
@@ -212,7 +214,8 @@ public class OdtUtils {
      * NullPointerException or IllegalArgumentException
      *
      * @param prependedErrorMessage the exception message to use if the check
-     * fails; will be converted to a string using String.valueOf(Object)
+     * fails; will be converted to a string using String.valueOf(Object) and
+     * prepended to more specific error messages.
      *
      */
     public static void checkNotEmpty(Collection coll, @Nullable Object prependedErrorMessage) {
@@ -305,8 +308,7 @@ public class OdtUtils {
     public static long parseNumericalId(String prefix, String url) {
 
         checkNotNull(prefix, "prefix can't be null!");
-        Preconditions.checkArgument(url != null, "URL can't be null!");
-        Preconditions.checkArgument(url.length() > 0, "URL can't be empty!");
+        checkNotEmpty(url, "Invalid url!");
 
         String s;
         if (prefix.length() > 0) {
