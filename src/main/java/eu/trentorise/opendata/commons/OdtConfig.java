@@ -112,7 +112,7 @@ public class OdtConfig {
                     URL url = getClass().getResource("/" + LOG_PROPERTIES_PATH);
                     if (url == null) {
                         System.out.println();
-                        throw new IOException("ERROR! fND ANY LOG CONFIGURATION FILE NAMED " + LOG_PROPERTIES_PATH + "!");
+                        throw new IOException("ERROR! COULDN'T FIND ANY LOG CONFIGURATION FILE NAMED " + LOG_PROPERTIES_PATH + "!");
                     }
                     inputStream = referenceClass.getResourceAsStream("/" + LOG_PROPERTIES_PATH);
                     path = url.toURI().getPath();
@@ -130,7 +130,8 @@ public class OdtConfig {
 
             }
             catch (Exception e) {
-                logger.log(Level.SEVERE, "ERROR - COULDN'T LOAD LOGGING PROPERTIES!", e);
+                System.out.println("ERROR - COULDN'T LOAD LOGGING PROPERTIES!");
+                e.printStackTrace();
             }
 
         }
