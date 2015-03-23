@@ -44,6 +44,8 @@ public final class Dict implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final Dict INSTANCE = new Dict();
+    
+    private static final int PADDING = 10;
 
     private ImmutableListMultimap<Locale, String> strings;
 
@@ -481,8 +483,7 @@ public final class Dict implements Serializable {
      * Returns all the strings in the dictionary in a nicely formatted way.
      */
     @Override
-    public String toString() {
-        final int PADDING = 10;
+    public String toString() {        
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
         sb.append("{\n");

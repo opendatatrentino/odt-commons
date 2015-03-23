@@ -15,7 +15,6 @@
  */
 package eu.trentorise.opendata.commons;
 
-import com.google.common.base.Preconditions;
 import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +29,7 @@ import javax.annotation.Nullable;
  *
  * @author David Leoni <david.leoni@unitn.it>
  */
-public class OdtUtils {
+public final class OdtUtils {
 
     private static final Logger LOG = Logger.getLogger(OdtUtils.class.getName());
 
@@ -39,6 +38,8 @@ public class OdtUtils {
      */
     public static final String BUILD_PROPERTIES_PATH = "odt.commons.build.properties";
 
+    private OdtUtils(){}
+    
     /**
      * Java 7 has Locale.forLanguageTag(format), this is the substitute for Java
      * 6 <br/>
@@ -135,7 +136,7 @@ public class OdtUtils {
      *
      * @param url
      */
-    public String addSlash(String url) {
+    public static String addSlash(String url) {
         checkNonNull(url, "url");
         if (url.endsWith("/")) {
             return url;
@@ -170,12 +171,7 @@ public class OdtUtils {
      *
      */
     public static String checkNotDirtyUrl(String url, @Nullable Object prependedErrorMessage) {
-        if (url == null) {
-            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found null URL!");
-        }
-        if (url.length() == 0) {
-            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty URL!");
-        }
+        checkNotEmpty(url, prependedErrorMessage);
 
         if (url.equalsIgnoreCase("null")) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found URL with string \"" + url + "\" as content!");

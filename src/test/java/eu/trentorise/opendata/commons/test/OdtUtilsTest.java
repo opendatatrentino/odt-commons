@@ -92,4 +92,38 @@ public class OdtUtilsTest {
         }
     }
     
+    @Test
+    public void addRemoveSlash(){
+        
+        assertEquals("a/", OdtUtils.addSlash("a"));
+        assertEquals("a/", OdtUtils.addSlash("a/"));
+        assertEquals("a", OdtUtils.removeTrailingSlash("a/"));
+        assertEquals("a", OdtUtils.removeTrailingSlash("a//"));
+        
+        assertEquals("a", OdtUtils.removeTrailingSlash(OdtUtils.addSlash("a")));
+        assertEquals("a", OdtUtils.removeTrailingSlash(OdtUtils.addSlash("a/")));
+    }
+    
+    @Test
+    public void languageTag(){
+        assertEquals(Locale.ITALIAN, OdtUtils.languageTagToLocale(OdtUtils.localeToLanguageTag(Locale.ITALIAN)));
+    }
+    
+    @Test
+    public void checkNotDirtyUrl(){
+        try {
+            OdtUtils.checkNotDirtyUrl("", "");
+            Assert.fail("Shouldn't arrive here!");
+        } catch (Exception ex){
+            
+        }
+        
+        try {
+            OdtUtils.checkNotDirtyUrl("null", "");
+            Assert.fail("Shouldn't arrive here!");
+        } catch (Exception ex){
+            
+        }        
+    }
+    
 }

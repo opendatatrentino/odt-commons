@@ -59,7 +59,7 @@ public class VersionTest {
         try {
             SemVersion.of("");
             Assert.fail("shouldn't arrive here!");
-        } catch (Throwable ex){
+        } catch (Exception ex){
             
         }
     }
