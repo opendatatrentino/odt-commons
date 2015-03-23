@@ -16,6 +16,7 @@
 package eu.trentorise.opendata.commons.test;
 
 import eu.trentorise.opendata.commons.BuildInfo;
+import eu.trentorise.opendata.commons.OdtConfig;
 import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,5 +38,6 @@ public class OdtConfigTest {
         assertTrue(buildInfo.getScmUrl().length() > 0);
         assertTrue(buildInfo.getVersion().length() > 0);
         assertTrue(OdtTestConfig.of().isLoggingConfigured());
+        assertTrue(OdtConfig.of(this.getClass()).getBuildInfo().getScmUrl().length() > 0);
     }
 }
