@@ -39,26 +39,16 @@ public class MultilingualStringsTest {
     public static void setUpClass() {        
         OdtTestConfig.of().loadLogConfig();
     }    
-
-    @Test
-    public void testDict_0() {
-        Dict dict = Dict.of();
-        assertTrue(dict.locales().isEmpty());        
-    }
-    
-    
-      @Test
-    public void testDict_1() {        
-        Dict dict = Dict.of("a");
-        assertEquals(dict.string(Locale.ROOT), "a");        
-    }
-               
+       
     @Test
     public void testDict() {
         assertTrue(Dict.of().isEmpty());
         assertTrue(Dict.of("").isEmpty());
         assertFalse(Dict.of("hello").isEmpty());
-
+        assertTrue(Dict.of().locales().isEmpty());        
+        assertEquals(Dict.of("a").string(Locale.ROOT), "a");        
+        
+        
         assertEquals(ImmutableList.of("a", "a", "b"),
                      Dict.builder().put("a").put("a","b").build().strings(Locale.ROOT));
         
@@ -70,6 +60,18 @@ public class MultilingualStringsTest {
 
         assertTrue(dict.contains("a"));
         assertTrue(dict.contains("B"));
+        
+        assertTrue(dict.toString().length() > 0);
+        
+        assertEquals(dict, Dict.ofLocalizedStrings(dict.asLocalizedStrings()));
+        
+        assertEquals(dict, Dict.of(dict.asMultimap()));
+        
+        assertEquals(Dict.of(Locale.ITALIAN, "a")
+                     .with(Locale.ITALIAN, "b"), 
+                    
+                    Dict.ofDicts(Dict.of(Locale.ITALIAN, "a"), 
+                                 Dict.of(Locale.ITALIAN, "b")));
 
         assertEquals(LocalizedString.of(Locale.ENGLISH, "c"),
                      dict.anyString(Locale.CHINESE));
@@ -83,6 +85,7 @@ public class MultilingualStringsTest {
         assertEquals(Dict.builder().put(Dict.of(Locale.GERMAN, "b")).put(Dict.of(Locale.ITALIAN, "a")).build(),
                      Dict.builder().put(Dict.of(Locale.ITALIAN, "a")).put(Dict.of(Locale.GERMAN, "b")).build()
         );                
+        
         
     }
     
@@ -170,7 +173,7 @@ public class MultilingualStringsTest {
     
     
     @Test
-    public void example1(){
+    public void example(){
         
         // Generally, there are only factory methods starting with 'of' and no 'new' constructor:                
         LocalizedString myLocalizedString = LocalizedString.of(Locale.ITALIAN, "ciao");
@@ -201,5 +204,6 @@ public class MultilingualStringsTest {
         assert "ciao".equals(myDict.string(Locale.ITALIAN)); 
                 
     }
+    
     
 }

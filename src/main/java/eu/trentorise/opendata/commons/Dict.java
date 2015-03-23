@@ -516,6 +516,16 @@ public final class Dict implements Serializable {
         return ret;
     }
 
+    /**
+     * Returns a new dictionary by merging all the provided dicts together
+     */
+    public static Dict ofDicts(Dict... dicts) {
+        return ofDicts(Arrays.asList(dicts));
+    }
+
+    /**
+     * Returns a new dictionary by merging all the provided dicts together
+     */    
     public static Dict ofDicts(Iterable<Dict> dicts) {
         Dict.Builder retb = Dict.builder();
         for (Dict st : dicts) {
