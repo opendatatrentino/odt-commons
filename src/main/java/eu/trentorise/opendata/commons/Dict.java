@@ -270,42 +270,7 @@ public final class Dict implements Serializable {
 
     }
 
-    /**
-     *
-     * Tries its best to produce a meaningful string in one of the provided
-     * languages
-     *
-     * @deprecated use {@link #anyString(java.util.Locale...) } instead
-     * @return A string in the first available language from the list of
-     * provided locales. If no translation is available, in order, defaults to
-     * English and then whatever it can find in the list of translations. Empty
-     * strings are discarded. If no valid translation is available at all,
-     * returns {@link LocalizedString#of()}.
-     */
-    public LocalizedString prettyString(Locale... locales) {
-        Preconditions.checkNotNull(locales);
-
-        for (Locale loc : locales) {
-            Preconditions.checkNotNull(loc);
-            String t = nonEmptyString(loc);
-            if (!t.isEmpty()) {
-                return LocalizedString.of(loc, t);
-            }
-        }
-        String t = nonEmptyString(Locale.ENGLISH);
-        if (!t.isEmpty()) {
-            return LocalizedString.of(Locale.ENGLISH, t);
-        }
-
-        for (Locale loc : locales()) {
-            String other = nonEmptyString(loc);
-            if (!other.isEmpty()) {
-                return LocalizedString.of(loc, other);
-            }
-        }
-        return LocalizedString.of();
-    }
-
+  
     /**
      *
      * Returns a new dictionary with provided array of strings with the same

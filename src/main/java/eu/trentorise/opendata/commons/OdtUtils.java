@@ -137,7 +137,7 @@ public final class OdtUtils {
      * @param url
      */
     public static String addSlash(String url) {
-        checkNonNull(url, "url");
+        checkNotNull(url, "invalid url!");
         if (url.endsWith("/")) {
             return url;
         } else {
@@ -149,7 +149,7 @@ public final class OdtUtils {
      * Returns the provided url with all trailing slash at the end removed.
      */
     public static String removeTrailingSlash(String url) {
-        checkNonNull(url, "url");
+        checkNotNull(url, "invalid url!");
         String tempUrl = url;
         while (tempUrl.endsWith("/")) {
             tempUrl = tempUrl.substring(0, tempUrl.length() - 1);
@@ -220,28 +220,7 @@ public final class OdtUtils {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection.");
         }
     }
-
-    /**
-     * @deprecated use {@link #checkNotEmpty} instead Checks if provided string
-     * is non null and non empty . If not, throws IllegalArgumentException
-     */
-    public static void checkNonEmpty(String string, @Nullable String parameterName) {
-        checkNotNull(string, parameterName);
-        if (string.length() == 0) {
-            throw new IllegalArgumentException("Parameter " + parameterName + " has zero length!");
-        }
-    }
-
-    /**
-     * @deprecated Use com.​google.​common.​base.​Preconditions#checkNotNull
-     * instead Checks if provided object is non null. If not, throws
-     * IllegalArgumentException
-     */
-    public static void checkNonNull(Object obj, String objName) {
-        if (obj == null) {
-            throw new IllegalArgumentException("Parameter " + objName + " can't be null!");
-        }
-    }
+  
 
     /**
      * Returns true if provided string is non null and non empty .
@@ -251,14 +230,6 @@ public final class OdtUtils {
                 || string.length() == 0;
     }
 
-    /**
-     * @deprecated use {@link #isNotEmpty(java.lang.String) } instead. Checks if
-     * provided string is non null and non empty .
-     */
-    public static boolean isNonEmpty(String string) {
-        return string == null
-                || string.length() == 0;
-    }
 
     /**
      * Parses file at {@link #BUILD_PROPERTIES_PATH} of the jar holding the

@@ -62,7 +62,7 @@ public class OdtUtilsTest {
             
         }
         try {
-            OdtUtils.checkNonEmpty("", "my string");
+            OdtUtils.checkNotEmpty("", "my string");
             Assert.fail();
         } catch (IllegalArgumentException ex){
             
