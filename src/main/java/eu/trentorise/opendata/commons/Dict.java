@@ -83,7 +83,7 @@ public final class Dict implements Serializable {
      * Constructs a Dict with with the provided string(s). Strings will be under
      * unknown locale {@link Locale#ROOT}.
      *
-     * @param strings a non-null string
+     * @param strings non-null strings
      */
     public static Dict of(String... strings) {
         return of(Locale.ROOT, strings);

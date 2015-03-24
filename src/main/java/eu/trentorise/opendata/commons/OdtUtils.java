@@ -226,8 +226,8 @@ public final class OdtUtils {
      * Returns true if provided string is non null and non empty .
      */
     public static boolean isNotEmpty(@Nullable String string) {
-        return string == null
-                || string.length() == 0;
+        return string != null
+                && string.length() != 0;
     }
 
 

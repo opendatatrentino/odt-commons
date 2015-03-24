@@ -22,6 +22,7 @@ import eu.trentorise.opendata.commons.OdtUtils;
 import java.util.Locale;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -43,6 +44,7 @@ public class OdtUtilsTest {
         // we want gracious null handling
         assertEquals(Locale.ROOT, OdtUtils.languageTagToLocale(null));
         assertEquals("", OdtUtils.localeToLanguageTag(null));
+        assertEquals(Locale.ITALIAN, OdtUtils.languageTagToLocale(OdtUtils.localeToLanguageTag(Locale.ITALIAN)));
     }
     
     @Test
@@ -50,6 +52,7 @@ public class OdtUtilsTest {
         BuildInfo buildInfo = OdtUtils.readBuildInfo(OdtTestConfig.class);
         assertTrue(buildInfo.getScmUrl().length() > 0);
         assertTrue(buildInfo.getVersion().length() > 0);
+                
     }
 
     
@@ -87,9 +90,25 @@ public class OdtUtilsTest {
         assertEquals(1, OdtUtils.parseNumericalId("a", "a1"));
         try {
             OdtUtils.parseNumericalId("", "");
+            Assert.fail();
         } catch (IllegalArgumentException ex){
             
         }
+        
+        try {
+            OdtUtils.parseNumericalId("a", "ab");
+            Assert.fail();
+        } catch (IllegalArgumentException ex){
+            
+        }
+        
+        try {
+            OdtUtils.parseNumericalId("a", "bb");
+            Assert.fail();
+        } catch (IllegalArgumentException ex){
+            
+        }        
+        
     }
     
     @Test
@@ -104,26 +123,33 @@ public class OdtUtilsTest {
         assertEquals("a", OdtUtils.removeTrailingSlash(OdtUtils.addSlash("a/")));
     }
     
-    @Test
-    public void languageTag(){
-        assertEquals(Locale.ITALIAN, OdtUtils.languageTagToLocale(OdtUtils.localeToLanguageTag(Locale.ITALIAN)));
-    }
+    
     
     @Test
-    public void checkNotDirtyUrl(){
+    public void testCheckNotDirtyUrl(){
         try {
             OdtUtils.checkNotDirtyUrl("", "");
             Assert.fail("Shouldn't arrive here!");
-        } catch (Exception ex){
+        } catch (IllegalArgumentException ex){
             
         }
         
         try {
             OdtUtils.checkNotDirtyUrl("null", "");
             Assert.fail("Shouldn't arrive here!");
-        } catch (Exception ex){
+        } catch (IllegalArgumentException ex){
             
-        }        
+        }       
+        
+        assertEquals("a", OdtUtils.checkNotDirtyUrl("a", "msg"));
     }
+    
+    @Test
+    public void testIsNotEmpty(){
+        assertFalse(OdtUtils.isNotEmpty(null));
+        assertFalse(OdtUtils.isNotEmpty(""));
+        assertTrue(OdtUtils.isNotEmpty("a"));
+    }
+    
     
 }

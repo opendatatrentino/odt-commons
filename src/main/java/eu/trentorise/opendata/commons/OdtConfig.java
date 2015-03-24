@@ -152,10 +152,6 @@ public class OdtConfig {
         this.referenceClass = clazz;
     }
 
-    public Logger getLogger() {
-        return logger;
-    }
-
     /**
      * Creates a new default OdtConfig using reference class to locate config
      * resources.
