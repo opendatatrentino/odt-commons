@@ -17,17 +17,27 @@ package eu.trentorise.opendata.commons;
 
 /**
  * Generic Odt Commons runtime exception
- * 
+ *
  * @author David Leoni
  */
 public class OdtException extends RuntimeException {
 
+    private OdtException() {
+        super();
+    }
+
+    /**
+     * Creates the exception with the provided message.
+     */
     public OdtException(String msg) {
         super(msg);
     }
 
-    public OdtException(String msg, Throwable ex) {
-        super(msg, ex);
+    /**
+     * Creates the exception with the provided message and throwable.
+     */
+    public OdtException(String msg, Throwable tr) {
+        super(msg, tr);
     }
 
 }
