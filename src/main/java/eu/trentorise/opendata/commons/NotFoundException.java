@@ -16,18 +16,33 @@
 package eu.trentorise.opendata.commons;
 
 /**
+ * A runtime exception to raise when something is not found.
+ * 
  * @author David Leoni <david.leoni@unitn.it>
  */
 public class NotFoundException extends RuntimeException {
     
-    public NotFoundException(Exception ex) {
-        super(ex);
+    private NotFoundException(){
+        super();
+    }
+    
+    /**
+     * Creates the NotFoundException using the provided throwable
+     */
+    public NotFoundException(Throwable tr) {
+        super(tr);
     }
 
-    public NotFoundException(String msg, Exception ex) {
-        super(msg, ex);
+    /**
+     * Creates the NotFoundException using the provided message and throwable
+     */
+    public NotFoundException(String msg, Throwable tr) {
+        super(msg, tr);
     }
 
+    /**
+     * Creates the NotFoundException using the provided message
+     */
     public NotFoundException(String msg) {
         super(msg);
     }

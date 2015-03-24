@@ -30,18 +30,27 @@ public abstract class ASemVersion implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Returns the major number of the version (i.e. for x.y.z-SNAPSHOT it would be the x)     
+     */
     @Value.Parameter
     @Value.Default
     public int getMajor() {
         return 0;
     }
 
+    /**
+     * Returns the minor number of the version (i.e. for x.y.z-SNAPSHOT it would be the y)     
+     */    
     @Value.Parameter
     @Value.Default
     public int getMinor() {
         return 0;
     }
 
+    /**
+     * Returns the patch number of the version (i.e. for x.y.z-SNAPSHOT it would be the z)
+     */    
     @Value.Parameter
     @Value.Default
     public int getPatch() {
