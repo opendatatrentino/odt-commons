@@ -88,12 +88,21 @@ public class OdtUtilsTest {
         
         assertEquals(1, OdtUtils.parseNumericalId("", "1"));
         assertEquals(1, OdtUtils.parseNumericalId("a", "a1"));
+
         try {
             OdtUtils.parseNumericalId("", "");
             Assert.fail();
         } catch (IllegalArgumentException ex){
             
         }
+        
+        try {
+            OdtUtils.parseNumericalId("a", "123");
+            Assert.fail();
+        } catch (IllegalArgumentException ex){
+            
+        }
+        
         
         try {
             OdtUtils.parseNumericalId("a", "ab");
@@ -147,7 +156,14 @@ public class OdtUtilsTest {
             Assert.fail("Shouldn't arrive here!");
         } catch (IllegalArgumentException ex){
             
-        }       
+        }     
+        
+        try {
+            OdtUtils.checkNotDirtyUrl("adfasdf/null", "");
+            Assert.fail("Shouldn't arrive here!");
+        } catch (IllegalArgumentException ex){
+            
+        }        
         
         assertEquals("a", OdtUtils.checkNotDirtyUrl("a", "msg"));
     }

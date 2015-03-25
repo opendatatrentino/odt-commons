@@ -160,4 +160,10 @@ public class OdtConfig {
         return new OdtConfig(clazz);
     }
 
+    protected Class getReferenceClass() {
+        return referenceClass;
+    }
+
+    
+    
 }

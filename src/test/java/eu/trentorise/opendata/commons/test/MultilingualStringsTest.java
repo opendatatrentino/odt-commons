@@ -65,6 +65,8 @@ public class MultilingualStringsTest {
         
         assertTrue(dict.toString().length() > 0);
         
+        
+        
         assertEquals(dict, Dict.ofLocalizedStrings(dict.asLocalizedStrings()));
         
         assertEquals(dict, Dict.of(dict.asMultimap()));
@@ -77,6 +79,10 @@ public class MultilingualStringsTest {
 
         assertEquals(LocalizedString.of(Locale.ENGLISH, "c"),
                      dict.anyString(Locale.CHINESE));
+        
+        assertEquals(LocalizedString.of(Locale.ITALIAN, "a"), 
+                     Dict.of(Locale.ITALIAN, "a").anyString(Locale.CHINESE));
+        
         
         assertEquals(LocalizedString.of(), Dict.of().anyString(Locale.ITALIAN));
 
@@ -115,7 +121,8 @@ public class MultilingualStringsTest {
     public void testNonEmpty(){
         Dict dict = Dict.builder().put(Locale.FRENCH, "", "a").build();
         assertEquals("a", dict.nonEmptyString(Locale.FRENCH));        
-        assertEquals("", dict.nonEmptyString(Locale.ITALIAN));     
+        assertEquals("", dict.nonEmptyString(Locale.ITALIAN));
+        
     }
     
     @Test

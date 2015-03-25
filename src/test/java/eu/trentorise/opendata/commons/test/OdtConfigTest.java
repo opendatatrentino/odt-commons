@@ -17,6 +17,7 @@ package eu.trentorise.opendata.commons.test;
 
 import eu.trentorise.opendata.commons.BuildInfo;
 import eu.trentorise.opendata.commons.OdtConfig;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,5 +40,18 @@ public class OdtConfigTest {
         assertTrue(buildInfo.getVersion().length() > 0);
         assertTrue(OdtTestConfig.of().isLoggingConfigured());
         assertTrue(OdtConfig.of(this.getClass()).getBuildInfo().getScmUrl().length() > 0);
+        
+        MyOdtConfig myOdtConfig = new MyOdtConfig();
     }
+    
+    private static class MyOdtConfig extends OdtConfig {
+        MyOdtConfig(){
+            assertEquals(MyOdtConfig.class, getReferenceClass());
+            setReferenceClass(String.class);
+            assertEquals(String.class, getReferenceClass());
+        }
+    }
+    
+    
+
 }

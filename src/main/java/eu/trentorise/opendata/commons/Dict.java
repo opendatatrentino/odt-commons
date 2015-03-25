@@ -125,7 +125,7 @@ public final class Dict implements Serializable {
     /**
      * Gets the translations in the given locale.
      *
-     * @param locale the language of the desired translation
+     * @param locale the language of the desired translations
      * @return the strings in the given locale if present. If no string is
      * present an empty list is returned.
      *
@@ -204,22 +204,17 @@ public final class Dict implements Serializable {
     /**
      * Returns the first non empty string in the given locale. If it can't find
      * it, an empty string is returned.
+     * @param locale the locale of the desired tranlsation. If unknown, use {@link Locale#ROOT}.
      */
     public String nonEmptyString(Locale locale) {
         Preconditions.checkNotNull(locale);
-        if (strings.containsKey(locale)) {
-            List<String> as = strings(locale);
 
-            if (as.isEmpty()) {
-                return "";
-            } else {
-                for (String s : strings.get(locale)) {
-                    if (!s.isEmpty()) {
-                        return s;
-                    }
-                }
+        for (String s : strings(locale)) {
+            if (!s.isEmpty()) {
+                return s;
             }
         }
+
         return "";
     }
 

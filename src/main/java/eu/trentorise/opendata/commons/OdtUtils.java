@@ -201,7 +201,7 @@ public final class OdtUtils {
      * @return the non-empty string that was validated
      */
     public static String checkNotEmpty(String string, @Nullable Object prependedErrorMessage) {
-        checkArgument(string != null, String.valueOf(prependedErrorMessage) + " -- Reason: Found null string.");
+        checkArgument(string != null, "%s -- Reason: Found null string.", prependedErrorMessage);
         if (string.length() == 0) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty string.");
         }
@@ -221,7 +221,7 @@ public final class OdtUtils {
      * @return a non-null non-empty collection
      */
     public static <T> Collection<T> checkNotEmpty(@Nullable Collection<T> coll, @Nullable Object prependedErrorMessage) {
-        checkArgument(coll != null, String.valueOf(prependedErrorMessage) + " -- Reason: Found null string.");
+        checkArgument(coll != null, "%s -- Reason: Found null collection.", prependedErrorMessage);
         if (coll.isEmpty()) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection.");
         }
@@ -284,11 +284,11 @@ public final class OdtUtils {
 
         String s;
         if (prefix.length() > 0) {
-            int pos = url.indexOf(prefix) + prefix.length();
-            if (pos == -1) {
+            int pos = url.indexOf(prefix);
+            if (pos != 0) {
                 throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + url);
             }
-            s = url.substring(pos);
+            s = url.substring(prefix.length());
         } else {
             s = url;
         }
