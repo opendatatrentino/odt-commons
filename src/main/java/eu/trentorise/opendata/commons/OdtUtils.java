@@ -15,6 +15,7 @@
  */
 package eu.trentorise.opendata.commons;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,8 +39,9 @@ public final class OdtUtils {
      */
     public static final String BUILD_PROPERTIES_PATH = "odt.commons.build.properties";
 
-    private OdtUtils(){}
-    
+    private OdtUtils() {
+    }
+
     /**
      * Java 7 has Locale.forLanguageTag(format), this is the substitute for Java
      * 6 <br/>
@@ -167,10 +169,11 @@ public final class OdtUtils {
      * fails; will be converted to a string using String.valueOf(Object) and
      * prepended to more specific error messages.
      * @throws IllegalArgumentException if provided URL fails validation.
+     * 
      * @return the non-dirty URL that was validated
      *
      */
-    public static String checkNotDirtyUrl(String url, @Nullable Object prependedErrorMessage) {
+    public static String checkNotDirtyUrl(@Nullable String url, @Nullable Object prependedErrorMessage) {
         checkNotEmpty(url, prependedErrorMessage);
 
         if (url.equalsIgnoreCase("null")) {
@@ -187,17 +190,18 @@ public final class OdtUtils {
 
     /**
      *
-     * Checks if provided string is non null and non empty . If not, throws
-     * NullPointerException or IllegalArgumentException
+     * Checks if provided string is non null and non empty.
      *
      * @param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
      * prepended to more specific error messages.
      *
+     * @throws IllegalArgumentException if provided string fails validation
+     * 
      * @return the non-empty string that was validated
      */
     public static String checkNotEmpty(String string, @Nullable Object prependedErrorMessage) {
-        checkNotNull(string, prependedErrorMessage);
+        checkArgument(string != null, String.valueOf(prependedErrorMessage) + " -- Reason: Found null string.");
         if (string.length() == 0) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty string.");
         }
@@ -206,21 +210,23 @@ public final class OdtUtils {
 
     /**
      *
-     * Checks if provided collection is non null and non empty . If not, throws
-     * NullPointerException or IllegalArgumentException
+     * Checks if provided collection is non null and non empty . 
      *
      * @param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
      * prepended to more specific error messages.
      *
+     * @throws IllegalArgumentException if provided collection fails validation
+     * 
+     * @return a non-null non-empty collection
      */
-    public static void checkNotEmpty(Collection coll, @Nullable Object prependedErrorMessage) {
-        checkNotNull(coll, prependedErrorMessage);
+    public static <T> Collection<T> checkNotEmpty(@Nullable Collection<T> coll, @Nullable Object prependedErrorMessage) {
+        checkArgument(coll != null, String.valueOf(prependedErrorMessage) + " -- Reason: Found null string.");
         if (coll.isEmpty()) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection.");
         }
+        return coll;
     }
-  
 
     /**
      * Returns true if provided string is non null and non empty .
@@ -229,7 +235,6 @@ public final class OdtUtils {
         return string != null
                 && string.length() != 0;
     }
-
 
     /**
      * Parses file at {@link #BUILD_PROPERTIES_PATH} of the jar holding the

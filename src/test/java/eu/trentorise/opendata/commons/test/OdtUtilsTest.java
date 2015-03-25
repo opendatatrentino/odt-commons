@@ -61,7 +61,7 @@ public class OdtUtilsTest {
         try {
             OdtUtils.checkNotEmpty((String) null, "my string");
             Assert.fail();
-        } catch (NullPointerException ex){
+        } catch (IllegalArgumentException ex){
             
         }
         try {
@@ -127,6 +127,14 @@ public class OdtUtilsTest {
     
     @Test
     public void testCheckNotDirtyUrl(){
+        
+        try {
+            OdtUtils.checkNotDirtyUrl(null, "");
+            Assert.fail("Shouldn't arrive here!");
+        } catch (IllegalArgumentException ex){
+            
+        }
+        
         try {
             OdtUtils.checkNotDirtyUrl("", "");
             Assert.fail("Shouldn't arrive here!");
