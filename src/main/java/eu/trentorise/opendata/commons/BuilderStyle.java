@@ -22,8 +22,8 @@ import java.lang.annotation.Target;
 import org.immutables.value.Value;
 
 /**
- * Annotated abstract class (let's suppose it's named AMyClass) will be used as
- * template for generating a corresponding immutable class named MyClass, along
+ * Annotated abstract class (let's suppose it's named {@code AMyClass}) will be used as
+ * template for generating a corresponding immutable class named {@code MyClass}, along
  * with a builder to create instances of it.
  *
  * This annotation will configure

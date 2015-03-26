@@ -22,9 +22,9 @@ import java.lang.annotation.Target;
 import org.immutables.value.Value;
 
 /**
- * Annotated abstract class (let's suppose it's named AMyClass) will be
+ * Annotated abstract class (let's suppose it's named {@code AMyClass}) will be
  * used as template for generating a corresponding immutable class named
- * MyClass. Annotated class is supposed to have few fields, thus no builder will
+ * {@code MyClass}. Annotated class is supposed to have few fields, thus no builder will
  * be generated. Immutable class will have public visibility.
  *
  * This annotation will configure
