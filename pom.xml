@@ -22,7 +22,7 @@
 
     <groupId>eu.trentorise.opendata.commons</groupId>
     <artifactId>odt-commons</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>Odt Commons</name>
@@ -220,7 +220,7 @@
                         <id>enforce</id>
                         <configuration>
                             <rules>
-                                <dependencyConvergence/>
+                                <dependencyConvergence />
                             </rules>
                         </configuration>
                         <goals>
@@ -262,7 +262,7 @@
         <url>${scmUrl}</url>
         <connection>scm:git:${scmUrl}.git</connection>
         <developerConnection>scm:git:${scmUrl}.git</developerConnection>        
-        <tag>HEAD</tag>
+        <tag>odt-commons-1.0.0</tag>
     </scm>
     
     <issueManagement>
