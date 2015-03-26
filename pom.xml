@@ -49,7 +49,7 @@
     </licenses>
 
     <properties>
-        <scmUrl>https://github.com/opendatatrentino/odr-commons</scmUrl>
+        <scmUrl>https://github.com/opendatatrentino/odt-commons</scmUrl>
         
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -270,7 +270,7 @@
         <url>${scmUrl}/issues</url>
     </issueManagement>    
     
-    <description>Java library to record provenance of datasets </description>
+    <description>Java utility library common to open data trentino projects </description>
 
     <developers>
 
