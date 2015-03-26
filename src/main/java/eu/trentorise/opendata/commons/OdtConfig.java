@@ -43,7 +43,7 @@ public final class OdtConfig {
 
     private static final Logger LOG = Logger.getLogger(OdtConfig.class.getName());
 
-    private static Map<Class, OdtConfig> INSTANCES = new HashMap();
+    private static final Map<Class, OdtConfig> INSTANCES = new HashMap();
 
     private static boolean loggingConfigured = false;
 
