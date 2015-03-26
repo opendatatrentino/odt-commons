@@ -15,11 +15,11 @@ Java utilities common to several Open Data in Trentino projects. Contains basic 
 
 Usage: See [docs](docs)
 
-Roadmap: See [project milestones](../../milestones)
+Roadmap: See <a href="../../milestones" target="_blank">project milestones</a>
 
-License: business-friendly [Apache License v2.0](LICENSE.txt)
+License: business-friendly <a href="LICENSE.txt" target="_blank">Apache License v2.0</a>
 
-Contributing: See [the wiki](../../wiki)
+Contributing: See <a href="../../wiki" target="_blank">the wiki</a>
 
 
 #### Projects using this API
