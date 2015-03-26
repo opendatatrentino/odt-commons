@@ -18,6 +18,7 @@ package eu.trentorise.opendata.commons.test;
 import com.google.common.collect.Multimap;
 import eu.trentorise.opendata.commons.Dict;
 import eu.trentorise.opendata.commons.LocalizedString;
+import eu.trentorise.opendata.commons.OdtConfig;
 import java.util.Arrays;
 import java.util.Locale;
 import org.immutables.value.internal.google.common.collect.ImmutableList;
@@ -36,9 +37,9 @@ import org.junit.Test;
 public class MultilingualStringsTest {
 
     @BeforeClass
-    public static void setUpClass() {        
-        OdtTestConfig.of().loadLogConfig();
-    }    
+    public static  void setUpClass() {        
+        OdtConfig.init(MultilingualStringsTest.class);
+    }  
        
     @Test
     public void testDict() {

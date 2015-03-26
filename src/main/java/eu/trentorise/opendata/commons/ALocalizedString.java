@@ -20,6 +20,8 @@ import java.util.Locale;
 import org.immutables.value.Value;
 
 /**
+ * A string with associated a locale. This class is used to generate the
+ * immutable {@link eu.trentorise.opendata.commons.LocalizedString}.
  *
  * @author David Leoni
  */
@@ -27,8 +29,8 @@ import org.immutables.value.Value;
 @SimpleStyle
 abstract class ALocalizedString implements Serializable {
 
-    private static final long serialVersionUID = 1L;    
-    
+    private static final long serialVersionUID = 1L;
+
     /**
      * Returns the locale of the string. Default locale is {@link Locale#ROOT}
      */
@@ -49,6 +51,7 @@ abstract class ALocalizedString implements Serializable {
 
     /**
      * Returns a LocalizedString with default locale {@link Locale#ROOT}
+     *
      * @param string a non-null string.
      */
     public static LocalizedString of(String string) {

@@ -10,6 +10,7 @@ Java utilities common to several Open Data in Trentino projects. Contains basic 
 * logging
 * exceptions
 * building info
+* immutability
 * multilingual strings
 
 Usage: See [docs](docs)

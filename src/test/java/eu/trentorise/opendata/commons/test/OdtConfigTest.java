@@ -17,7 +17,6 @@ package eu.trentorise.opendata.commons.test;
 
 import eu.trentorise.opendata.commons.BuildInfo;
 import eu.trentorise.opendata.commons.OdtConfig;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,29 +26,19 @@ import org.junit.Test;
  * @author David Leoni
  */
 public class OdtConfigTest {
-
+    
     @BeforeClass
-    public static void setUpClass() {
-        OdtTestConfig.of().loadLogConfig();
+    public static  void setUpClass() {        
+        OdtConfig.init(OdtConfigTest.class);
     }
 
     @Test
     public void testConfig() {
-        BuildInfo buildInfo = OdtTestConfig.of().getBuildInfo();
+        BuildInfo buildInfo = OdtConfig.of(OdtConfigTest.class).getBuildInfo();
         assertTrue(buildInfo.getScmUrl().length() > 0);
         assertTrue(buildInfo.getVersion().length() > 0);
-        assertTrue(OdtTestConfig.of().isLoggingConfigured());
-        assertTrue(OdtConfig.of(this.getClass()).getBuildInfo().getScmUrl().length() > 0);
-        
-        MyOdtConfig myOdtConfig = new MyOdtConfig();
-    }
-    
-    private static class MyOdtConfig extends OdtConfig {
-        MyOdtConfig(){
-            assertEquals(MyOdtConfig.class, getReferenceClass());
-            setReferenceClass(String.class);
-            assertEquals(String.class, getReferenceClass());
-        }
+        assertTrue(OdtConfig.isLoggingConfigured());
+        assertTrue(OdtConfig.of(this.getClass()).getBuildInfo().getScmUrl().length() > 0);                
     }
     
     

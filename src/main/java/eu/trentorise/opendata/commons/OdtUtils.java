@@ -236,39 +236,6 @@ public final class OdtUtils {
                 && string.length() != 0;
     }
 
-    /**
-     * Parses file at {@link #BUILD_PROPERTIES_PATH} of the jar holding the
-     * provided class.
-     *
-     * @param clazz A class used for locating the build info file, which should
-     * be in the root of the class resources.
-     *
-     * @throws eu.​trentorise.​opendata.​traceprov.​TraceProvException if file
-     * is not found.
-     */
-    public static BuildInfo readBuildInfo(Class clazz) {
-        InputStream stream = clazz.getResourceAsStream("/" + BUILD_PROPERTIES_PATH);
-        Properties props = new Properties();
-        if (stream == null) {
-            throw new NotFoundException("Couldn't find " + BUILD_PROPERTIES_PATH + " file in resources of package containing class " + clazz.getSimpleName() + "  !!");
-        } else {
-            try {
-                props.load(stream);
-            }
-            catch (IOException ex) {
-                throw new OdtException("Couldn't load " + BUILD_PROPERTIES_PATH + " file in resources of package containing class " + clazz.getSimpleName() + "  !!", ex);
-            }
-        }
-        return BuildInfo.builder()
-                .setBuildJdk(props.getProperty("build-jdk", ""))
-                .setBuiltBy(props.getProperty("built-by", ""))
-                .setCreatedBy(props.getProperty("created-by", ""))
-                .setGitSha(props.getProperty("git-sha", ""))
-                .setScmUrl(props.getProperty("scm-url", ""))
-                .setTimestamp(props.getProperty("timestamp", ""))
-                .setVersion(props.getProperty("version", ""))
-                .build();
-    }
 
     /**
      * Parses an URL having a numeric ID after the provided prefix, i.e. for

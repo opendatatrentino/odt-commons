@@ -8,6 +8,7 @@ Odt Commons implements basic utilities for
 * logging
 * building info
 * versioning
+* immutability
 * multilingual strings such as `LocalizedString` and `Dict`
 
 

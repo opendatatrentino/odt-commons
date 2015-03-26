@@ -15,6 +15,7 @@
  */
 package eu.trentorise.opendata.commons.test;
 
+import eu.trentorise.opendata.commons.OdtConfig;
 import eu.trentorise.opendata.commons.test.codegen.AFatClass;
 import eu.trentorise.opendata.commons.test.codegen.FatClass;
 import eu.trentorise.opendata.commons.test.codegen.SlimClass;
@@ -29,8 +30,8 @@ import org.junit.BeforeClass;
 public class CodeGenTest {
     
     @BeforeClass
-    public static  void setUpClass() {        
-        OdtTestConfig.of().loadLogConfig();
+    public static void setUpClass() {        
+        OdtConfig.init(CodeGenTest.class);
     }
 
     @Test

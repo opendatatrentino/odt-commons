@@ -19,6 +19,8 @@ import java.io.Serializable;
 import org.immutables.value.Value;
 
 /**
+ * Class of build related information. This class is used to generate the
+ * immutable {@link eu.trentorise.opendata.commons.BuildInfo}.
  *
  * @author David Leoni
  */
@@ -26,16 +28,16 @@ import org.immutables.value.Value;
 @BuilderStyle
 public abstract class ABuildInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;    
-    
+    private static final long serialVersionUID = 1L;
+
     /**
      * i.e. 1.0
      */
     @Value.Default
     public String getVersion() {
         return "";
-    }        
-       
+    }
+
     /**
      * i.e. David Leoni
      */

@@ -20,7 +20,9 @@ import org.immutables.value.Value;
 
 /**
  * Simple class to model a semantic version, see
- * <a href="http://semver.org">semver.org</a>
+ * <a href="http://semver.org">semver.org</a>. This class is used to generate
+ * the immutable {@link eu.trentorise.opendata.commons.SemVersion}.
+ *
  *
  * @author David Leoni
  */
@@ -31,7 +33,8 @@ public abstract class ASemVersion implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Returns the major number of the version (i.e. for x.y.z-SNAPSHOT it would be the x)     
+     * Returns the major number of the version (i.e. for x.y.z-SNAPSHOT it would
+     * be the x)
      */
     @Value.Parameter
     @Value.Default
@@ -40,8 +43,9 @@ public abstract class ASemVersion implements Serializable {
     }
 
     /**
-     * Returns the minor number of the version (i.e. for x.y.z-SNAPSHOT it would be the y)     
-     */    
+     * Returns the minor number of the version (i.e. for x.y.z-SNAPSHOT it would
+     * be the y)
+     */
     @Value.Parameter
     @Value.Default
     public int getMinor() {
@@ -49,16 +53,18 @@ public abstract class ASemVersion implements Serializable {
     }
 
     /**
-     * Returns the patch number of the version (i.e. for x.y.z-SNAPSHOT it would be the z)
-     */    
+     * Returns the patch number of the version (i.e. for x.y.z-SNAPSHOT it would
+     * be the z)
+     */
     @Value.Parameter
     @Value.Default
     public int getPatch() {
         return 0;
     }
 
-    /** 
-     * Returns the prerelease version, (i.e. alphanumerical string such as SNAPSHOT, RC1, alpha, ....)
+    /**
+     * Returns the prerelease version, (i.e. alphanumerical string such as
+     * SNAPSHOT, RC1, alpha, ....)
      */
     @Value.Parameter
     @Value.Default

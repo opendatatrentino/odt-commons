@@ -18,6 +18,7 @@ package eu.trentorise.opendata.commons.test;
 
 import com.google.common.collect.ImmutableList;
 import eu.trentorise.opendata.commons.BuildInfo;
+import eu.trentorise.opendata.commons.OdtConfig;
 import eu.trentorise.opendata.commons.OdtUtils;
 import java.util.Locale;
 import org.junit.Assert;
@@ -34,9 +35,9 @@ import org.junit.Test;
 public class OdtUtilsTest {
     
     @BeforeClass
-    public static void setUpClass() {        
-        OdtTestConfig.of().loadLogConfig();
-    }    
+    public static  void setUpClass() {        
+        OdtConfig.init(OdtUtilsTest.class);
+    }  
     
 
     @Test
@@ -49,7 +50,7 @@ public class OdtUtilsTest {
     
     @Test
     public void testBuildInfo(){
-        BuildInfo buildInfo = OdtUtils.readBuildInfo(OdtTestConfig.class);
+        BuildInfo buildInfo = OdtConfig.of(OdtConfig.class).getBuildInfo();
         assertTrue(buildInfo.getScmUrl().length() > 0);
         assertTrue(buildInfo.getVersion().length() > 0);
                 
