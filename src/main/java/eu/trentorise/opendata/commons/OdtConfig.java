@@ -15,10 +15,14 @@
  */
 package eu.trentorise.opendata.commons;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -29,7 +33,7 @@ import javax.annotation.Nullable;
  *
  * @author David Leoni
  */
-public class OdtConfig {
+public final class OdtConfig {
 
     public static final String LOG_PROPERTIES_PATH = "odt.commons.logging.properties";
 
@@ -37,19 +41,19 @@ public class OdtConfig {
 
     public static final String BUILD_PROPERTIES_PATH = "odt.commons.build.properties";
 
-    private Logger logger;
+    private static final Logger LOG = Logger.getLogger(OdtConfig.class.getName());
 
-    private boolean loggingConfigured;
+    private static Map<Class, OdtConfig> INSTANCES = new HashMap();
+
+    private static boolean loggingConfigured = false;
 
     private Class referenceClass;
 
     @Nullable
     private BuildInfo buildInfo;
 
-    protected OdtConfig() {
-        this.loggingConfigured = false;
+    private OdtConfig() {
         this.referenceClass = this.getClass();
-        this.logger = Logger.getLogger(this.getClass().getName());
     }
 
     /**
@@ -58,23 +62,44 @@ public class OdtConfig {
      *
      * @param clazz
      */
-    protected OdtConfig(Class clazz) {
-        this.loggingConfigured = false;
-        this.referenceClass = clazz;
-        this.logger = Logger.getLogger(clazz.getName());
+    private OdtConfig(Class clazz) {
+        this.referenceClass = clazz;        
     }
 
     /**
-     * Returns build information. In case it is not available, returns
+     *
+     * Parses file at {@link #BUILD_PROPERTIES_PATH} of the jar holding the
+     * provided class. In case it is not available, returns
      * {@link BuildInfo#of()}.
+     *
      */
     public BuildInfo getBuildInfo() {
         if (buildInfo == null) {
             try {
-                buildInfo = OdtUtils.readBuildInfo(referenceClass);
+                InputStream stream = referenceClass.getResourceAsStream("/" + BUILD_PROPERTIES_PATH);
+                Properties props = new Properties();
+                if (stream == null) {
+                    throw new NotFoundException("Couldn't find " + BUILD_PROPERTIES_PATH + " file in resources of package containing class " + referenceClass.getSimpleName() + "  !!");
+                } else {
+                    try {
+                        props.load(stream);
+                    }
+                    catch (IOException ex) {
+                        throw new OdtException("Couldn't load " + BUILD_PROPERTIES_PATH + " file in resources of package containing class " + referenceClass.getSimpleName() + "  !!", ex);
+                    }
+                }
+                buildInfo = BuildInfo.builder()
+                        .setBuildJdk(props.getProperty("build-jdk", ""))
+                        .setBuiltBy(props.getProperty("built-by", ""))
+                        .setCreatedBy(props.getProperty("created-by", ""))
+                        .setGitSha(props.getProperty("git-sha", ""))
+                        .setScmUrl(props.getProperty("scm-url", ""))
+                        .setTimestamp(props.getProperty("timestamp", ""))
+                        .setVersion(props.getProperty("version", ""))
+                        .build();
             }
             catch (Exception ex) {
-                logger.log(Level.SEVERE, "COULD NOT LOAD BUILD INFORMATION! DEFAULTING TO EMPTY BUILD INFO!", ex);
+                LOG.log(Level.SEVERE, "COULD NOT LOAD BUILD INFORMATION! DEFAULTING TO EMPTY BUILD INFO!", ex);
                 buildInfo = BuildInfo.of();
             }
         }
@@ -84,13 +109,20 @@ public class OdtConfig {
     /**
      * Configure logging by reading properties in
      * {@link #LOG_PROPERTIES_CONF_PATH} file first, and, if not found, in
-     * {@link #LOG_PROPERTIES_PATH} file in package resources. If you're using
-     * the library in your application and you have your own logger system,
-     * don't call this method and route JUL to your logger API instead.
+     * {@link #LOG_PROPERTIES_PATH} file in package resources relative to
+     * provided {@code referenceClass}. Successive calls to this method will do
+     * nothing and log a message at FINEST level. <br/>
+     * <br/>
+     * If you're using the library in your application and you have your own
+     * logger system, don't call this method and route JUL to your logger API
+     * instead.
+     *
+     * @param referenceClass the class where to look for logging properties
+     * resource.
      */
-    public void loadLogConfig() {
+    public static void loadLogConfig(Class referenceClass) {
         if (loggingConfigured) {
-            logger.finest("Trying to reload twice logger properties!");
+            LOG.finest("Trying to reload twice logger properties!");
         } else {
             System.out.print(referenceClass.getSimpleName() + ": searching logging config in " + LOG_PROPERTIES_CONF_PATH + ":");
             InputStream inputStream = null;
@@ -98,7 +130,7 @@ public class OdtConfig {
             String configured = "";
 
             try {
-                inputStream = new FileInputStream(LOG_PROPERTIES_CONF_PATH);                
+                inputStream = new FileInputStream(LOG_PROPERTIES_CONF_PATH);
                 System.out.println("  found.");
                 configured = referenceClass.getSimpleName() + ": logging configured.";
             }
@@ -109,22 +141,21 @@ public class OdtConfig {
             try {
                 if (inputStream == null) {
                     System.out.println(referenceClass.getSimpleName() + ": searching logging config in default " + LOG_PROPERTIES_PATH + " from resources... ");
-                    URL url = getClass().getResource("/" + LOG_PROPERTIES_PATH);
+                    URL url = referenceClass.getResource("/" + LOG_PROPERTIES_PATH);
                     if (url == null) {
                         System.out.println();
-                        throw new IOException("ERROR! COULDN'T FIND ANY LOG CONFIGURATION FILE NAMED " + LOG_PROPERTIES_PATH + "!");
+                        throw new IOException("ERROR! COULDN'T FIND ANY LOG CONFIGURATION FILE NAMED " + LOG_PROPERTIES_PATH + " from reference class " + referenceClass.getName());
                     }
                     inputStream = referenceClass.getResourceAsStream("/" + LOG_PROPERTIES_PATH);
                     path = url.toURI().getPath();
-                    configured = referenceClass.getSimpleName() + ": configured logging with " + path;
-
+                    configured = OdtConfig.class.getSimpleName() + ": configured logging with " + path;
                 }
                 LogManager.getLogManager().readConfiguration(inputStream);
 
                 // IMPORTANT!!!! Due to a JDK bug, we need to create another useless logger to refresh actually ALL loggers (sic) . See https://www.java.net/forum/topic/jdk/java-se-snapshots-project-feedback/jdk-70-doesnt-refresh-handler-specific-logger                
                 Logger loggerWorkaround = Logger.getLogger(referenceClass.getName() + ".workaround");
 
-                setLoggingConfigured(true);
+                loggingConfigured = true;
 
                 System.out.println(configured);
 
@@ -137,33 +168,36 @@ public class OdtConfig {
         }
     }
 
-    public boolean isLoggingConfigured() {
+    public static boolean isLoggingConfigured() {
         return loggingConfigured;
     }
 
-    protected void setLoggingConfigured(boolean loggingConfigured) {
-        this.loggingConfigured = loggingConfigured;
+    /**
+     * Inits OdtConfig by loading the log config using the provided class as
+     * reference for locating it. For more info on search paths see
+     * {@link #loadLogConfig(java.lang.Class)}.
+     *
+     * @return the OdtConfig instance for method chaining.
+     */
+    public static OdtConfig init(Class clazz) {
+        OdtConfig ret = OdtConfig.of(clazz);
+        OdtConfig.loadLogConfig(clazz);
+        return ret;
     }
 
     /**
-     * Sets the reference class used for locating resources.     
+     * Returns an OdtConfig using reference class to locate config resources.
      */
-    protected void setReferenceClass(Class clazz) {
-        this.referenceClass = clazz;
+    public static synchronized OdtConfig of(Class clazz) {
+        checkNotNull(clazz);
+        if (!INSTANCES.containsKey(clazz)) {
+            INSTANCES.put(clazz, new OdtConfig(clazz));
+        }
+        return INSTANCES.get(clazz);
     }
 
-    /**
-     * Creates a new default OdtConfig using reference class to locate config
-     * resources.
-     */
-    public static OdtConfig of(Class clazz) {
-        return new OdtConfig(clazz);
-    }
-
-    protected Class getReferenceClass() {
+    public Class getReferenceClass() {
         return referenceClass;
     }
 
-    
-    
 }
