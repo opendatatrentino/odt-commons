@@ -15,7 +15,6 @@ Odt Commons implements basic utilities for
 ### Maven
 
 Odt Commons is available on Maven Central. To use it, put this in the dependencies section of your _pom.xml_:
-todo
 
 ```
     <dependency>
