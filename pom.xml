@@ -22,7 +22,7 @@
 
     <groupId>eu.trentorise.opendata.commons</groupId>
     <artifactId>odt-commons</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>Odt Commons</name>
