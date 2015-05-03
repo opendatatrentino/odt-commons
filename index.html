@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Odt Commons</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link id="josman-stylesheet" rel="stylesheet" type="text/css" href="css/josman.css">
+        <!-- <link id="bootstrap-stylesheet" rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link id="bootstrap-theme-stylesheet" rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        -->
+        <link rel="stylesheet" type="text/css" href="website-template/css/josman.css"> 
+        <!--
+        <link  rel="stylesheet" type="text/css" href="website-template/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="website-template/css/bootstrap-theme.min.css">
+        -->
+    </head>
+    <body>
+        <div id="josman-wrapper">
+            <div id="josman-header">
+
+                <div style="position:absolute;  min-height:100px; min-width:100%; ">
+                    <a id="josman-program-logo-link" href="index.html" style="display:none;">
+                        <img id="josman-program-logo" src="img/josman-logo-200px.png" alt="program logo">    
+                    </a>
+
+                    <a id="josman-repo-link" href="index.html">Odt Commons</a>
+
+
+                    <a href="http://dati.trentino.it/en/" target="_blank">
+                        <img style="float:right; padding:10px; width:80px" src="img/odt-logo.png" alt="organization logo">                        
+                    </a>
+
+                    <div id="josman-nav-header">
+                        <a id="josman-home" href="index.html" class="josman-tag-selected">Home</a>                        
+                        <span id="josman-usage" style="margin-left:15px">Usage:                        
+                            
+                            
+                        <a class="josman-version-tab-header " href="1.0/index.html">1.0</a></span>
+                        <span style="margin-left:35px">
+                            <a id="josman-project" class="josman-external-link" href="https://github.com/opendatatrentino/odt-commons" target="_blank">Repo</a>
+                            <a id="josman-wiki" class="josman-external-link" href="https://github.com/opendatatrentino/odt-commons/wiki" target="_blank">Wiki</a> 
+                        </span>
+                    </div>
+                </div>                
+
+            </div>
+
+            <div id="josman-sidebar">
+                <div id="josman-internal-sidebar" class="josman-sidebar-block"></div>
+
+
+
+                <div id="josman-sidebar-managed-block" class="josman-sidebar-block" style="display:none;">
+
+                    <div id="josman-javadoc-link" class="josman-sidebar-page-title"><a class="josman-external-link" href="javadoc/index.html" target="_blank">Javadoc</a></div>
+                    <!-- <div><a href="CHANGES.html">Release notes</a></div> -->              
+                </div>
+
+
+            </div>
+
+            <div id="josman-content">
+                <div id="josman-internal-content"><h4><a href="#about" name="about">About</a></h4><p>Java utilities common to several Open Data in Trentino projects. Contains basic facilities to manage:</p>
+<ul>
+  <li>logging</li>
+  <li>exceptions</li>
+  <li>building info</li>
+  <li>immutability</li>
+  <li>multilingual strings</li>
+</ul><p>Usage: See <a href="1.0/index.html">docs</a></p><p>Roadmap: See <a href="https://github.com/opendatatrentino/odt-commons/milestones" target="_blank">project milestones</a></p><p>License: business-friendly <a href="LICENSE.txt" target="_blank">Apache License v2.0</a></p><p>Contributing: See <a href="https://github.com/opendatatrentino/odt-commons/wiki" target="_blank">the wiki</a></p><h4><a href="#projects-using-this-api" name="projects-using-this-api">Projects using this API</a></h4>
+<ul>
+  <li><a href="http://opendatatrentino.github.io/jackan" target="_blank"> Jackan </a>: client for accessing opendata catalogs</li>
+  <li><a href="https://github.com/opendatatrentino/OpenDataRise" target="_blank"> OpenDataRise</a>: a power tool to cleanse and semantify open data, based on Refine</li>
+  <li><a href="http://opendatatrentino.github.io/semtext" target="_blank">SemText</a>: simple format to represent semantically enriched text</li>
+</ul><h4><a href="#credits" name="credits">Credits</a></h4>
+<ul>
+  <li>David Leoni - DISI at University of Trento - <a href="mailto:david.leoni@unitn.it">david.leoni@unitn.it</a></li>
+</ul></div>
+            </div>
+
+        </div>        
+        <script src="js/jquery-1.11.2.min.js"></script>
+        <!-- <script src="js/bootstrap-3.3.4.min.js"></script> -->
+
+        <!-- quick and silly hack to get the file -->
+        <script src="website-template/js/jquery-1.11.2.min.js"></script>
+        <!-- quick and silly hack to get the file -->
+        <script src="website-template/js/jquery-3.3.4.min.js"></script>
+        <script>
+            // idotic CSS in style doesn't work, so use jquery instead: 
+            // also would like pre code but this will select code and won't work. There aren't selectors for parents
+
+            $("pre").css("max-width", "680px").css("overflow-x", "auto");
+
+            /* We don't support this yet...
+             $('.josman-tree-toggle').click(function () {
+             $(this).parent().children('ul.tree').toggle(200);
+             return false;
+             });
+             */
+        </script>
+    </body>
+</html>
