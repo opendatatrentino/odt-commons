@@ -15,13 +15,13 @@
  */
 package eu.trentorise.opendata.commons.test;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import eu.trentorise.opendata.commons.Dict;
 import eu.trentorise.opendata.commons.LocalizedString;
 import eu.trentorise.opendata.commons.OdtConfig;
 import java.util.Arrays;
 import java.util.Locale;
-import org.immutables.value.internal.google.common.collect.ImmutableList;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

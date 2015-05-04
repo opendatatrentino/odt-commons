@@ -1,5 +1,22 @@
 
-##### 1.0.0
+Odt Commons Release Notes
+-----------------------------
+
+https://github.com/opendatatrentino/odt-commons
+
+### 1.0.2
+
+4 May 2015
+
+* Adopted new josman-maven-plugin for generating website
+* Upgraded Immutables to 2.0.9
+* Upgraded to odt-super-pom-1.0.17
+
+### 1.0.1
+
+* Adopted new parent odt-super-pom
+
+### 1.0.0
 
 Implemented basic utilities for
 
