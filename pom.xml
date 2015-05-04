@@ -22,7 +22,7 @@
 
     <groupId>eu.trentorise.opendata.commons</groupId>
     <artifactId>odt-commons</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>Odt Commons</name>
@@ -97,13 +97,13 @@
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
-            <version>${odt-commons.findbugs.version}</version>
+            <version>3.0.0</version>
         </dependency>
     
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>annotations</artifactId>
-            <version>${odt-commons.findbugs.version}</version>
+            <version>3.0.0</version>
         </dependency> 
         
             
