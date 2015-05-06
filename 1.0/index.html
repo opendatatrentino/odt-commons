@@ -71,7 +71,7 @@
 <pre><code>    &lt;dependency&gt;
         &lt;groupId&gt;eu.trentorise.opendata&lt;/groupId&gt;
         &lt;artifactId&gt;odt-commons&lt;/artifactId&gt;
-        &lt;version&gt;1.0.2&lt;/version&gt;
+        &lt;version&gt;1.0.3&lt;/version&gt;
     &lt;/dependency&gt;
 </code></pre><p>In case updates are available, version numbers follows <a href="http://semver.org/" target="_blank">semantic versioning</a> rules.</p><h3><a href="#building-objects" name="building-objects">Building objects</a></h3><p>Most objects in odt-commons are immutable, and make heavy use of <a href="https://code.google.com/p/guava-libraries/wiki/ImmutableCollectionsExplained" target="_blank"> Guava immutable collections </a>. In odt-commons, wherever you see an abstract class called <code>ASomething</code>, there will always be an immutable class <code>Something</code> implementing it.</p><p>Immutable classes don't have public constructors, they only have factory methods starting with <em>of()</em>:</p>
 <pre><code>    LocalizedString myLocalizedString = LocalizedString.of(Locale.ITALIAN, "ciao");
