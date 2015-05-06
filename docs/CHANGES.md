@@ -1,8 +1,14 @@
 
-Odt Commons Release Notes
------------------------------
+## Odt Commons Release Notes
 
-https://github.com/opendatatrentino/odt-commons
+
+### 1.0.3
+
+6 May 2015
+
+* Now BuilderStyle and SimpleStyle accept both A* and Abstract*
+* added BuilderStylePublic
+* upgraded to odt-super-pom-1.2.0
 
 ### 1.0.2
 

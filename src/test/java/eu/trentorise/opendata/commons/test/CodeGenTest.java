@@ -16,7 +16,10 @@
 package eu.trentorise.opendata.commons.test;
 
 import eu.trentorise.opendata.commons.OdtConfig;
+import eu.trentorise.opendata.commons.test.codegen.AComplexFat;
 import eu.trentorise.opendata.commons.test.codegen.AFatClass;
+import eu.trentorise.opendata.commons.test.codegen.AbstractComplexFat;
+import eu.trentorise.opendata.commons.test.codegen.ComplexFat;
 import eu.trentorise.opendata.commons.test.codegen.FatClass;
 import eu.trentorise.opendata.commons.test.codegen.SlimClass;
 import org.junit.Test;
@@ -45,6 +48,13 @@ public class CodeGenTest {
         assertEquals("a", FatClass.builder().setProp2("a").build().getProp2());
 
         assertEquals("b", fat.withProp2("b").getProp2());
+                
+        ComplexFat complexFat = ComplexFat.of();
+       
+        assertEquals("a", complexFat.getName());
+
+        assertEquals("b", ComplexFat.builder().setName("b").build().getName());
+        
         
         SlimClass slim = SlimClass.of();
 

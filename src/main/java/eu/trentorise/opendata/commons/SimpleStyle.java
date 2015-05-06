@@ -32,14 +32,14 @@ import org.immutables.value.Value;
  * class to have bean style getters. Also, generated immutable objects will all
  * have an empty object retrievable with a method of the form MyClass.of().
  *
- * <b>NOTE:</b> Annotated abstract class name MUST begin with 'A'.
+ * <b>NOTE:</b> Annotated abstract class name MUST begin with 'A' or 'Abstract'
  *
  * @author David Leoni
  * @see SimpleStyle
  */
 @Value.Style(get = {"is*", "get*"},
         init = "set*",
-        typeAbstract = {"A*"},
+        typeAbstract = {"Abstrct*", "A*"},
         typeImmutable = "",
         visibility = Value.Style.ImplementationVisibility.PUBLIC,
         defaults = @Value.Immutable(singleton = true,
