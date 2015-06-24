@@ -39,7 +39,8 @@ import org.immutables.value.Value;
  */
 @Value.Style(get = {"is*", "get*"},
         init = "set*",
-        typeAbstract = {"Abstrct*", "A*"},
+        typeAbstract = {"Abstract*", "A*"},
+        allParameters = true,        
         typeImmutable = "",
         visibility = Value.Style.ImplementationVisibility.PUBLIC,
         defaults = @Value.Immutable(singleton = true,

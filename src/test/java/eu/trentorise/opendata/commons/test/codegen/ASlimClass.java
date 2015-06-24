@@ -28,16 +28,24 @@ import org.immutables.value.Value;
 @SimpleStyle
 abstract class ASlimClass {
 
-    @Value.Parameter
+
     @Value.Default
     public int getProp1(){
         return 0;
-    };
+    }
 
-    @Value.Parameter
     @Value.Default
     public String getProp2() {
         return "";
     }
-;
+    
+    @Value.Default
+    public int bli(){
+        return 0;
+    }
+
+        
+    public int bla(){
+        return 0;
+    }
 }

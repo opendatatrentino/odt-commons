@@ -15,6 +15,7 @@
  */
 package eu.trentorise.opendata.commons.test;
 
+import com.google.common.collect.ImmutableList;
 import eu.trentorise.opendata.commons.OdtConfig;
 import eu.trentorise.opendata.commons.test.codegen.AComplexFat;
 import eu.trentorise.opendata.commons.test.codegen.AFatClass;
@@ -46,7 +47,8 @@ public class CodeGenTest {
         assertEquals("", fat.getProp2());
 
         assertEquals("a", FatClass.builder().setProp2("a").build().getProp2());
-
+        assertEquals(ImmutableList.of(), FatClass.builder().build().getFoos());
+        
         assertEquals("b", fat.withProp2("b").getProp2());
                 
         ComplexFat complexFat = ComplexFat.of();
@@ -60,9 +62,10 @@ public class CodeGenTest {
 
         assertEquals("", slim.getProp2());
                
-        SlimClass slim2 = SlimClass.of(3, "r");
+        SlimClass slim2 = SlimClass.of(3, "r",5);
         assertEquals(3, slim2.getProp1());
         assertEquals("r", slim2.getProp2());
+        assertEquals(5, slim2.bli());
         
         
     }

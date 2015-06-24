@@ -34,8 +34,7 @@ abstract class ALocalizedString implements Serializable {
     /**
      * Returns the locale of the string. Default locale is {@link Locale#ROOT}
      */
-    @Value.Default
-    @Value.Parameter
+    @Value.Default    
     public Locale getLocale() {
         return Locale.ROOT;
     }
@@ -43,8 +42,7 @@ abstract class ALocalizedString implements Serializable {
     /**
      * Returns the string.
      */
-    @Value.Default
-    @Value.Parameter
+    @Value.Default    
     public String getString() {
         return "";
     }

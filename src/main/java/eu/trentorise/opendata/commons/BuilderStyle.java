@@ -39,7 +39,7 @@ import org.immutables.value.Value;
  * @see SimpleStyle
  */
 @Value.Style(get = {"is*", "get*"},
-        init = "set*",
+        init = "set*",        
         typeAbstract = {"Abstract*", "A*"},
         typeImmutable = "",
         defaults = @Value.Immutable(singleton = true))

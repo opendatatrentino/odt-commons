@@ -16,6 +16,7 @@
 package eu.trentorise.opendata.commons.test.codegen;
 
 import eu.trentorise.opendata.commons.BuilderStyle;
+import java.util.List;
 import org.immutables.value.Value;
 
 /**
@@ -29,16 +30,26 @@ public abstract class AFatClass {
     /**
      * Has Parameter annotation so it ends up in the generated of()
      */
-    @Value.Parameter   
+    
     @Value.Default
     public int getProp1(){
         return 0;
-    };
-
-    @Value.Parameter
+    }
+    
     @Value.Default
     public String getProp2() {
         return "";
     }
-;
+
+    @Value.Default
+    public int bli(){
+        return 0;
+    }
+
+        
+    public int bla(){
+        return 0;
+    }
+    
+    public abstract List<String> getFoos();
 }

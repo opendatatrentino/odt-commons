@@ -236,7 +236,7 @@ public final class OdtUtils {
 
     /**
      * Parses an URL having a numeric ID after the provided prefix, i.e. for
-     * prefix '/concepts/' and url http://entitypedia.org/concepts/14324 returns
+     * prefix 'http://entitypedia.org/concepts/' and url http://entitypedia.org/concepts/14324 returns
      * 14324
      *
      * @throws IllegalArgumentException on invalid URL

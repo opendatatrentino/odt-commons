@@ -32,10 +32,17 @@
     <parent>
         <groupId>eu.trentorise.opendata.commons</groupId>
         <artifactId>odt-super-pom</artifactId>
-        <version>1.2.0</version>
+        <version>1.3.0-SNAPSHOT</version>
     </parent>  
 
-    
+    <!-- better to copy scm, see https://github.com/opendatatrentino/odt-super-pom/issues/1 -->    
+    <scm>
+        <url>${project.url}</url>
+        <connection>scm:git:${project.url}.git</connection>
+        <developerConnection>scm:git:${project.url}.git</developerConnection>  
+        <tag>HEAD</tag>
+    </scm>   
+  
 
     <developers>
         
