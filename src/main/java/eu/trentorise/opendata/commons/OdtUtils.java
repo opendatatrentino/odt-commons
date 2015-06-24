@@ -29,6 +29,11 @@ import javax.annotation.Nullable;
  */
 public final class OdtUtils {
 
+    /**
+     * Tolerance for probabilities
+     */
+    public static final double TOLERANCE = 0.001;
+
     private static final Logger LOG = Logger.getLogger(OdtUtils.class.getName());
 
     /**
@@ -166,7 +171,7 @@ public final class OdtUtils {
      * fails; will be converted to a string using String.valueOf(Object) and
      * prepended to more specific error messages.
      * @throws IllegalArgumentException if provided URL fails validation.
-     * 
+     *
      * @return the non-dirty URL that was validated
      *
      */
@@ -194,7 +199,7 @@ public final class OdtUtils {
      * prepended to more specific error messages.
      *
      * @throws IllegalArgumentException if provided string fails validation
-     * 
+     *
      * @return the non-empty string that was validated
      */
     public static String checkNotEmpty(String string, @Nullable Object prependedErrorMessage) {
@@ -206,15 +211,50 @@ public final class OdtUtils {
     }
 
     /**
+     * Checks the provided score is within valid bounds
      *
-     * Checks if provided collection is non null and non empty . 
+     * @param score must be between -{@link #TOLERANCE} ≤ score ≤ 1 + {@link
+     * #TOLERANCE}
+     *
+     * @param prependedErrorMessage the exception message to use if the check
+     * fails; will be converted to a string using String.valueOf(Object) and
+     * prepended to more specific error messages.
+     *
+     * @throws IllegalArgumentException on invalid score
+     * @return the validated score in the range [0.0, 1.0]
+     */
+    public static double checkScore(double score, @Nullable Object prependedErrorMessage) {        
+        
+        if (score < 0.0) {
+            if (score > -OdtUtils.TOLERANCE) {
+                return 0.0;
+            } else {
+                throw new IllegalArgumentException("Score must be greater or equal than zero, found instead: " + score);
+            }
+        }
+
+        if (score >= 1.0) {
+            if (score < 1.0 + OdtUtils.TOLERANCE) {
+                return 1.0;
+            } else {
+                throw new IllegalArgumentException("Score must be less than or equal than 1.0, found instead: " + score);
+            }
+        }
+        
+        return score;        
+
+    }
+
+    /**
+     *
+     * Checks if provided collection is non null and non empty .
      *
      * @param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
      * prepended to more specific error messages.
      *
      * @throws IllegalArgumentException if provided collection fails validation
-     * 
+     *
      * @return a non-null non-empty collection
      */
     public static <T> Collection<T> checkNotEmpty(@Nullable Collection<T> coll, @Nullable Object prependedErrorMessage) {
@@ -233,11 +273,10 @@ public final class OdtUtils {
                 && string.length() != 0;
     }
 
-
     /**
      * Parses an URL having a numeric ID after the provided prefix, i.e. for
-     * prefix 'http://entitypedia.org/concepts/' and url http://entitypedia.org/concepts/14324 returns
-     * 14324
+     * prefix 'http://entitypedia.org/concepts/' and url
+     * http://entitypedia.org/concepts/14324 returns 14324
      *
      * @throws IllegalArgumentException on invalid URL
      */
