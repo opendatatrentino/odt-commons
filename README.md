@@ -12,6 +12,7 @@ Java utilities common to several Open Data in Trentino projects. Contains basic 
 * building info
 * immutability
 * multilingual strings
+* validation
 
 Usage: See [docs](docs)
 

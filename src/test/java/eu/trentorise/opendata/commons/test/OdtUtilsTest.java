@@ -80,8 +80,15 @@ public class OdtUtilsTest {
         }
         
         OdtUtils.checkNotEmpty(ImmutableList.of("a"), "my string");
+     
+        try {
+            OdtUtils.checkNotEmpty("", "a%s", "bc");
+            Assert.fail();
+        } catch (IllegalArgumentException ex){
+            assertTrue(ex.getMessage().contains("abc"));
+        }
         
-        
+        OdtUtils.checkNotEmpty("a", "a%s","bc");
     }
     
     @Test

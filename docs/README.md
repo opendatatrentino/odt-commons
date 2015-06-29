@@ -10,6 +10,7 @@ Odt Commons implements basic utilities for
 * versioning
 * immutability
 * multilingual strings such as `LocalizedString` and `Dict`
+* validation
 
 
 ### Maven
