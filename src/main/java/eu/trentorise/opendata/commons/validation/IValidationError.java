@@ -34,7 +34,7 @@ public interface IValidationError extends Serializable {
     /**
      * A reference to logical and physical position of the error.
      */
-    public IRef getRef();
+    public Ref getRef();
     
     /**
      * The optional error code associated to the error.

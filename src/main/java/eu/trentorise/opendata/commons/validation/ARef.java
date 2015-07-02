@@ -17,6 +17,7 @@ package eu.trentorise.opendata.commons.validation;
 
 import com.google.common.base.Preconditions;
 import eu.trentorise.opendata.commons.SimpleStyle;
+import java.io.Serializable;
 import org.immutables.value.Value;
 
 /**
@@ -28,28 +29,43 @@ import org.immutables.value.Value;
  */
 @Value.Immutable
 @SimpleStyle
-abstract class ARef implements IRef {
+abstract class ARef implements Serializable {
 
-    @Value.Default
-    @Override
+    /**
+     * An identifier (possibly an IRI) for the original document.
+     *
+     */    
+    @Value.Default    
     public String getDocumentId() {
         return "";
     }
 
-    @Value.Default
-    @Override
+    /**
+     * The row index in the physical file (starting from 0), in case the file of
+     * reference is in text format. In case paramter is not set -1 is returned.
+     */    
+    @Value.Default    
     public int getPhysicalRow() {
         return -1;
     }
 
+    /**
+     * The column index in the physical file (starting from 0), in case the file
+     * of reference is in text format. In case paramter is not set -1 is
+     * returned.
+     */    
     @Value.Default
-    @Override
     public int getPhysicalColumn() {
         return -1;
     }
 
+    /**
+     * A reference to one or more elements expressed as a JsonPath. See
+     * <a href="https://github.com/jayway/JsonPath" target="_blank">JSONPath
+     * syntax</a>
+     *
+     */    
     @Value.Default
-    @Override
     public String getJsonPath() {
         return "*";
     }

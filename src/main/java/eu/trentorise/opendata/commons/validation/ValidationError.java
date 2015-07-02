@@ -46,7 +46,7 @@ public class ValidationError implements IValidationError {
 
     private final static ValidationError INSTANCE = new ValidationError();
 
-    private IRef ref;
+    private Ref ref;
     @Nullable
     private Object errorCode;
     private List reason;
@@ -58,7 +58,7 @@ public class ValidationError implements IValidationError {
     }
 
     ValidationError(
-            IRef ref,
+            Ref ref,
             Object errorCode,
             Object... reason) {
         if (ref == null) {
@@ -77,7 +77,7 @@ public class ValidationError implements IValidationError {
     }
 
     @Override
-    public IRef getRef() {
+    public Ref getRef() {
         return ref;
     }
 
@@ -105,7 +105,7 @@ public class ValidationError implements IValidationError {
      * to the user in the style of Javascript's <br/>
      * console.log("Expected ", x, "Found ", y )
      */
-    public static ValidationError of(IRef ref, @Nullable Object errorCode, Object... reason) {
+    public static ValidationError of(Ref ref, @Nullable Object errorCode, Object... reason) {
         return new ValidationError(ref, errorCode, reason);
     }
 
@@ -121,7 +121,7 @@ public class ValidationError implements IValidationError {
      * console.log("Expected ", x, "Found ", y )
      */
     public static ValidationError of(String jsonPath, @Nullable Object errorCode, Object... reason) {
-        IRef ref;
+        Ref ref;
         if (jsonPath == null || jsonPath.trim().length() == 0){
             LOG.log(Level.WARNING, "Found null or empty jsonPath while creating {0}, setting it to '*'", ValidationError.class.getSimpleName());
             ref = Ref.of();

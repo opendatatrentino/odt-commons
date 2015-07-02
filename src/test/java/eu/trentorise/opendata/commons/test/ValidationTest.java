@@ -16,7 +16,7 @@
 package eu.trentorise.opendata.commons.test;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import eu.trentorise.opendata.commons.validation.IRef;
+import eu.trentorise.opendata.commons.validation.Ref;
 import eu.trentorise.opendata.commons.validation.ValidationError;
 
 import static org.junit.Assert.assertEquals;
@@ -47,7 +47,7 @@ public class ValidationTest {
         }
         
         @Override
-        public IRef getRef() {
+        public Ref getRef() {
             return validationError.getRef();
         }
 
