@@ -16,8 +16,6 @@
 package eu.trentorise.opendata.commons.validation;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -131,4 +129,41 @@ public class ValidationError implements IValidationError {
         return new ValidationError(ref, errorCode, reason);
     }
 
+    @Override
+    public String toString() {
+        return "ValidationError{" + "ref=" + ref + ", errorCode=" + errorCode + ", reason=" + reason + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 31 * hash + Objects.hashCode(this.ref);
+        hash = 31 * hash + Objects.hashCode(this.errorCode);
+        hash = 31 * hash + Objects.hashCode(this.reason);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ValidationError other = (ValidationError) obj;
+        if (!Objects.equals(this.ref, other.ref)) {
+            return false;
+        }
+        if (!Objects.equals(this.errorCode, other.errorCode)) {
+            return false;
+        }
+        if (!Objects.equals(this.reason, other.reason)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
 }
