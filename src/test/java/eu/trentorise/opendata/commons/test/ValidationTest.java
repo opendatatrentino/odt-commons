@@ -15,27 +15,107 @@
  */
 package eu.trentorise.opendata.commons.test;
 
-import eu.trentorise.opendata.commons.ValidationError;
-import org.junit.Assert;
+import static com.google.common.base.Preconditions.checkNotNull;
+import eu.trentorise.opendata.commons.validation.IRef;
+import eu.trentorise.opendata.commons.validation.ValidationError;
+
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
+import eu.trentorise.opendata.commons.validation.IValidationError;
+import java.util.List;
+import java.util.Objects;
 /**
  *
  * @author David Leoni
  */
 public class ValidationTest {
     
+    private static class MyValidationError implements IValidationError {
+        
+        private String myField;
+        
+        private ValidationError validationError;
+
+        private MyValidationError(){
+            this.validationError = ValidationError.of();
+        }
+        
+        private MyValidationError(String myField){
+            checkNotNull(myField);
+            this.validationError = ValidationError.of();
+            this.myField = myField;
+        }
+        
+        @Override
+        public IRef getRef() {
+            return validationError.getRef();
+        }
+
+        @Override
+        public Object getErrorCode() {
+            return validationError.getErrorCode();
+        }
+
+        @Override
+        public List getReason() {
+            return validationError.getReason();
+        }
+
+        public String getMyField() {
+            return myField;
+        }
+                        
+        
+        public static MyValidationError of(){            
+            return new MyValidationError();
+        }
+        
+        public static MyValidationError of(String myField){            
+            return new MyValidationError(myField);
+        }
+        
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 89 * hash + Objects.hashCode(this.myField);
+            hash = 89 * hash + Objects.hashCode(this.validationError);
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final MyValidationError other = (MyValidationError) obj;
+            if (!Objects.equals(this.myField, other.myField)) {
+                return false;
+            }
+            if (!Objects.equals(this.validationError, other.validationError)) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "MyValidationError{" + "myField=" + myField + ", validationError=" + validationError + '}';
+        }
+    
+        
+        
+    }
+    
+    
     @Test
     public void testValidation(){
-        assertEquals("$", ValidationError.of().getJsonPath());
-        assertEquals("$", ValidationError.of("$","").getJsonPath());
-
-        try {
-            ValidationError.of("","");
-            Assert.fail();
-        } catch (IllegalArgumentException ex){
-            
-        }
+        assertEquals("*", ValidationError.of().getRef().getJsonPath());
+        assertEquals("$", ValidationError.of("$",null, "").getRef().getJsonPath());
+        assertEquals("*", ValidationError.of((String) null,null,"").getRef().getJsonPath());
+        assertEquals("*", ValidationError.of("",null,"").getRef().getJsonPath());       
     }
 }
