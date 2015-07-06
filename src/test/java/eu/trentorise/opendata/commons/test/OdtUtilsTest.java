@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList;
 import eu.trentorise.opendata.commons.BuildInfo;
 import eu.trentorise.opendata.commons.OdtConfig;
 import eu.trentorise.opendata.commons.OdtUtils;
+import java.lang.reflect.Array;
 import java.util.Locale;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
@@ -80,6 +81,32 @@ public class OdtUtilsTest {
         }
         
         OdtUtils.checkNotEmpty(ImmutableList.of("a"), "my string");
+        
+        try {
+            // not that ints wouldn't be picked by the method. See http://stackoverflow.com/questions/5405673/java-varags-method-param-list-vs-array            
+            OdtUtils.checkNotEmpty(new Integer[]{}, "my string");
+            Assert.fail();
+        } catch (IllegalArgumentException ex){
+            
+        }
+        
+        try {
+            // not that ints wouldn't be picked by the method. See http://stackoverflow.com/questions/5405673/java-varags-method-param-list-vs-array            
+            OdtUtils.checkNotEmpty(new Integer[]{}, "a%sc", "b");
+            Assert.fail();
+        } catch (IllegalArgumentException ex){
+            assertTrue(ex.getMessage().contains("abc"));
+        }
+        
+        try {
+            // not that ints wouldn't be picked by the method. See http://stackoverflow.com/questions/5405673/java-varags-method-param-list-vs-array            
+            OdtUtils.checkNotEmpty((Integer[]) null, "a%sc", "b");
+            Assert.fail();
+        } catch (IllegalArgumentException ex){
+            assertTrue(ex.getMessage().contains("abc"));
+        }
+        
+        OdtUtils.checkNotEmpty(new Integer[]{1}, "my string");
      
         try {
             OdtUtils.checkNotEmpty("", "a%s", "bc");
@@ -89,6 +116,8 @@ public class OdtUtilsTest {
         }
         
         OdtUtils.checkNotEmpty("a", "a%s","bc");
+        
+        
     }
     
     @Test

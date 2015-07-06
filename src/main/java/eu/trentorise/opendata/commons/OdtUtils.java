@@ -17,7 +17,7 @@ package eu.trentorise.opendata.commons;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
-import java.util.Collection;
+import com.google.common.collect.Iterables;
 import java.util.Locale;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
@@ -228,7 +228,7 @@ public final class OdtUtils {
      * @throws IllegalArgumentException if {@code expression} is false
      * @throws NullPointerException if the check fails and either
      * {@code errorMessageTemplate} or {@code errorMessageArgs} is null (don't
-     * let this happen) 
+     * let this happen)
      *
      *
      * @throws IllegalArgumentException if provided string fails validation
@@ -282,9 +282,11 @@ public final class OdtUtils {
 
     }
 
+    
+    
     /**
      *
-     * Checks if provided collection is non null and non empty .
+     * Checks if provided iterable is non null and non empty .
      *
      * @param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
@@ -292,14 +294,100 @@ public final class OdtUtils {
      *
      * @throws IllegalArgumentException if provided collection fails validation
      *
-     * @return a non-null non-empty collection
+     * @return a non-null non-empty iterable
      */
-    public static <T> Collection<T> checkNotEmpty(@Nullable Collection<T> coll, @Nullable Object prependedErrorMessage) {
-        checkArgument(coll != null, "%s -- Reason: Found null collection.", prependedErrorMessage);
-        if (coll.isEmpty()) {
+    public static <T> Iterable<T> checkNotEmpty(@Nullable Iterable<T> iterable, @Nullable Object prependedErrorMessage) {
+        checkArgument(iterable != null, "%s -- Reason: Found null iterable.", prependedErrorMessage);
+        if (Iterables.isEmpty(iterable)) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection.");
         }
-        return coll;
+        return iterable;
+    }
+
+    /**
+     *
+     * Checks if provided array is non null and non empty .
+     *
+     * @param prependedErrorMessage the exception message to use if the check
+     * fails; will be converted to a string using String.valueOf(Object) and
+     * prepended to more specific error messages.
+     *
+     * @throws IllegalArgumentException if provided array fails validation
+     *
+     * @return a non-null non-empty array
+     */
+    public static <T> T[] checkNotEmpty(@Nullable T[] array, @Nullable Object prependedErrorMessage) {
+        checkArgument(array != null, "%s -- Reason: Found null array.", prependedErrorMessage);
+        if (array.length == 0) {
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty array.");
+        }
+        return array;
+    }
+    
+    
+    /**
+     *
+     * Checks if provided iterable is non null and non empty .
+     *
+     * @param errorMessageTemplate a template for the exception message should
+     * the check fail. The message is formed by replacing each {@code %s}
+     * placeholder in the template with an argument. These are matched by
+     * position - the first {@code %s} gets {@code
+     *     errorMessageArgs[0]}, etc. Unmatched arguments will be appended to the
+     * formatted message in square braces. Unmatched placeholders will be left
+     * as-is.
+     * @param errorMessageArgs the arguments to be substituted into the message
+     * template. Arguments are converted to strings using
+     * {@link String#valueOf(Object)}.
+     * @throws IllegalArgumentException if {@code iterable} is empty or null
+     * @throws NullPointerException if the check fails and either
+     * {@code errorMessageTemplate} or {@code errorMessageArgs} is null (don't
+     * let this happen)
+     *
+     * @return a non-null non-empty iterable
+     */
+    public static <T> Iterable<T> checkNotEmpty(@Nullable Iterable<T> iterable,
+            @Nullable String errorMessageTemplate,
+            @Nullable Object... errorMessageArgs) {
+        String formattedMessage = OdtUtils.simpleFormat(errorMessageTemplate, errorMessageArgs);
+
+        checkArgument(iterable != null, "%s -- Reason: Found null iterable.", formattedMessage);
+        if (Iterables.isEmpty(iterable)) {
+            throw new IllegalArgumentException(formattedMessage + " -- Reason: Found empty iterable.");
+        }
+        return iterable;
+    }
+
+    /**
+     *
+     * Checks if provided array is non null and non empty .
+     *
+     * @param errorMessageTemplate a template for the exception message should
+     * the check fail. The message is formed by replacing each {@code %s}
+     * placeholder in the template with an argument. These are matched by
+     * position - the first {@code %s} gets {@code errorMessageArgs[0]}, etc.
+     * Unmatched arguments will be appended to the formatted message in square
+     * braces. Unmatched placeholders will be left as-is.
+     * @param errorMessageArgs the arguments to be substituted into the message
+     * template. Arguments are converted to strings using
+     * {@link String#valueOf(Object)}.
+     * @throws IllegalArgumentException if {@code array} is empty or null
+     * @throws NullPointerException if the check fails and either
+     * {@code errorMessageTemplate} or {@code errorMessageArgs} is null (don't
+     * let this happen)
+     *
+     * @return a non-null non-empty array
+     */
+    public static <T> T[] checkNotEmpty(@Nullable T[] array,
+            @Nullable String errorMessageTemplate,
+            @Nullable Object... errorMessageArgs) {
+        String formattedMessage = OdtUtils.simpleFormat(errorMessageTemplate, errorMessageArgs);
+
+        checkArgument(array != null, "%s -- Reason: Found null iterable.", formattedMessage);
+        if (array.length == 0) {
+            throw new IllegalArgumentException(formattedMessage + " -- Reason: Found empty array.");
+        }
+        return array;
     }
 
     /**
