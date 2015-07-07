@@ -23,6 +23,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.Immutable;
 
 /**
@@ -33,9 +34,12 @@ import javax.annotation.concurrent.Immutable;
  * Definition of error codes and their format is entire responsability of the
  * library users.
  *
+ * TODO Do we include an error level? (i.e. SEVERE, WARNING, MINOR, ...)
+ * 
  * @author David Leoni
  */
 @Immutable
+@ParametersAreNonnullByDefault
 public class ValidationError implements IValidationError {
 
     private static final Logger LOG = Logger.getLogger(ValidationError.class.getName());
