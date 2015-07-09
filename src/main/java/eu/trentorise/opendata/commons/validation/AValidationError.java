@@ -20,6 +20,7 @@ import eu.trentorise.opendata.commons.OdtUtils;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -127,5 +128,45 @@ public abstract class AValidationError {
     public String formatReason() {
         return OdtUtils.format(reason, reasonArgs.toArray());
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.ref);
+        hash = 37 * hash + this.errorCode;
+        hash = 37 * hash + Objects.hashCode(this.errorLevel);
+        hash = 37 * hash + Objects.hashCode(this.reason);
+        hash = 37 * hash + Objects.hashCode(this.reasonArgs);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AValidationError other = (AValidationError) obj;
+        if (!Objects.equals(this.ref, other.ref)) {
+            return false;
+        }
+        if (this.errorCode != other.errorCode) {
+            return false;
+        }
+        if (this.errorLevel != other.errorLevel) {
+            return false;
+        }
+        if (!Objects.equals(this.reason, other.reason)) {
+            return false;
+        }
+        if (!Objects.equals(this.reasonArgs, other.reasonArgs)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }
