@@ -21,9 +21,9 @@ import java.io.Serializable;
 import org.immutables.value.Value;
 
 /**
- * A reference to an element of a dataset or its metadata. The reference is both
+ * A reference to an element in a file. The reference is both
  * logical (i.e. the path to a json node a.b.c) and physical (the row and column
- * number (13,48) in the json file of origin).
+ * number (13,48) in the json file ).
  *
  * @author David Leoni
  */
@@ -33,7 +33,6 @@ abstract class ARef implements Serializable {
 
     /**
      * An identifier (possibly an IRI) for the original document.
-     *
      */    
     @Value.Default    
     public String getDocumentId() {

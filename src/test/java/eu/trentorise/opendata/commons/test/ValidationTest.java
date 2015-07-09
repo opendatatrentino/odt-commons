@@ -16,55 +16,36 @@
 package eu.trentorise.opendata.commons.test;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import eu.trentorise.opendata.commons.validation.Ref;
-import eu.trentorise.opendata.commons.validation.ValidationError;
+
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import eu.trentorise.opendata.commons.validation.IValidationError;
-import java.util.List;
-import java.util.Objects;
+import eu.trentorise.opendata.commons.validation.AValidationError;
+import eu.trentorise.opendata.commons.validation.ErrorLevel;
+import eu.trentorise.opendata.commons.validation.ValidationError;
 /**
  *
  * @author David Leoni
  */
 public class ValidationTest {
     
-    private static class MyValidationError implements IValidationError {
+    private static class MyValidationError extends AValidationError {
         
-        private String myField;
-        
-        private ValidationError validationError;
+        private String myField;                
 
         private MyValidationError(){
-            this.validationError = ValidationError.of();
+            super();
         }
         
         private MyValidationError(String myField){
-            checkNotNull(myField);
-            this.validationError = ValidationError.of();
+            super();
+            checkNotNull(myField);            
             this.myField = myField;
         }
         
-        @Override
-        public Ref getRef() {
-            return validationError.getRef();
-        }
-
-        @Override
-        public Object getErrorCode() {
-            return validationError.getErrorCode();
-        }
-
-        @Override
-        public List getReason() {
-            return validationError.getReason();
-        }
-
         public String getMyField() {
             return myField;
-        }
-                        
+        }                        
         
         public static MyValidationError of(){            
             return new MyValidationError();
@@ -73,49 +54,23 @@ public class ValidationTest {
         public static MyValidationError of(String myField){            
             return new MyValidationError(myField);
         }
-        
-
-        @Override
-        public int hashCode() {
-            int hash = 7;
-            hash = 89 * hash + Objects.hashCode(this.myField);
-            hash = 89 * hash + Objects.hashCode(this.validationError);
-            return hash;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            final MyValidationError other = (MyValidationError) obj;
-            if (!Objects.equals(this.myField, other.myField)) {
-                return false;
-            }
-            if (!Objects.equals(this.validationError, other.validationError)) {
-                return false;
-            }
-            return true;
-        }
 
         @Override
         public String toString() {
-            return "MyValidationError{" + "myField=" + myField + ", validationError=" + validationError + '}';
+            return "MyValidationError{" + "myField=" + myField + ","+super.toString()+'}';
         }
-    
-        
-        
+ 
     }
     
     
     @Test
     public void testValidation(){
+        
+        ValidationError.of("$",ErrorLevel.INFO,0, "").getRef();
+        
         assertEquals("*", ValidationError.of().getRef().getJsonPath());
-        assertEquals("$", ValidationError.of("$",null, "").getRef().getJsonPath());
-        assertEquals("*", ValidationError.of((String) null,null,"").getRef().getJsonPath());
-        assertEquals("*", ValidationError.of("",null,"").getRef().getJsonPath());       
+        assertEquals("$", ValidationError.of("$",ErrorLevel.INFO,0, "").getRef().getJsonPath());
+        assertEquals("*", ValidationError.of((String) null, ErrorLevel.INFO,0,"").getRef().getJsonPath());
+        assertEquals("*", ValidationError.of("",null,0,"").getRef().getJsonPath());       
     }
 }

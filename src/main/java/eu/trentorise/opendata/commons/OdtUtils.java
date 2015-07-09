@@ -17,7 +17,7 @@ package eu.trentorise.opendata.commons;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
-import com.google.common.collect.Iterables;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
@@ -48,6 +48,8 @@ public final class OdtUtils {
      * Java 7 has Locale.forLanguageTag(format), this is the substitute for Java
      * 6 <br/>
      *
+     * @deprecated Now library targets Java >= 7, so use Locale.forLanguageTag(format) instead.
+     * 
      * Copied from apache.commons.lang, with the change it returns Locale.ROOT
      * for null input <br/>
      * -------------------------------------------------------------------------
@@ -124,10 +126,10 @@ public final class OdtUtils {
      * Converts a Java locale to a String.
      *
      * @see #languageTagToLocale(java.lang.String) fo the inverse operation
-     *
+     * @deprecated Now library targets Java >= 7, so use Locale.toLanguageTag() instead.
      */
     public static String localeToLanguageTag(Locale locale) {
-        if (locale == null) {
+        if (locale == null) {           
             LOG.warning("Found null locale, returning empty string (which corresponds to Locale.ROOT)");
             return "";
         }
@@ -166,6 +168,7 @@ public final class OdtUtils {
      * heuristics to detect oddities, like i.e. the string "null" inside the
      * url.
      *
+     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotDirtyUrl(java.lang.String, java.lang.Object) }
      * @param url the URL to check
      * @param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
@@ -195,6 +198,7 @@ public final class OdtUtils {
      *
      * Checks if provided string is non null and non empty.
      *
+     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotEmpty(java.lang.String, java.lang.Object)  }
      * @param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
      * prepended to more specific error messages.
@@ -211,186 +215,33 @@ public final class OdtUtils {
         return string;
     }
 
-    /**
-     *
-     * Checks if provided string is non null and non empty.
-     *
-     * @param errorMessageTemplate a template for the exception message should
-     * the check fail. The message is formed by replacing each {@code %s}
-     * placeholder in the template with an argument. These are matched by
-     * position - the first {@code %s} gets {@code
-     *     errorMessageArgs[0]}, etc. Unmatched arguments will be appended to the
-     * formatted message in square braces. Unmatched placeholders will be left
-     * as-is.
-     * @param errorMessageArgs the arguments to be substituted into the message
-     * template. Arguments are converted to strings using
-     * {@link String#valueOf(Object)}.
-     * @throws IllegalArgumentException if {@code expression} is false
-     * @throws NullPointerException if the check fails and either
-     * {@code errorMessageTemplate} or {@code errorMessageArgs} is null (don't
-     * let this happen)
-     *
-     *
-     * @throws IllegalArgumentException if provided string fails validation
-     *
-     * @return the non-empty string that was validated
-     */
-    public static String checkNotEmpty(
-            String string,
-            @Nullable String errorMessageTemplate,
-            @Nullable Object... errorMessageArgs) {
-        String formattedMessage = OdtUtils.simpleFormat(errorMessageTemplate, errorMessageArgs);
-        checkArgument(string != null, "%s -- Reason: Found null string.", formattedMessage);
-        if (string.length() == 0) {
-            throw new IllegalArgumentException(formattedMessage + " -- Reason: Found empty string.");
-        }
-        return string;
-    }
-
-    /**
-     * Checks the provided score is within valid bounds
-     *
-     * @param score must be between -{@link #TOLERANCE} ≤ score ≤ 1 + {@link
-     * #TOLERANCE}
-     *
-     * @param prependedErrorMessage the exception message to use if the check
-     * fails; will be converted to a string using String.valueOf(Object) and
-     * prepended to more specific error messages.
-     *
-     * @throws IllegalArgumentException on invalid score
-     * @return the validated score in the range [0.0, 1.0]
-     */
-    public static double checkScore(double score, @Nullable Object prependedErrorMessage) {
-
-        if (score < 0.0) {
-            if (score > -OdtUtils.TOLERANCE) {
-                return 0.0;
-            } else {
-                throw new IllegalArgumentException("Score must be greater or equal than zero, found instead: " + score);
-            }
-        }
-
-        if (score >= 1.0) {
-            if (score < 1.0 + OdtUtils.TOLERANCE) {
-                return 1.0;
-            } else {
-                throw new IllegalArgumentException("Score must be less than or equal than 1.0, found instead: " + score);
-            }
-        }
-
-        return score;
-
-    }
-
     
     
-    /**
+    
+     /**
      *
-     * Checks if provided iterable is non null and non empty .
+     * Checks if provided collection is non null and non empty . 
      *
+     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotEmpty(java.lang.Iterable, java.lang.Object)   }
+
      * @param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
      * prepended to more specific error messages.
      *
      * @throws IllegalArgumentException if provided collection fails validation
-     *
-     * @return a non-null non-empty iterable
+     * 
+     * @return a non-null non-empty collection
      */
-    public static <T> Iterable<T> checkNotEmpty(@Nullable Iterable<T> iterable, @Nullable Object prependedErrorMessage) {
-        checkArgument(iterable != null, "%s -- Reason: Found null iterable.", prependedErrorMessage);
-        if (Iterables.isEmpty(iterable)) {
+    public static <T> Collection<T> checkNotEmpty(@Nullable Collection<T> coll, @Nullable Object prependedErrorMessage) {
+        checkArgument(coll != null, "%s -- Reason: Found null collection.", prependedErrorMessage);
+        if (coll.isEmpty()) {
             throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection.");
         }
-        return iterable;
+        return coll;
     }
 
-    /**
-     *
-     * Checks if provided array is non null and non empty .
-     *
-     * @param prependedErrorMessage the exception message to use if the check
-     * fails; will be converted to a string using String.valueOf(Object) and
-     * prepended to more specific error messages.
-     *
-     * @throws IllegalArgumentException if provided array fails validation
-     *
-     * @return a non-null non-empty array
-     */
-    public static <T> T[] checkNotEmpty(@Nullable T[] array, @Nullable Object prependedErrorMessage) {
-        checkArgument(array != null, "%s -- Reason: Found null array.", prependedErrorMessage);
-        if (array.length == 0) {
-            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty array.");
-        }
-        return array;
-    }
-    
-    
-    /**
-     *
-     * Checks if provided iterable is non null and non empty .
-     *
-     * @param errorMessageTemplate a template for the exception message should
-     * the check fail. The message is formed by replacing each {@code %s}
-     * placeholder in the template with an argument. These are matched by
-     * position - the first {@code %s} gets {@code
-     *     errorMessageArgs[0]}, etc. Unmatched arguments will be appended to the
-     * formatted message in square braces. Unmatched placeholders will be left
-     * as-is.
-     * @param errorMessageArgs the arguments to be substituted into the message
-     * template. Arguments are converted to strings using
-     * {@link String#valueOf(Object)}.
-     * @throws IllegalArgumentException if {@code iterable} is empty or null
-     * @throws NullPointerException if the check fails and either
-     * {@code errorMessageTemplate} or {@code errorMessageArgs} is null (don't
-     * let this happen)
-     *
-     * @return a non-null non-empty iterable
-     */
-    public static <T> Iterable<T> checkNotEmpty(@Nullable Iterable<T> iterable,
-            @Nullable String errorMessageTemplate,
-            @Nullable Object... errorMessageArgs) {
-        String formattedMessage = OdtUtils.simpleFormat(errorMessageTemplate, errorMessageArgs);
-
-        checkArgument(iterable != null, "%s -- Reason: Found null iterable.", formattedMessage);
-        if (Iterables.isEmpty(iterable)) {
-            throw new IllegalArgumentException(formattedMessage + " -- Reason: Found empty iterable.");
-        }
-        return iterable;
-    }
-
-    /**
-     *
-     * Checks if provided array is non null and non empty .
-     *
-     * @param errorMessageTemplate a template for the exception message should
-     * the check fail. The message is formed by replacing each {@code %s}
-     * placeholder in the template with an argument. These are matched by
-     * position - the first {@code %s} gets {@code errorMessageArgs[0]}, etc.
-     * Unmatched arguments will be appended to the formatted message in square
-     * braces. Unmatched placeholders will be left as-is.
-     * @param errorMessageArgs the arguments to be substituted into the message
-     * template. Arguments are converted to strings using
-     * {@link String#valueOf(Object)}.
-     * @throws IllegalArgumentException if {@code array} is empty or null
-     * @throws NullPointerException if the check fails and either
-     * {@code errorMessageTemplate} or {@code errorMessageArgs} is null (don't
-     * let this happen)
-     *
-     * @return a non-null non-empty array
-     */
-    public static <T> T[] checkNotEmpty(@Nullable T[] array,
-            @Nullable String errorMessageTemplate,
-            @Nullable Object... errorMessageArgs) {
-        String formattedMessage = OdtUtils.simpleFormat(errorMessageTemplate, errorMessageArgs);
-
-        checkArgument(array != null, "%s -- Reason: Found null iterable.", formattedMessage);
-        if (array.length == 0) {
-            throw new IllegalArgumentException(formattedMessage + " -- Reason: Found empty array.");
-        }
-        return array;
-    }
-
-    /**
+    /**     
+     * @deprecated use Guava {@link com.google.common.base.Strings#isNullOrEmpty(java.lang.String) } instead
      * Returns true if provided string is non null and non empty .
      */
     public static boolean isNotEmpty(@Nullable String string) {
@@ -446,9 +297,12 @@ public final class OdtUtils {
      * Arguments are converted to strings using {@link String#valueOf(Object)}.
      * Arguments can be null.
      *
-     *
+     * @since 1.1
      */
-    public static String simpleFormat(String template, @Nullable Object... args) {
+    public static String format(String template, @Nullable Object... args) {
+        if (template == null){
+            LOG.warning("Found null template while formatting, converting it to \"null\"");
+        }
         template = String.valueOf(template); // null -> "null"
 
         // start substituting the arguments into the '%s' placeholders
