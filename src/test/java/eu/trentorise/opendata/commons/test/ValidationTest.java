@@ -17,12 +17,17 @@ package eu.trentorise.opendata.commons.test;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.collect.ImmutableList;
+import eu.trentorise.opendata.commons.Dict;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import eu.trentorise.opendata.commons.validation.AValidationError;
 import eu.trentorise.opendata.commons.validation.ErrorLevel;
+import eu.trentorise.opendata.commons.validation.Ref;
 import eu.trentorise.opendata.commons.validation.ValidationError;
+import java.util.Locale;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  *
@@ -75,4 +80,14 @@ public class ValidationTest {
         assertEquals(ImmutableList.of("b"), ValidationError.of("$", ErrorLevel.INFO, 0, "a", "b").getReasonArgs());
 
     }
+    
+    @Test
+    @SuppressWarnings({"IncompatibleEquals", "ObjectEqualsNull"})
+    public void testEquals(){
+        assertFalse(ValidationError.of().equals(""));
+        assertFalse(ValidationError.of().equals(null));
+        assertEquals(ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, 1, "a%s", 2,3).hashCode(), 
+                   ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, 1, "a%s", 2,3).hashCode());                
+        
+    }    
 }
