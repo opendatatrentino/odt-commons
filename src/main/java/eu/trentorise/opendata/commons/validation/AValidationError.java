@@ -78,6 +78,7 @@ public abstract class AValidationError {
         }
         this.errorCode = errorCode;
         this.errorLevel = errorLevel;
+        this.reason = reason;
         this.reasonArgs = Collections.unmodifiableList(Arrays.asList(reasonArgs)); // ImmutableList would complain about nulls...
     }
 
@@ -124,7 +125,7 @@ public abstract class AValidationError {
      * Returns the formatted reason.
      */
     public String formatReason() {
-        return OdtUtils.format(reason, reasonArgs);
+        return OdtUtils.format(reason, reasonArgs.toArray());
     }
 
 }
