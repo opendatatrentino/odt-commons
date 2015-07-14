@@ -15,6 +15,9 @@
  */
 package eu.trentorise.opendata.commons.validation;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -37,7 +40,7 @@ public final class ValidationError extends AValidationError {
         super();
     }
 
-    private ValidationError(Ref ref, ErrorLevel errorLevel, int errorCode, String reason, Object... reasonArgs) {
+    private ValidationError(Ref ref, ErrorLevel errorLevel, int errorCode, String reason, Map<String, ?> reasonArgs) {
         super(ref, errorLevel, errorCode, reason, reasonArgs);
     }
 
@@ -47,55 +50,70 @@ public final class ValidationError extends AValidationError {
     public static ValidationError of() {
         return INSTANCE;
     }
-
-    
+        
     /**
-     * Creates a ValidationError specifying an error code.
+     * Creates a ValidationError.
      *
      * @param ref a reference to the error.
      * @param errorLevel the level of the error
      * @param errorCode the error code. If unknown pass 0.
-     * @param reason the error reason template, with %s as placeholders for
-     * {@code reasonArgs}. Internally, {@code reason} will be stored as is,
-     * without substitution.
+     * @param reason the error reason template, see
+     * {@link AValidationError#getReason()} for placeholders format. Internally,
+     * {@code reason} will be stored as is, without substitution.
      * @param reasonArgs the arguments to be substituted to the {@code reason}
      * placeholder
      */
-    public static ValidationError of(Ref ref, ErrorLevel errorLevel, int errorCode, String reason, Object... reasonArgs) {
+    public static ValidationError of(Ref ref, ErrorLevel errorLevel, int errorCode, String reason, Map<String, ?> reasonArgs) {
         return new ValidationError(ref, errorLevel, errorCode, reason, reasonArgs);
     }
 
+    
     /**
-     * Creates a ValidationError specifying an error code.
+     * Creates a ValidationError.
      *
-     * @param jsonPath a path as specified by
-     * <a href="https://github.com/jayway/JsonPath" target="_blank">JSONPath
-     * syntax</a>.
+     * @param ref a reference to the error.
      * @param errorLevel the level of the error
-     * @param errorCode the error code. If unknown pass zero.
-     * @param reason the error reason template, with %s as placeholders for
-     * {@code reasonArgs}. Internally, {@code reason} will be stored as is,
-     * without substitution.
-     * @param reasonArgs the arguments to be substituted to the {@code reason}
-     * placeholder
+     * @param errorCode the error code. If unknown pass 0.
+     * @param reason the error reason string, with no placeholders.
      */
-    public static ValidationError of(String jsonPath, ErrorLevel errorLevel, int errorCode, String reason, Object... reasonArgs) {
-        Ref ref;
-        if (jsonPath == null || jsonPath.trim().length() == 0) {
-            LOG.log(Level.WARNING, "Found null or empty jsonPath while creating {0}, setting it to '*'", ValidationError.class.getSimpleName());
-            ref = Ref.of();
-        } else {
-            ref = Ref.of(jsonPath);
-        }
-        return new ValidationError(ref, errorLevel, errorCode, reason, reasonArgs);
-    }
-
-   @Override
-    public String toString() {
-        return "ValidationError{" + "ref=" + getRef() + ", errorCode=" + getErrorCode() + ", errorLevel=" + getErrorLevel() + ", reason=" + getReason() + ", reasonArgs=" + getReasonArgs() + '}';
+    public static ValidationError of(Ref ref, ErrorLevel errorLevel, int errorCode, String reason) {
+        return new ValidationError(ref, errorLevel, errorCode, reason, ImmutableMap.<String, Object>of());
     }    
     
+    /**
+     * Creates a ValidationError.
+     *
+     * @param ref a reference to the error.
+     * @param errorLevel the level of the error
+     * @param errorCode the error code. If unknown pass 0.
+     * @param reason the error reason template, see
+     * {@link AValidationError#getReason()} for placeholders format. Internally,
+     * {@code reason} will be stored as is, without substitution.
+     */
+    public static ValidationError of(Ref ref, ErrorLevel errorLevel, int errorCode, String reason, String reasonArgName1, Object reasonArg1) {
+        return new ValidationError(ref, errorLevel, errorCode, reason, ImmutableMap.of(reasonArgName1, reasonArg1));
+    }
     
-    
-    
+
+    /**
+     * Creates a ValidationError.
+     *
+     * @param ref a reference to the error.
+     * @param errorLevel the level of the error
+     * @param errorCode the error code. If unknown pass 0.
+     * @param reason the error reason template, see
+     * {@link AValidationError#getReason()} for placeholders format. Internally,
+     * {@code reason} will be stored as is, without substitution.
+     */
+    public static ValidationError of(Ref ref, ErrorLevel errorLevel, int errorCode, String reason, 
+            String reasonArgName1, Object reasonArg1,
+            String argName2, Object reasonArg2) {
+        return new ValidationError(ref, errorLevel, errorCode, reason, ImmutableMap.of(reasonArgName1, reasonArg1, reasonArgName1, reasonArg2));
+    }    
+
+    @Override
+    public String toString() {
+        return "ValidationError{" + "ref=" + getRef() + ", errorCode=" + getErrorCode() + ", errorLevel=" + getErrorLevel() + ", reason=" + getReason() + ", reasonArgs=" + getReasonArgs() + '}';
+    }
+
 }

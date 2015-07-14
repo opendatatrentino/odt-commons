@@ -16,10 +16,11 @@
 package eu.trentorise.opendata.commons.validation;
 
 import com.google.common.collect.ImmutableList;
-import eu.trentorise.opendata.commons.OdtUtils;
+import com.google.common.collect.ImmutableMap;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,14 +49,14 @@ public abstract class AValidationError {
     private int errorCode;
     private ErrorLevel errorLevel;
     private String reason;
-    private List reasonArgs;
+    private ImmutableMap<String, ?> reasonArgs;
 
     protected AValidationError() {
         this.ref = Ref.of();
         this.errorCode = 0;
         this.errorLevel = ErrorLevel.SEVERE;
         this.reason = "";
-        this.reasonArgs = ImmutableList.of();
+        this.reasonArgs = ImmutableMap.of();
     }
 
     protected AValidationError(
@@ -63,7 +64,7 @@ public abstract class AValidationError {
             ErrorLevel errorLevel,
             int errorCode,
             String reason,
-            Object... reasonArgs) {
+            Map<String, ?> reasonArgs) {
 
         if (ref == null) {
             LOG.log(Level.WARNING, "Found null ref while creating validation error, setting it to Ref.of()");
@@ -80,13 +81,18 @@ public abstract class AValidationError {
         this.errorCode = errorCode;
         this.errorLevel = errorLevel;
         this.reason = reason;
-        this.reasonArgs = Collections.unmodifiableList(Arrays.asList(reasonArgs)); // ImmutableList would complain about nulls...
+        this.reasonArgs = ImmutableMap.copyOf(reasonArgs);
     }
 
     /**
-     * The error reason template, with %s as placeholders for
-     * {@code reasonArgs}. Returned string does not substitute placeholders. If
-     * you want substituted placeholders use {@link #formattedReason() }
+     * The error reason template, formatted according to
+     * <a href="http://icu-project.org/apiref/icu4j/com/ibm/icu/text/MessageFormat.html" target="_blank">
+     * ICU4J MessageFormat</a>. Only use the styles {@code SelectFormat} and
+     * {@code PluralFormat}. Placeholders can be either numeric (i.e. {2}) or
+     * names {i.e. someName}). If you want substituted placeholders in Java add ICU4J
+     * dependency and use com.ibm.icu.text.MessageFormat.format(). In Javascript
+     * you can use
+     * <a href="https://github.com/SlexAxton/messageformat.js/" target="_blank">MessageFormat.js</a>
      * instead.
      *
      */
@@ -97,7 +103,7 @@ public abstract class AValidationError {
     /**
      * The arguments to be substituted to the {@code reason} placeholder
      */
-    public final List getReasonArgs() {
+    public final ImmutableMap<String, ?> getReasonArgs() {
         return reasonArgs;
     }
 
@@ -120,13 +126,6 @@ public abstract class AValidationError {
      */
     public final ErrorLevel getErrorLevel() {
         return errorLevel;
-    }
-
-    /**
-     * Returns the formatted reason.
-     */
-    public String formatReason() {
-        return OdtUtils.format(reason, reasonArgs.toArray());
     }
 
     @Override
@@ -166,7 +165,5 @@ public abstract class AValidationError {
         }
         return true;
     }
-    
-    
 
 }

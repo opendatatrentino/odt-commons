@@ -16,16 +16,15 @@
 package eu.trentorise.opendata.commons.test;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import com.google.common.collect.ImmutableList;
-import eu.trentorise.opendata.commons.Dict;
-
-import static org.junit.Assert.assertEquals;
+import com.google.common.collect.ImmutableMap;
+import com.ibm.icu.text.MessageFormat;
 import org.junit.Test;
 import eu.trentorise.opendata.commons.validation.AValidationError;
 import eu.trentorise.opendata.commons.validation.ErrorLevel;
 import eu.trentorise.opendata.commons.validation.Ref;
 import eu.trentorise.opendata.commons.validation.ValidationError;
-import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -72,12 +71,26 @@ public class ValidationTest {
     public void testValidation() {
 
         assertEquals("*", ValidationError.of().getRef().getJsonPath());
-        assertEquals("$", ValidationError.of("$", ErrorLevel.INFO, 0, "").getRef().getJsonPath());
-        assertEquals("*", ValidationError.of((String) null, ErrorLevel.INFO, 0, "").getRef().getJsonPath());
-        assertEquals("*", ValidationError.of("", null, 0, "").getRef().getJsonPath());
+        
+        ValidationError.of(Ref.of(), ErrorLevel.SEVERE, 0, "", ImmutableMap.of("", ""));
+        
+        assertEquals("$", ValidationError.of(Ref.of("$"), ErrorLevel.INFO, 0, "").getRef().getJsonPath());
+        assertEquals("*", ValidationError.of((Ref) null, ErrorLevel.INFO, 0, "").getRef().getJsonPath());        
+        
+        ValidationError v1 = ValidationError.of(Ref.of(), ErrorLevel.INFO, 0, "a{0}c", "0", "b");
+        
+        // this is unbelievable, if I don't put (Map) the compiler picks the wrong method with varargs Object... , 
+        // but passing a HashMap the compiler works as expected!!!!
+        assertEquals("ab", MessageFormat.format("a{x}",  (Map) ImmutableMap.of("x", "b"))); 
+        HashMap hm = new HashMap();
+        hm.put("x","b");
+        assertEquals("ab", MessageFormat.format("a{x}", hm));
 
-        assertEquals("abc", ValidationError.of("$", ErrorLevel.INFO, 0, "a%sc", "b").formatReason());
-        assertEquals(ImmutableList.of("b"), ValidationError.of("$", ErrorLevel.INFO, 0, "a", "b").getReasonArgs());
+        HashMap<String,Object> hm2 = new HashMap();
+        hm2.put("0","b");
+        assertEquals("ab", MessageFormat.format("a{0}", hm2));
+                
+        assertEquals(ImmutableMap.of("b","c"), ValidationError.of(Ref.of(), ErrorLevel.INFO, 0, "a", "b", "c").getReasonArgs());
 
     }
     
@@ -86,8 +99,8 @@ public class ValidationTest {
     public void testEquals(){
         assertFalse(ValidationError.of().equals(""));
         assertFalse(ValidationError.of().equals(null));
-        assertEquals(ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, 1, "a%s", 2,3).hashCode(), 
-                   ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, 1, "a%s", 2,3).hashCode());                
+        assertEquals(ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, 1, "a{x}", "x",3).hashCode(), 
+                   ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, 1, "a{x}", "x",3).hashCode());                
         
     }    
 }

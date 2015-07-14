@@ -44,7 +44,7 @@ abstract class ARef implements Serializable {
      * reference is in text format. In case paramter is not set -1 is returned.
      */    
     @Value.Default    
-    public int getPhysicalRow() {
+    public long getPhysicalRow() {
         return -1;
     }
 
@@ -54,7 +54,7 @@ abstract class ARef implements Serializable {
      * returned.
      */    
     @Value.Default
-    public int getPhysicalColumn() {
+    public long getPhysicalColumn() {
         return -1;
     }
 
