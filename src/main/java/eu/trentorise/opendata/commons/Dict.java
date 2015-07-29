@@ -389,7 +389,7 @@ public final class Dict implements Serializable {
         /**
          * Stores a collection of values with default locale {@link Locale#ROOT}
          * in the built dictionary. Strings will be appended to existing ones
-         * for the same locale.
+         * for the same default locale.
          *
          * @return {@code this} builder for chained invocation
          */

@@ -21,9 +21,9 @@ import java.io.Serializable;
 import org.immutables.value.Value;
 
 /**
- * A reference to an element in a file. The reference is both
- * logical (i.e. the path to a json node a.b.c) and physical (the row and column
- * number (13,48) in the json file ).
+ * A reference to an element in a file. The reference is both logical (i.e. the
+ * path to a json node a.b.c) and physical (the row and column number (13,48) in
+ * the json file ).
  *
  * @author David Leoni
  */
@@ -32,9 +32,11 @@ import org.immutables.value.Value;
 abstract class ARef implements Serializable {
 
     /**
-     * An identifier (possibly an IRI) for the original document.
-     */    
-    @Value.Default    
+     * An identifier (possibly an IRI) for the original document. In case the
+     * data was obtained through a query the id could be the endpoint address
+     * with the query parameters.
+     */
+    @Value.Default
     public String getDocumentId() {
         return "";
     }
@@ -42,8 +44,8 @@ abstract class ARef implements Serializable {
     /**
      * The row index in the physical file (starting from 0), in case the file of
      * reference is in text format. In case paramter is not set -1 is returned.
-     */    
-    @Value.Default    
+     */
+    @Value.Default
     public long getPhysicalRow() {
         return -1;
     }
@@ -52,7 +54,7 @@ abstract class ARef implements Serializable {
      * The column index in the physical file (starting from 0), in case the file
      * of reference is in text format. In case paramter is not set -1 is
      * returned.
-     */    
+     */
     @Value.Default
     public long getPhysicalColumn() {
         return -1;
@@ -63,7 +65,7 @@ abstract class ARef implements Serializable {
      * <a href="https://github.com/jayway/JsonPath" target="_blank">JSONPath
      * syntax</a>
      *
-     */    
+     */
     @Value.Default
     public String getJsonPath() {
         return "*";
@@ -95,6 +97,5 @@ abstract class ARef implements Serializable {
     public static Ref of() {
         return Ref.of("", -1, -1, "$");
     }
-    
 
 }

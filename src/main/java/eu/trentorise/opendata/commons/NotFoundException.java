@@ -20,7 +20,7 @@ package eu.trentorise.opendata.commons;
  * 
  * @author David Leoni <david.leoni@unitn.it>
  */
-public class NotFoundException extends RuntimeException {
+public class NotFoundException extends IllegalStateException {
     
     private NotFoundException(){
         super();

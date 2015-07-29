@@ -29,7 +29,7 @@ In case updates are available, version numbers follows <a href="http://semver.or
 
 ### Building objects
 
-Most objects in odt-commons are immutable, and make heavy use of <a href="https://code.google.com/p/guava-libraries/wiki/ImmutableCollectionsExplained" target="_blank"> Guava immutable collections </a>. In odt-commons, wherever you see an abstract class called `ASomething`, there will always be an immutable class `Something` implementing it.
+Most objects in odt-commons are immutable, and make heavy use of <a href="https://code.google.com/p/guava-libraries/wiki/ImmutableCollectionsExplained" target="_blank"> Guava immutable collections </a>. In odt-commons, wherever you see an abstract class called `ASomething` or `AbstractSomething`, there will always be an immutable class `Something` implementing it.
 
 
 
