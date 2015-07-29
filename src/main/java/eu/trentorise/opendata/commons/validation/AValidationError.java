@@ -31,6 +31,8 @@ import javax.annotation.concurrent.Immutable;
  * Definition of error codes is entire responsability of the library users. You
  * can extend this class to create your own validation errors.
  *
+ * TODO maybe we don't need this, javax.validation seems decent enough
+ * 
  * @author David Leoni
  */
 @Immutable
@@ -42,14 +44,14 @@ public abstract class AValidationError {
     private static final long serialVersionUID = 1L;
 
     private Ref ref;
-    private int errorCode;
+    private String errorCode;
     private ErrorLevel errorLevel;
     private String reason;
     private ImmutableMap<String, ?> reasonArgs;
 
     protected AValidationError() {
         this.ref = Ref.of();
-        this.errorCode = 0;
+        this.errorCode = "";
         this.errorLevel = ErrorLevel.SEVERE;
         this.reason = "";
         this.reasonArgs = ImmutableMap.of();
@@ -58,7 +60,7 @@ public abstract class AValidationError {
     protected AValidationError(
             Ref ref,
             ErrorLevel errorLevel,
-            int errorCode,
+            String errorCode,
             String reason,
             Map<String, ?> reasonArgs) {
 
@@ -113,7 +115,7 @@ public abstract class AValidationError {
     /**
      * The optional error code associated to the error.
      */
-    public final int getErrorCode() {
+    public final String getErrorCode() {
         return errorCode;
     }
 
@@ -127,11 +129,11 @@ public abstract class AValidationError {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.ref);
-        hash = 37 * hash + this.errorCode;
-        hash = 37 * hash + Objects.hashCode(this.errorLevel);
-        hash = 37 * hash + Objects.hashCode(this.reason);
-        hash = 37 * hash + Objects.hashCode(this.reasonArgs);
+        hash = 97 * hash + Objects.hashCode(this.ref);
+        hash = 97 * hash + Objects.hashCode(this.errorCode);
+        hash = 97 * hash + Objects.hashCode(this.errorLevel);
+        hash = 97 * hash + Objects.hashCode(this.reason);
+        hash = 97 * hash + Objects.hashCode(this.reasonArgs);
         return hash;
     }
 
@@ -147,7 +149,7 @@ public abstract class AValidationError {
         if (!Objects.equals(this.ref, other.ref)) {
             return false;
         }
-        if (this.errorCode != other.errorCode) {
+        if (!Objects.equals(this.errorCode, other.errorCode)) {
             return false;
         }
         if (this.errorLevel != other.errorLevel) {
@@ -161,5 +163,7 @@ public abstract class AValidationError {
         }
         return true;
     }
+
+ 
 
 }

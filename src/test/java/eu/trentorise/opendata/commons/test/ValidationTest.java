@@ -72,12 +72,12 @@ public class ValidationTest {
 
         assertEquals("*", ValidationError.of().getRef().getJsonPath());
         
-        ValidationError.of(Ref.of(), ErrorLevel.SEVERE, 0, "", ImmutableMap.of("", ""));
+        ValidationError.of(Ref.of(), ErrorLevel.SEVERE, "0", "", ImmutableMap.of("", ""));
         
-        assertEquals("$", ValidationError.of(Ref.of("$"), ErrorLevel.INFO, 0, "").getRef().getJsonPath());
-        assertEquals("*", ValidationError.of((Ref) null, ErrorLevel.INFO, 0, "").getRef().getJsonPath());        
+        assertEquals("$", ValidationError.of(Ref.of("$"), ErrorLevel.INFO, "0", "").getRef().getJsonPath());
+        assertEquals("*", ValidationError.of((Ref) null, ErrorLevel.INFO, "0", "").getRef().getJsonPath());        
         
-        ValidationError v1 = ValidationError.of(Ref.of(), ErrorLevel.INFO, 0, "a{0}c", "0", "b");
+        ValidationError v1 = ValidationError.of(Ref.of(), ErrorLevel.INFO, "0", "a{0}c", "0", "b");
         
         // this is unbelievable, if I don't put (Map) the compiler picks the wrong method with varargs Object... , 
         // but passing a HashMap the compiler works as expected!!!!
@@ -90,7 +90,7 @@ public class ValidationTest {
         hm2.put("0","b");
         assertEquals("ab", MessageFormat.format("a{0}", hm2));
                 
-        assertEquals(ImmutableMap.of("b","c"), ValidationError.of(Ref.of(), ErrorLevel.INFO, 0, "a", "b", "c").getReasonArgs());
+        assertEquals(ImmutableMap.of("b","c"), ValidationError.of(Ref.of(), ErrorLevel.INFO, "0", "a", "b", "c").getReasonArgs());
 
     }
     
@@ -99,8 +99,8 @@ public class ValidationTest {
     public void testEquals(){
         assertFalse(ValidationError.of().equals(""));
         assertFalse(ValidationError.of().equals(null));
-        assertEquals(ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, 1, "a{x}", "x",3).hashCode(), 
-                   ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, 1, "a{x}", "x",3).hashCode());                
+        assertEquals(ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, "1", "a{x}", "x",3).hashCode(), 
+                   ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, "1", "a{x}", "x",3).hashCode());                
         
     }    
 }

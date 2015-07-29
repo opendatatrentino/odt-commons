@@ -15,10 +15,8 @@
  */
 package eu.trentorise.opendata.commons.validation;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.concurrent.Immutable;
@@ -26,6 +24,9 @@ import javax.annotation.concurrent.Immutable;
 /**
  * Standard implementation of {@link AValidationError}
  *
+ * 
+ * TODO maybe we don't need this, javax.validation seems decent enough
+ * 
  * @author David Leoni
  */
 @Immutable
@@ -40,7 +41,7 @@ public final class ValidationError extends AValidationError {
         super();
     }
 
-    private ValidationError(Ref ref, ErrorLevel errorLevel, int errorCode, String reason, Map<String, ?> reasonArgs) {
+    private ValidationError(Ref ref, ErrorLevel errorLevel, String errorCode, String reason, Map<String, ?> reasonArgs) {
         super(ref, errorLevel, errorCode, reason, reasonArgs);
     }
 
@@ -63,7 +64,7 @@ public final class ValidationError extends AValidationError {
      * @param reasonArgs the arguments to be substituted to the {@code reason}
      * placeholder
      */
-    public static ValidationError of(Ref ref, ErrorLevel errorLevel, int errorCode, String reason, Map<String, ?> reasonArgs) {
+    public static ValidationError of(Ref ref, ErrorLevel errorLevel, String errorCode, String reason, Map<String, ?> reasonArgs) {
         return new ValidationError(ref, errorLevel, errorCode, reason, reasonArgs);
     }
 
@@ -76,7 +77,7 @@ public final class ValidationError extends AValidationError {
      * @param errorCode the error code. If unknown pass 0.
      * @param reason the error reason string, with no placeholders.
      */
-    public static ValidationError of(Ref ref, ErrorLevel errorLevel, int errorCode, String reason) {
+    public static ValidationError of(Ref ref, ErrorLevel errorLevel, String errorCode, String reason) {
         return new ValidationError(ref, errorLevel, errorCode, reason, ImmutableMap.<String, Object>of());
     }    
     
@@ -90,7 +91,7 @@ public final class ValidationError extends AValidationError {
      * {@link AValidationError#getReason()} for placeholders format. Internally,
      * {@code reason} will be stored as is, without substitution.
      */
-    public static ValidationError of(Ref ref, ErrorLevel errorLevel, int errorCode, String reason, String reasonArgName1, Object reasonArg1) {
+    public static ValidationError of(Ref ref, ErrorLevel errorLevel, String errorCode, String reason, String reasonArgName1, Object reasonArg1) {
         return new ValidationError(ref, errorLevel, errorCode, reason, ImmutableMap.of(reasonArgName1, reasonArg1));
     }
     
@@ -105,7 +106,7 @@ public final class ValidationError extends AValidationError {
      * {@link AValidationError#getReason()} for placeholders format. Internally,
      * {@code reason} will be stored as is, without substitution.
      */
-    public static ValidationError of(Ref ref, ErrorLevel errorLevel, int errorCode, String reason, 
+    public static ValidationError of(Ref ref, ErrorLevel errorLevel, String errorCode, String reason, 
             String reasonArgName1, Object reasonArg1,
             String argName2, Object reasonArg2) {
         return new ValidationError(ref, errorLevel, errorCode, reason, ImmutableMap.of(reasonArgName1, reasonArg1, reasonArgName1, reasonArg2));
