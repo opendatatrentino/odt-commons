@@ -56,12 +56,15 @@
     </developers>
     
     <build>
-        <plugins>                                             
+        <plugins>         
+            
+                                          
                         
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>         
+            
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -94,6 +97,15 @@
     </build>
     
     <dependencies>
+        
+        <dependency>
+            <groupId>org.joda</groupId>
+            <artifactId>joda-convert</artifactId>
+            <version>1.2</version>
+            <scope>compile</scope>
+            <optional>true</optional><!-- mandatory in Scala -->
+        </dependency>     
+
         
         <dependency>
             <groupId>com.google.guava</groupId>        
