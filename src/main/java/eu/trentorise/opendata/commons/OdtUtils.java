@@ -240,8 +240,7 @@ public final class OdtUtils {
         return coll;
     }
 
-    /**     
-     * @deprecated use Guava {@link com.google.common.base.Strings#isNullOrEmpty(java.lang.String) } instead
+    /**         
      * Returns true if provided string is non null and non empty .
      */
     public static boolean isNotEmpty(@Nullable String string) {
