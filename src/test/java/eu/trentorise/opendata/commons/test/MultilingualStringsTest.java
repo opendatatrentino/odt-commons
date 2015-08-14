@@ -48,8 +48,7 @@ public class MultilingualStringsTest {
         assertFalse(Dict.of("hello").isEmpty());
         assertTrue(Dict.of().locales().isEmpty());        
         assertEquals(Dict.of("a").string(Locale.ROOT), "a");        
-        
-        
+                
         assertEquals(ImmutableList.of("a", "a", "b"),
                      Dict.builder().put("a").put("a","b").build().strings(Locale.ROOT));
         

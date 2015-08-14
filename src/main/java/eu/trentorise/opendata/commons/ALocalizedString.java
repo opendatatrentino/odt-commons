@@ -33,6 +33,7 @@ abstract class ALocalizedString implements Serializable {
 
     /**
      * Returns the locale of the string. Default locale is {@link Locale#ROOT}
+     * @deprecated use {#loc()} instead. (This one is kept for java bean compatibility)
      */
     @Value.Default    
     public Locale getLocale() {
@@ -40,13 +41,30 @@ abstract class ALocalizedString implements Serializable {
     }
 
     /**
-     * Returns the string.
+     * Returns the string, which is never null.
+     * @deprecated use {#str()} instead. (This one is kept for java bean compatibility)
      */
     @Value.Default    
     public String getString() {
         return "";
     }
 
+    /**
+     * Returns the string, which is never null.
+     * @since 1.1
+     */
+    public String str(){
+        return getString();
+    }
+
+    /**
+     * Returns the locale. Default locale is {@link Locale#ROOT}
+     * @since 1.1
+     */    
+    public Locale loc(){
+        return getLocale();
+    }
+    
     /**
      * Returns a LocalizedString with default locale {@link Locale#ROOT}
      *

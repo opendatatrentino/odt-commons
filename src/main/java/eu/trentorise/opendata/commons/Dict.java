@@ -44,7 +44,7 @@ public final class Dict implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final Dict INSTANCE = new Dict();
-    
+
     private static final int PADDING = 10;
 
     private ImmutableListMultimap<Locale, String> strings;
@@ -124,7 +124,23 @@ public final class Dict implements Serializable {
 
     /**
      * Gets the translations in the given locale.
+     * 
+     * @param locale the language of the desired translations
+     * @return the strings in the given locale if present. If no string is
+     * present an empty list is returned.
      *
+     * @see #strs(java.util.Locale)
+     * @since 1.1
+     */    
+    public ImmutableList<String> strs(Locale locale) {        
+        return strings.get(locale);
+    }    
+    
+    /**
+     * Gets the translations in the given locale.
+     *
+     * @deprecated use {@link #get(java.util.Locale) instead}
+     * 
      * @param locale the language of the desired translations
      * @return the strings in the given locale if present. If no string is
      * present an empty list is returned.
@@ -132,28 +148,38 @@ public final class Dict implements Serializable {
      * @see #string(java.util.Locale)
      */
     public ImmutableList<String> strings(Locale locale) {
-        Preconditions.checkNotNull(locale);
-        if (strings.containsKey(locale)) {
-            return strings.get(locale);
-        } else {
-            return ImmutableList.of();
-        }
+        return strings.get(locale);
     }
 
     /**
-     * Gets the first translation in the given locale.
+     * Gets the first translation in the given locale.          
      *
      * @param locale the language of the desired translation
      * @return the string in the given locale if present. If no string is
      * present the empty string is returned.
+     * 
+     * @since 1.1
      */
-    public String string(Locale locale) {
+    public String str(Locale locale) {
         List<String> rets = strings(locale);
         if (rets.isEmpty()) {
             return "";
         } else {
             return rets.get(0);
         }
+    }
+
+    /**
+     * Gets the first translation in the given locale.
+     *
+     * @deprecated use {@link #gets(java.util.Locale)  instead}
+     *
+     * @param locale the language of the desired translation
+     * @return the string in the given locale if present. If no string is
+     * present the empty string is returned.
+     */
+    public String string(Locale locale) {
+       return str(locale);
     }
 
     /**
@@ -204,7 +230,9 @@ public final class Dict implements Serializable {
     /**
      * Returns the first non empty string in the given locale. If it can't find
      * it, an empty string is returned.
-     * @param locale the locale of the desired tranlsation. If unknown, use {@link Locale#ROOT}.
+     *
+     * @param locale the locale of the desired tranlsation. If unknown, use
+     * {@link Locale#ROOT}.
      */
     public String nonEmptyString(Locale locale) {
         Preconditions.checkNotNull(locale);
@@ -218,6 +246,7 @@ public final class Dict implements Serializable {
         return "";
     }
 
+    
     /**
      *
      * Tries its best to return a meaningful string in one of the provided
@@ -228,8 +257,43 @@ public final class Dict implements Serializable {
      * English and then whatever it can find in the list of translations. Empty
      * strings are discarded. If no valid translation is available at all,
      * returns {@link LocalizedString#of()}.
+     * 
+     * @deprecated use {@link #any(java.lang.Iterable)} instead
      */
     public LocalizedString anyString(Iterable<Locale> locales) {
+        return any(locales);
+    }
+
+    /**
+     *
+     * Tries its best to return a meaningful string in one of the provided
+     * languages. For more details, see {@link #anyString(java.util.Locale...)}
+     *
+     * Superceeds {@link #anyString(java.util.Locale...)}.
+     * 
+     * @since 1.1
+     */
+    public LocalizedString any(Locale... locales) {
+        return any(Arrays.asList(locales));
+    }
+    
+    
+    /**
+     *
+     * Tries its best to return a meaningful string in one of the provided
+     * languages.
+     *
+     * Superceeds {@link #anyString(java.lang.Iterable) }.
+     * 
+     * @return A string in the first available language from the list of
+     * provided locales. If no translation is available, in order, defaults to
+     * English and then whatever it can find in the list of translations. Empty
+     * strings are discarded. If no valid translation is available at all,
+     * returns {@link LocalizedString#of()}.
+     * 
+     * @since 1.1
+     */
+    public LocalizedString any(Iterable<Locale> locales) {
         Preconditions.checkNotNull(locales);
 
         for (Locale loc : locales) {
@@ -259,18 +323,17 @@ public final class Dict implements Serializable {
      * Tries its best to return a meaningful string in one of the provided
      * languages. For more details, see {@link #anyString(java.util.Locale...)}
      *
+     * @deprecated use {@link #any(java.util.Locale...) } instead
      */
     public LocalizedString anyString(Locale... locales) {
-        return anyString(Arrays.asList(locales));
-
+        return any(locales);
     }
 
-  
     /**
      *
      * Returns a new dictionary with provided array of strings with the same
      * locale. Strings will be appended to existing ones for the same locale.
-     *
+     *      
      * @param locale the locale of the strings
      * @param strings the strings in the given locale
      *
@@ -443,7 +506,7 @@ public final class Dict implements Serializable {
      * Returns all the strings in the dictionary in a nicely formatted way.
      */
     @Override
-    public String toString() {        
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
         sb.append("{\n");
@@ -485,7 +548,7 @@ public final class Dict implements Serializable {
 
     /**
      * Returns a new dictionary by merging all the provided dicts together
-     */    
+     */
     public static Dict ofDicts(Iterable<Dict> dicts) {
         Dict.Builder retb = Dict.builder();
         for (Dict st : dicts) {
