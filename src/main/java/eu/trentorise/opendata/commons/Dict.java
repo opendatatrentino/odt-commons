@@ -258,10 +258,10 @@ public final class Dict implements Serializable {
      * strings are discarded. If no valid translation is available at all,
      * returns {@link LocalizedString#of()}.
      * 
-     * @deprecated use {@link #any(java.lang.Iterable)} instead
+     * @deprecated use {@link #some(java.lang.Iterable)} instead
      */
     public LocalizedString anyString(Iterable<Locale> locales) {
-        return any(locales);
+        return some(locales);
     }
 
     /**
@@ -273,8 +273,8 @@ public final class Dict implements Serializable {
      * 
      * @since 1.1
      */
-    public LocalizedString any(Locale... locales) {
-        return any(Arrays.asList(locales));
+    public LocalizedString some(Locale... locales) {
+        return some(Arrays.asList(locales));
     }
     
     
@@ -293,7 +293,7 @@ public final class Dict implements Serializable {
      * 
      * @since 1.1
      */
-    public LocalizedString any(Iterable<Locale> locales) {
+    public LocalizedString some(Iterable<Locale> locales) {
         Preconditions.checkNotNull(locales);
 
         for (Locale loc : locales) {
@@ -323,10 +323,10 @@ public final class Dict implements Serializable {
      * Tries its best to return a meaningful string in one of the provided
      * languages. For more details, see {@link #anyString(java.util.Locale...)}
      *
-     * @deprecated use {@link #any(java.util.Locale...) } instead
+     * @deprecated use {@link #some(java.util.Locale...) } instead
      */
     public LocalizedString anyString(Locale... locales) {
-        return any(locales);
+        return some(locales);
     }
 
     /**
