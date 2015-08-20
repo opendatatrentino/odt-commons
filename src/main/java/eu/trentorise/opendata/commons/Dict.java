@@ -129,10 +129,10 @@ public final class Dict implements Serializable {
      * @return the strings in the given locale if present. If no string is
      * present an empty list is returned.
      *
-     * @see #strs(java.util.Locale)
+     * @see #get(java.util.Locale)
      * @since 1.1
      */    
-    public ImmutableList<String> strs(Locale locale) {        
+    public ImmutableList<String> get(Locale locale) {        
         return strings.get(locale);
     }    
     
@@ -172,7 +172,7 @@ public final class Dict implements Serializable {
     /**
      * Gets the first translation in the given locale.
      *
-     * @deprecated use {@link #gets(java.util.Locale)  instead}
+     * @deprecated use {@link #str(java.util.Locale)  instead}
      *
      * @param locale the language of the desired translation
      * @return the string in the given locale if present. If no string is
