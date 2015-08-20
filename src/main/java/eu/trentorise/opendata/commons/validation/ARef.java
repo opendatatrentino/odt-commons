@@ -61,19 +61,19 @@ abstract class ARef implements Serializable {
     }
 
     /**
-     * A reference to one or more elements expressed as a JsonPath. See
-     * <a href="https://github.com/jayway/JsonPath" target="_blank">JSONPath
-     * syntax</a>
+     * A reference to one or more elements expressed as a
+     * {@link eu.trentorise.opendata.traceprov.path.TracePath TracePath}. By
+     * default returns '*'
      *
      */
     @Value.Default
-    public String getJsonPath() {
+    public String getTracePath() {
         return "*";
     }
 
     @Value.Check
     protected void check() {
-        Preconditions.checkState(getJsonPath().trim().length() > 0, "Found empty jsonpath!");
+        Preconditions.checkState(getTracePath().trim().length() > 0, "Found empty jsonpath!");
         Preconditions.checkState(getPhysicalRow() >= -1, "physical row should be grater or equal to -1, found instead %s ", getPhysicalRow());
         Preconditions.checkState(getPhysicalColumn() >= -1, "physical column should be grater or equal to -1, found instead %s ", getPhysicalColumn());
     }

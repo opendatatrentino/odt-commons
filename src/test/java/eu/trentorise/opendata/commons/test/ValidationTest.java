@@ -70,12 +70,12 @@ public class ValidationTest {
     @Test
     public void testValidation() {
 
-        assertEquals("*", ValidationError.of().getRef().getJsonPath());
+        assertEquals("*", ValidationError.of().getRef().getTracePath());
         
         ValidationError.of(Ref.of(), ErrorLevel.SEVERE, "0", "", ImmutableMap.of("", ""));
         
-        assertEquals("$", ValidationError.of(Ref.of("$"), ErrorLevel.INFO, "0", "").getRef().getJsonPath());
-        assertEquals("*", ValidationError.of((Ref) null, ErrorLevel.INFO, "0", "").getRef().getJsonPath());        
+        assertEquals("$", ValidationError.of(Ref.of("$"), ErrorLevel.INFO, "0", "").getRef().getTracePath());
+        assertEquals("*", ValidationError.of((Ref) null, ErrorLevel.INFO, "0", "").getRef().getTracePath());        
         
         ValidationError v1 = ValidationError.of(Ref.of(), ErrorLevel.INFO, "0", "a{0}c", "0", "b");
         
