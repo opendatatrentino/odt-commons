@@ -17,8 +17,20 @@ package eu.trentorise.opendata.commons;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Multimap;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
@@ -48,8 +60,9 @@ public final class OdtUtils {
      * Java 7 has Locale.forLanguageTag(format), this is the substitute for Java
      * 6 <br/>
      *
-     * @deprecated Now library targets Java >= 7, so use Locale.forLanguageTag(format) instead.
-     * 
+     * @deprecated Now library targets Java >= 7, so use
+     * Locale.forLanguageTag(format) instead.
+     *
      * Copied from apache.commons.lang, with the change it returns Locale.ROOT
      * for null input <br/>
      * -------------------------------------------------------------------------
@@ -126,10 +139,11 @@ public final class OdtUtils {
      * Converts a Java locale to a String.
      *
      * @see #languageTagToLocale(java.lang.String) fo the inverse operation
-     * @deprecated Now library targets Java >= 7, so use Locale.toLanguageTag() instead.
+     * @deprecated Now library targets Java >= 7, so use Locale.toLanguageTag()
+     * instead.
      */
     public static String localeToLanguageTag(Locale locale) {
-        if (locale == null) {           
+        if (locale == null) {
             LOG.warning("Found null locale, returning empty string (which corresponds to Locale.ROOT)");
             return "";
         }
@@ -156,7 +170,7 @@ public final class OdtUtils {
      */
     public static String removeTrailingSlash(String url) {
         checkNotNull(url, "invalid url!");
-        String tempUrl = url;
+        String tempUrl = url.trim();
         while (tempUrl.endsWith("/")) {
             tempUrl = tempUrl.substring(0, tempUrl.length() - 1);
         }
@@ -168,8 +182,10 @@ public final class OdtUtils {
      * heuristics to detect oddities, like i.e. the string "null" inside the
      * url.
      *
-     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotDirtyUrl(java.lang.String, java.lang.Object) }
-     * @param url the URL to check
+     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotDirtyUrl(java.lang.String, java.lang.Object)
+     * }
+     * @
+     * param url the URL to check
      * @param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
      * prepended to more specific error messages.
@@ -198,8 +214,10 @@ public final class OdtUtils {
      *
      * Checks if provided string is non null and non empty.
      *
-     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotEmpty(java.lang.String, java.lang.Object)  }
-     * @param prependedErrorMessage the exception message to use if the check
+     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotEmpty(java.lang.String, java.lang.Object)
+     * }
+     * @
+     * param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
      * prepended to more specific error messages.
      *
@@ -215,21 +233,19 @@ public final class OdtUtils {
         return string;
     }
 
-    
-    
-    
-     /**
+    /**
      *
-     * Checks if provided collection is non null and non empty . 
+     * Checks if provided collection is non null and non empty .
      *
-     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotEmpty(java.lang.Iterable, java.lang.Object)   }
-
+     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotEmpty(java.lang.Iterable, java.lang.Object)
+     * }
+     *
      * @param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
      * prepended to more specific error messages.
      *
      * @throws IllegalArgumentException if provided collection fails validation
-     * 
+     *
      * @return a non-null non-empty collection
      */
     public static <T> Collection<T> checkNotEmpty(@Nullable Collection<T> coll, @Nullable Object prependedErrorMessage) {
@@ -240,7 +256,7 @@ public final class OdtUtils {
         return coll;
     }
 
-    /**         
+    /**
      * Returns true if provided string is non null and non empty .
      */
     public static boolean isNotEmpty(@Nullable String string) {
@@ -252,6 +268,8 @@ public final class OdtUtils {
      * Parses an URL having a numeric ID after the provided prefix, i.e. for
      * prefix 'http://entitypedia.org/concepts/' and url
      * http://entitypedia.org/concepts/14324 returns 14324
+     *
+     * @deprecated this shouldn't be here.....
      *
      * @throws IllegalArgumentException on invalid URL
      */
@@ -299,7 +317,7 @@ public final class OdtUtils {
      * @since 1.1
      */
     public static String format(String template, @Nullable Object... args) {
-        if (template == null){
+        if (template == null) {
             LOG.warning("Found null template while formatting, converting it to \"null\"");
         }
         template = String.valueOf(template); // null -> "null"
@@ -332,5 +350,42 @@ public final class OdtUtils {
 
         return builder.toString();
     }
-    
+
+    /**
+     * Extracts parameters from given url. Works also with multiple params with
+     * same name.
+     *
+     * @return map of param name : [args]
+     * @throws IllegalArgumentException
+     */
+    public static Multimap<String, String> parseUrlParams(String url) {
+        URL u;
+        try {
+            u = new URL(url);
+        }
+        catch (MalformedURLException ex) {
+            throw new IllegalArgumentException("Ill formed url!", ex);
+        }
+        Multimap<String, String> queryPairs = LinkedListMultimap.create();
+        final String[] pairs = u.getQuery().split("&");
+
+        try {
+            for (String pair : pairs) {
+                final int idx = pair.indexOf("=");
+
+                final String key;
+
+                key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), "UTF-8") : pair;
+
+                
+                final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : "";
+                queryPairs.put(key,value);
+            }
+            return queryPairs;
+        }
+        catch (UnsupportedEncodingException ex) {
+            throw new IllegalArgumentException("Encoding not supported!", ex);
+        }
+    }
+
 }

@@ -124,23 +124,23 @@ public final class Dict implements Serializable {
 
     /**
      * Gets the translations in the given locale.
-     * 
+     *
      * @param locale the language of the desired translations
      * @return the strings in the given locale if present. If no string is
      * present an empty list is returned.
      *
      * @see #get(java.util.Locale)
      * @since 1.1
-     */    
-    public ImmutableList<String> get(Locale locale) {        
+     */
+    public ImmutableList<String> get(Locale locale) {
         return strings.get(locale);
-    }    
-    
+    }
+
     /**
      * Gets the translations in the given locale.
      *
      * @deprecated use {@link #get(java.util.Locale) instead}
-     * 
+     *
      * @param locale the language of the desired translations
      * @return the strings in the given locale if present. If no string is
      * present an empty list is returned.
@@ -152,12 +152,13 @@ public final class Dict implements Serializable {
     }
 
     /**
-     * Gets the first translation in the given locale.          
-     *
+     * Gets the first translation in the given locale. Superceeds
+     * {@link #string(java.util.Locale)}
+     * 
      * @param locale the language of the desired translation
      * @return the string in the given locale if present. If no string is
      * present the empty string is returned.
-     * 
+     *
      * @since 1.1
      */
     public String str(Locale locale) {
@@ -179,7 +180,7 @@ public final class Dict implements Serializable {
      * present the empty string is returned.
      */
     public String string(Locale locale) {
-       return str(locale);
+        return str(locale);
     }
 
     /**
@@ -246,7 +247,6 @@ public final class Dict implements Serializable {
         return "";
     }
 
-    
     /**
      *
      * Tries its best to return a meaningful string in one of the provided
@@ -257,7 +257,7 @@ public final class Dict implements Serializable {
      * English and then whatever it can find in the list of translations. Empty
      * strings are discarded. If no valid translation is available at all,
      * returns {@link LocalizedString#of()}.
-     * 
+     *
      * @deprecated use {@link #some(java.lang.Iterable)} instead
      */
     public LocalizedString anyString(Iterable<Locale> locales) {
@@ -270,27 +270,28 @@ public final class Dict implements Serializable {
      * languages. For more details, see {@link #anyString(java.util.Locale...)}
      *
      * Superceeds {@link #anyString(java.util.Locale...)}.
-     * 
+     *
      * @since 1.1
      */
     public LocalizedString some(Locale... locales) {
         return some(Arrays.asList(locales));
     }
+
     
-    
+
     /**
      *
      * Tries its best to return a meaningful string in one of the provided
      * languages.
      *
      * Superceeds {@link #anyString(java.lang.Iterable) }.
-     * 
+     *
      * @return A string in the first available language from the list of
      * provided locales. If no translation is available, in order, defaults to
      * English and then whatever it can find in the list of translations. Empty
      * strings are discarded. If no valid translation is available at all,
      * returns {@link LocalizedString#of()}.
-     * 
+     *
      * @since 1.1
      */
     public LocalizedString some(Iterable<Locale> locales) {
@@ -333,7 +334,7 @@ public final class Dict implements Serializable {
      *
      * Returns a new dictionary with provided array of strings with the same
      * locale. Strings will be appended to existing ones for the same locale.
-     *      
+     *
      * @param locale the locale of the strings
      * @param strings the strings in the given locale
      *
