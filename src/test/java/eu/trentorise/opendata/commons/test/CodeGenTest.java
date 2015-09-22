@@ -17,12 +17,13 @@ package eu.trentorise.opendata.commons.test;
 
 import com.google.common.collect.ImmutableList;
 import eu.trentorise.opendata.commons.OdtConfig;
-import eu.trentorise.opendata.commons.test.codegen.AComplexFat;
 import eu.trentorise.opendata.commons.test.codegen.AFatClass;
-import eu.trentorise.opendata.commons.test.codegen.AbstractComplexFat;
 import eu.trentorise.opendata.commons.test.codegen.ComplexFat;
 import eu.trentorise.opendata.commons.test.codegen.FatClass;
 import eu.trentorise.opendata.commons.test.codegen.SlimClass;
+import java.util.Map;
+import org.immutables.value.Value;
+import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
@@ -70,5 +71,39 @@ public class CodeGenTest {
         
     }
 
+    @Value.Immutable
+    static abstract class C {
+        public abstract Map<String, Integer> getMyMap();
+    }
+
+    /**
+     * Shows that unforutnately we cannot put duplicate keys in map
+     */
+    @Test 
+    public void testImmutablesMap1(){
+	try {
+	    ImmutableC c1 = ImmutableC.builder().putMyMap("a", 1).putMyMap("a", 1).build();
+	} catch (IllegalArgumentException ex){
+            
+        }
+    }
+    
+    
+    /**
+     * Shows that unforutnately we cannot put duplicate keys from copied map
+     */
+    @Test 
+    public void testImmutablesMap2(){
+        ImmutableC c1 = ImmutableC.builder().putMyMap("a", 1).build();
+        
+        try {
+            ImmutableC c2 = ImmutableC.builder().from(c1).putMyMap("a", 1).build();
+            Assert.fail();
+        } catch (IllegalArgumentException ex){
+            
+        }
+    }
+    
+    
 
 }

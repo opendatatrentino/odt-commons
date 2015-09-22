@@ -17,6 +17,8 @@ package eu.trentorise.opendata.commons;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
@@ -61,78 +63,84 @@ public final class OdtUtils {
      * 6 <br/>
      *
      * @deprecated Now library targets Java >= 7, so use
-     * Locale.forLanguageTag(format) instead.
+     *             Locale.forLanguageTag(format) instead.
      *
-     * Copied from apache.commons.lang, with the change it returns Locale.ROOT
-     * for null input <br/>
-     * -------------------------------------------------------------------------
-     * <p>
-     * Converts a String to a Locale.</p>
+     *             Copied from apache.commons.lang, with the change it returns
+     *             Locale.ROOT for null input <br/>
+     *             -------------------------------------------------------------
+     *             ------------
+     *             <p>
+     *             Converts a String to a Locale.
+     *             </p>
      *
-     * <p>
-     * This method takes the string format of a locale and creates the locale
-     * object from it.</p>
+     *             <p>
+     *             This method takes the string format of a locale and creates
+     *             the locale object from it.
+     *             </p>
      *
-     * <pre>
+     *             <pre>
      *   LocaleUtils.toLocale("en")         = new Locale("en", "")
      *   LocaleUtils.toLocale("en_GB")      = new Locale("en", "GB")
      *   LocaleUtils.toLocale("en_GB_xxx")  = new Locale("en", "GB", "xxx")   (#)
-     * </pre>
+     *             </pre>
      *
-     * <p>
-     * (#) The behaviour of the JDK variant constructor changed between JDK1.3
-     * and JDK1.4. In JDK1.3, the constructor upper cases the variant, in
-     * JDK1.4, it doesn't. Thus, the result from getVariant() may vary depending
-     * on your JDK.</p>
+     *             <p>
+     *             (#) The behaviour of the JDK variant constructor changed
+     *             between JDK1.3 and JDK1.4. In JDK1.3, the constructor upper
+     *             cases the variant, in JDK1.4, it doesn't. Thus, the result
+     *             from getVariant() may vary depending on your JDK.
+     *             </p>
      *
-     * <p>
-     * This method validates the input strictly. The language code must be
-     * lowercase. The country code must be uppercase. The separator must be an
-     * underscore. The length must be correct.
-     * </p>
+     *             <p>
+     *             This method validates the input strictly. The language code
+     *             must be lowercase. The country code must be uppercase. The
+     *             separator must be an underscore. The length must be correct.
+     *             </p>
      *
-     * @param str the locale String to convert, null returns null
+     * @param str
+     *            the locale String to convert, null returns null
      * @return a Locale, Locale.ROOT if null input
-     * @throws IllegalArgumentException if the string is an invalid format
+     * @throws IllegalArgumentException
+     *             if the string is an invalid format
      */
     public static Locale languageTagToLocale(String str) {
 
-        if (str == null) {
-            LOG.warning("Found null locale, returning Locale.ROOT");
-            return Locale.ROOT;
-        }
-        int len = str.length();
-        if (len != 2 && len != 5 && len < 7) {
-            throw new IllegalArgumentException("Invalid locale format: " + str);
-        }
-        char ch0 = str.charAt(0);
-        char ch1 = str.charAt(1);
-        if (ch0 < 'a' || ch0 > 'z' || ch1 < 'a' || ch1 > 'z') {
-            throw new IllegalArgumentException("Invalid locale format: " + str);
-        }
-        if (len == 2) {
-            return new Locale(str, "");
-        } else {
-            if (str.charAt(2) != '_') {
-                throw new IllegalArgumentException("Invalid locale format: " + str);
-            }
-            char ch3 = str.charAt(3);
-            if (ch3 == '_') {
-                return new Locale(str.substring(0, 2), "", str.substring(4));
-            }
-            char ch4 = str.charAt(4);
-            if (ch3 < 'A' || ch3 > 'Z' || ch4 < 'A' || ch4 > 'Z') {
-                throw new IllegalArgumentException("Invalid locale format: " + str);
-            }
-            if (len == 5) {
-                return new Locale(str.substring(0, 2), str.substring(3, 5));
-            } else {
-                if (str.charAt(5) != '_') {
-                    throw new IllegalArgumentException("Invalid locale format: " + str);
-                }
-                return new Locale(str.substring(0, 2), str.substring(3, 5), str.substring(6));
-            }
-        }
+	if (str == null) {
+	    LOG.warning("Found null locale, returning Locale.ROOT");
+	    return Locale.ROOT;
+	}
+	int len = str.length();
+	if (len != 2 && len != 5 && len < 7) {
+	    throw new IllegalArgumentException("Invalid locale format: " + str);
+	}
+	char ch0 = str.charAt(0);
+	char ch1 = str.charAt(1);
+	if (ch0 < 'a' || ch0 > 'z' || ch1 < 'a' || ch1 > 'z') {
+	    throw new IllegalArgumentException("Invalid locale format: " + str);
+	}
+	if (len == 2) {
+	    return new Locale(str, "");
+	} else {
+	    if (str.charAt(2) != '_') {
+		throw new IllegalArgumentException("Invalid locale format: " + str);
+	    }
+	    char ch3 = str.charAt(3);
+	    if (ch3 == '_') {
+		return new Locale(str.substring(0, 2), "", str.substring(4));
+	    }
+	    char ch4 = str.charAt(4);
+	    if (ch3 < 'A' || ch3 > 'Z' || ch4 < 'A' || ch4 > 'Z') {
+		throw new IllegalArgumentException("Invalid locale format: " + str);
+	    }
+	    if (len == 5) {
+		return new Locale(str.substring(0, 2), str.substring(3, 5));
+	    } else {
+		if (str.charAt(5) != '_') {
+		    throw new IllegalArgumentException("Invalid locale format: " + str);
+		}
+		return new Locale(str.substring(0, 2), str.substring(3, 5), str.substring(6));
+	    }
+	}
     }
 
     /**
@@ -140,14 +148,14 @@ public final class OdtUtils {
      *
      * @see #languageTagToLocale(java.lang.String) fo the inverse operation
      * @deprecated Now library targets Java >= 7, so use Locale.toLanguageTag()
-     * instead.
+     *             instead.
      */
     public static String localeToLanguageTag(Locale locale) {
-        if (locale == null) {
-            LOG.warning("Found null locale, returning empty string (which corresponds to Locale.ROOT)");
-            return "";
-        }
-        return locale.getLanguage();
+	if (locale == null) {
+	    LOG.warning("Found null locale, returning empty string (which corresponds to Locale.ROOT)");
+	    return "";
+	}
+	return locale.getLanguage();
     }
 
     /**
@@ -157,24 +165,24 @@ public final class OdtUtils {
      * @param url
      */
     public static String addSlash(String url) {
-        checkNotNull(url, "invalid url!");
-        if (url.endsWith("/")) {
-            return url;
-        } else {
-            return url + "/";
-        }
+	checkNotNull(url, "invalid url!");
+	if (url.endsWith("/")) {
+	    return url;
+	} else {
+	    return url + "/";
+	}
     }
 
     /**
      * Returns the provided url with all trailing slash at the end removed.
      */
     public static String removeTrailingSlash(String url) {
-        checkNotNull(url, "invalid url!");
-        String tempUrl = url.trim();
-        while (tempUrl.endsWith("/")) {
-            tempUrl = tempUrl.substring(0, tempUrl.length() - 1);
-        }
-        return tempUrl;
+	checkNotNull(url, "invalid url!");
+	String tempUrl = url.trim();
+	while (tempUrl.endsWith("/")) {
+	    tempUrl = tempUrl.substring(0, tempUrl.length() - 1);
+	}
+	return tempUrl;
     }
 
     /**
@@ -182,86 +190,93 @@ public final class OdtUtils {
      * heuristics to detect oddities, like i.e. the string "null" inside the
      * url.
      *
-     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotDirtyUrl(java.lang.String, java.lang.Object)
-     * }
-     * @
+     * @deprecated Moved to
+     *             {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotDirtyUrl(java.lang.String, java.lang.Object) } @
      * param url the URL to check
-     * @param prependedErrorMessage the exception message to use if the check
-     * fails; will be converted to a string using String.valueOf(Object) and
-     * prepended to more specific error messages.
+     * @param prependedErrorMessage
+     *            the exception message to use if the check fails; will be
+     *            converted to a string using String.valueOf(Object) and
+     *            prepended to more specific error messages.
      *
-     * @throws IllegalArgumentException if provided URL fails validation.
+     * @throws IllegalArgumentException
+     *             if provided URL fails validation.
      *
      * @return the non-dirty URL that was validated
      *
      */
     public static String checkNotDirtyUrl(@Nullable String url, @Nullable Object prependedErrorMessage) {
-        checkNotEmpty(url, prependedErrorMessage);
+	checkNotEmpty(url, prependedErrorMessage);
 
-        if (url.equalsIgnoreCase("null")) {
-            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found URL with string \"" + url + "\" as content!");
-        }
+	if (url.equalsIgnoreCase("null")) {
+	    throw new IllegalArgumentException(String.valueOf(prependedErrorMessage)
+		    + " -- Reason: Found URL with string \"" + url + "\" as content!");
+	}
 
-        // todo delete this is a too radical checker...
-        if (url.toLowerCase().endsWith("/null")) {
-            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found URL ending with /\"null\": " + url);
-        }
+	// todo delete this is a too radical checker...
+	if (url.toLowerCase().endsWith("/null")) {
+	    throw new IllegalArgumentException(
+		    String.valueOf(prependedErrorMessage) + " -- Reason: Found URL ending with /\"null\": " + url);
+	}
 
-        return url;
+	return url;
     }
 
     /**
      *
      * Checks if provided string is non null and non empty.
      *
-     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotEmpty(java.lang.String, java.lang.Object)
-     * }
-     * @
+     * @deprecated Moved to
+     *             {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotEmpty(java.lang.String, java.lang.Object) } @
      * param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
      * prepended to more specific error messages.
      *
-     * @throws IllegalArgumentException if provided string fails validation
+     * @throws IllegalArgumentException
+     *             if provided string fails validation
      *
      * @return the non-empty string that was validated
      */
     public static String checkNotEmpty(String string, @Nullable Object prependedErrorMessage) {
-        checkArgument(string != null, "%s -- Reason: Found null string.", prependedErrorMessage);
-        if (string.length() == 0) {
-            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty string.");
-        }
-        return string;
+	checkArgument(string != null, "%s -- Reason: Found null string.", prependedErrorMessage);
+	if (string.length() == 0) {
+	    throw new IllegalArgumentException(
+		    String.valueOf(prependedErrorMessage) + " -- Reason: Found empty string.");
+	}
+	return string;
     }
 
     /**
      *
      * Checks if provided collection is non null and non empty .
      *
-     * @deprecated Moved to {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotEmpty(java.lang.Iterable, java.lang.Object)
-     * }
+     * @deprecated Moved to
+     *             {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotEmpty(java.lang.Iterable, java.lang.Object) }
      *
-     * @param prependedErrorMessage the exception message to use if the check
-     * fails; will be converted to a string using String.valueOf(Object) and
-     * prepended to more specific error messages.
+     * @param prependedErrorMessage
+     *            the exception message to use if the check fails; will be
+     *            converted to a string using String.valueOf(Object) and
+     *            prepended to more specific error messages.
      *
-     * @throws IllegalArgumentException if provided collection fails validation
+     * @throws IllegalArgumentException
+     *             if provided collection fails validation
      *
      * @return a non-null non-empty collection
      */
-    public static <T> Collection<T> checkNotEmpty(@Nullable Collection<T> coll, @Nullable Object prependedErrorMessage) {
-        checkArgument(coll != null, "%s -- Reason: Found null collection.", prependedErrorMessage);
-        if (coll.isEmpty()) {
-            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection.");
-        }
-        return coll;
+    public static <T> Collection<T> checkNotEmpty(@Nullable Collection<T> coll,
+	    @Nullable Object prependedErrorMessage) {
+	checkArgument(coll != null, "%s -- Reason: Found null collection.", prependedErrorMessage);
+	if (coll.isEmpty()) {
+	    throw new IllegalArgumentException(
+		    String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection.");
+	}
+	return coll;
     }
 
     /**
      * Returns true if provided string is non null and non empty .
      */
     public static boolean isNotEmpty(@Nullable String string) {
-        return string != null
-                && string.length() != 0;
+	return string != null && string.length() != 0;
     }
 
     /**
@@ -271,29 +286,29 @@ public final class OdtUtils {
      *
      * @deprecated this shouldn't be here.....
      *
-     * @throws IllegalArgumentException on invalid URL
+     * @throws IllegalArgumentException
+     *             on invalid URL
      */
     public static long parseNumericalId(String prefix, String url) {
 
-        checkNotNull(prefix, "prefix can't be null!");
-        checkNotEmpty(url, "Invalid url!");
+	checkNotNull(prefix, "prefix can't be null!");
+	checkNotEmpty(url, "Invalid url!");
 
-        String s;
-        if (prefix.length() > 0) {
-            int pos = url.indexOf(prefix);
-            if (pos != 0) {
-                throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + url);
-            }
-            s = url.substring(prefix.length());
-        } else {
-            s = url;
-        }
-        try {
-            return Long.parseLong(s);
-        }
-        catch (NumberFormatException ex) {
-            throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + url, ex);
-        }
+	String s;
+	if (prefix.length() > 0) {
+	    int pos = url.indexOf(prefix);
+	    if (pos != 0) {
+		throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + url);
+	    }
+	    s = url.substring(prefix.length());
+	} else {
+	    s = url;
+	}
+	try {
+	    return Long.parseLong(s);
+	} catch (NumberFormatException ex) {
+	    throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + url, ex);
+	}
 
     }
 
@@ -305,50 +320,53 @@ public final class OdtUtils {
      * will be appended to the end of the formatted message in square braces.
      * <br/>
      * <br/>
-     * (Copied from Guava's {@link com.google.common.base.Preconditions#format(java.lang.String, java.lang.Object...)
-     * })
+     * (Copied from Guava's
+     * {@link com.google.common.base.Preconditions#format(java.lang.String, java.lang.Object...) }
+     * )
      *
-     * @param template a non-null string containing 0 or more {@code %s}
-     * placeholders.
-     * @param args the arguments to be substituted into the message template.
-     * Arguments are converted to strings using {@link String#valueOf(Object)}.
-     * Arguments can be null.
+     * @param template
+     *            a non-null string containing 0 or more {@code %s}
+     *            placeholders.
+     * @param args
+     *            the arguments to be substituted into the message template.
+     *            Arguments are converted to strings using
+     *            {@link String#valueOf(Object)}. Arguments can be null.
      *
      * @since 1.1
      */
     public static String format(String template, @Nullable Object... args) {
-        if (template == null) {
-            LOG.warning("Found null template while formatting, converting it to \"null\"");
-        }
-        template = String.valueOf(template); // null -> "null"
+	if (template == null) {
+	    LOG.warning("Found null template while formatting, converting it to \"null\"");
+	}
+	template = String.valueOf(template); // null -> "null"
 
-        // start substituting the arguments into the '%s' placeholders
-        StringBuilder builder = new StringBuilder(template.length() + 16 * args.length);
-        int templateStart = 0;
-        int i = 0;
-        while (i < args.length) {
-            int placeholderStart = template.indexOf("%s", templateStart);
-            if (placeholderStart == -1) {
-                break;
-            }
-            builder.append(template.substring(templateStart, placeholderStart));
-            builder.append(args[i++]);
-            templateStart = placeholderStart + 2;
-        }
-        builder.append(template.substring(templateStart));
+	// start substituting the arguments into the '%s' placeholders
+	StringBuilder builder = new StringBuilder(template.length() + 16 * args.length);
+	int templateStart = 0;
+	int i = 0;
+	while (i < args.length) {
+	    int placeholderStart = template.indexOf("%s", templateStart);
+	    if (placeholderStart == -1) {
+		break;
+	    }
+	    builder.append(template.substring(templateStart, placeholderStart));
+	    builder.append(args[i++]);
+	    templateStart = placeholderStart + 2;
+	}
+	builder.append(template.substring(templateStart));
 
-        // if we run out of placeholders, append the extra args in square braces
-        if (i < args.length) {
-            builder.append(" [");
-            builder.append(args[i++]);
-            while (i < args.length) {
-                builder.append(", ");
-                builder.append(args[i++]);
-            }
-            builder.append(']');
-        }
+	// if we run out of placeholders, append the extra args in square braces
+	if (i < args.length) {
+	    builder.append(" [");
+	    builder.append(args[i++]);
+	    while (i < args.length) {
+		builder.append(", ");
+		builder.append(args[i++]);
+	    }
+	    builder.append(']');
+	}
 
-        return builder.toString();
+	return builder.toString();
     }
 
     /**
@@ -359,33 +377,51 @@ public final class OdtUtils {
      * @throws IllegalArgumentException
      */
     public static Multimap<String, String> parseUrlParams(String url) {
-        URL u;
-        try {
-            u = new URL(url);
-        }
-        catch (MalformedURLException ex) {
-            throw new IllegalArgumentException("Ill formed url!", ex);
-        }
-        Multimap<String, String> queryPairs = LinkedListMultimap.create();
-        final String[] pairs = u.getQuery().split("&");
+	URL u;
+	try {
+	    u = new URL(url);
+	} catch (MalformedURLException ex) {
+	    throw new IllegalArgumentException("Ill formed url!", ex);
+	}
+	Multimap<String, String> queryPairs = LinkedListMultimap.create();
+	final String[] pairs = u.getQuery().split("&");
 
-        try {
-            for (String pair : pairs) {
-                final int idx = pair.indexOf("=");
+	try {
+	    for (String pair : pairs) {
+		final int idx = pair.indexOf("=");
 
-                final String key;
+		final String key;
 
-                key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), "UTF-8") : pair;
+		key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), "UTF-8") : pair;
 
-                
-                final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : "";
-                queryPairs.put(key,value);
-            }
-            return queryPairs;
-        }
-        catch (UnsupportedEncodingException ex) {
-            throw new IllegalArgumentException("Encoding not supported!", ex);
-        }
+		final String value = idx > 0 && pair.length() > idx + 1
+			? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : "";
+		queryPairs.put(key, value);
+	    }
+	    return queryPairs;
+	} catch (UnsupportedEncodingException ex) {
+	    throw new IllegalArgumentException("Encoding not supported!", ex);
+	}
+    }
+
+    /**
+     * Returns a copy of provided map with {@code newObject} set under the given
+     * key. If key already exists replaces its value in the returned object. Not
+     * efficient, but sometimes we need it.
+     *
+     * @param newObject
+     *            Must be an immutable object.
+     */
+    public static <K, V> ImmutableMap<K, V> putKey(Map<K, V> map, K key, V newObject) {
+	ImmutableMap.Builder<K, V> mapb = ImmutableMap.builder();
+
+	for (K k : map.keySet()) {
+	    if (!k.equals(key)) {
+		mapb.put(k, map.get(k));
+	    }
+	}
+	mapb.put(key, newObject);
+	return mapb.build();
     }
 
 }

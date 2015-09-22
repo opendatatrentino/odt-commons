@@ -16,6 +16,7 @@
 package eu.trentorise.opendata.commons.test;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Multimap;
 import eu.trentorise.opendata.commons.BuildInfo;
 import eu.trentorise.opendata.commons.OdtConfig;
@@ -185,4 +186,14 @@ public class OdtUtilsTest {
         assertEquals(ImmutableList.of(""), m.get("a"));
     }
 
+    @Test
+    public void testPutKey(){
+	ImmutableMap<String, Integer> m = ImmutableMap.of("a", 1);
+	
+	ImmutableMap<String, Integer> newM = OdtUtils.putKey(m, "a",2);
+	
+	assertEquals(new Integer(2), newM.get("a"));
+    }
+    
+    
 }

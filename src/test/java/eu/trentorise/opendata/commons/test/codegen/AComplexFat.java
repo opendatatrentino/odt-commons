@@ -15,13 +15,16 @@
  */
 package eu.trentorise.opendata.commons.test.codegen;
 
+
 import org.immutables.value.Value.Default;
 import org.immutables.value.Value.Parameter;
+
 
 /**
  *
  * @author David Leoni
  */
+
 public class AComplexFat {
     @Parameter()
     @Default()
