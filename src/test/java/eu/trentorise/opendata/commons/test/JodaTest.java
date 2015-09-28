@@ -15,9 +15,9 @@
  */
 package eu.trentorise.opendata.commons.test;
 
-import eu.trentorise.opendata.commons.joda.time.DateTime;
-import eu.trentorise.opendata.commons.joda.time.tz.Provider;
-import eu.trentorise.opendata.commons.joda.time.tz.ZoneInfoProvider;
+import eu.trentorise.opendata.commons.internal.joda.time.DateTime;
+import eu.trentorise.opendata.commons.internal.joda.time.tz.Provider;
+import eu.trentorise.opendata.commons.internal.joda.time.tz.ZoneInfoProvider;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
