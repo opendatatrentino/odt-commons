@@ -59,98 +59,32 @@ public final class OdtUtils {
     }
 
     /**
-     * Java 7 has Locale.forLanguageTag(format), this is the substitute for Java
-     * 6 <br/>
-     *
-     * @deprecated Now library targets Java >= 7, so use
-     *             Locale.forLanguageTag(format) instead.
-     *
-     *             Copied from apache.commons.lang, with the change it returns
-     *             Locale.ROOT for null input <br/>
-     *             -------------------------------------------------------------
-     *             ------------
-     *             <p>
-     *             Converts a String to a Locale.
-     *             </p>
-     *
-     *             <p>
-     *             This method takes the string format of a locale and creates
-     *             the locale object from it.
-     *             </p>
-     *
-     *             <pre>
-     *   LocaleUtils.toLocale("en")         = new Locale("en", "")
-     *   LocaleUtils.toLocale("en_GB")      = new Locale("en", "GB")
-     *   LocaleUtils.toLocale("en_GB_xxx")  = new Locale("en", "GB", "xxx")   (#)
-     *             </pre>
-     *
-     *             <p>
-     *             (#) The behaviour of the JDK variant constructor changed
-     *             between JDK1.3 and JDK1.4. In JDK1.3, the constructor upper
-     *             cases the variant, in JDK1.4, it doesn't. Thus, the result
-     *             from getVariant() may vary depending on your JDK.
-     *             </p>
-     *
-     *             <p>
-     *             This method validates the input strictly. The language code
-     *             must be lowercase. The country code must be uppercase. The
-     *             separator must be an underscore. The length must be correct.
-     *             </p>
-     *
-     * @param str
-     *            the locale String to convert, null returns null
-     * @return a Locale, Locale.ROOT if null input
-     * @throws IllegalArgumentException
-     *             if the string is an invalid format
+     * Converts a language code to Java Locale. On null input returns
+     * {@link Locale#ROOT}
+     * 
+     * Notice Java 7 introduced {@link Locale#forLanguageTag(String)}, but that
+     * method throws null pointer exception on null string, which unfortunately
+     * can happen quite often, so we use this method instead.
+     * 
+     * @see Locale#forLanguageTag(String)
+     * @see #localeToLanguageTag(Locale) for the inverse operation
      */
-    public static Locale languageTagToLocale(String str) {
+    public static Locale languageTagToLocale(@Nullable String languageTag) {
 
-	if (str == null) {
+	if (languageTag == null) {
 	    LOG.warning("Found null locale, returning Locale.ROOT");
 	    return Locale.ROOT;
 	}
-	int len = str.length();
-	if (len != 2 && len != 5 && len < 7) {
-	    throw new IllegalArgumentException("Invalid locale format: " + str);
-	}
-	char ch0 = str.charAt(0);
-	char ch1 = str.charAt(1);
-	if (ch0 < 'a' || ch0 > 'z' || ch1 < 'a' || ch1 > 'z') {
-	    throw new IllegalArgumentException("Invalid locale format: " + str);
-	}
-	if (len == 2) {
-	    return new Locale(str, "");
-	} else {
-	    if (str.charAt(2) != '_') {
-		throw new IllegalArgumentException("Invalid locale format: " + str);
-	    }
-	    char ch3 = str.charAt(3);
-	    if (ch3 == '_') {
-		return new Locale(str.substring(0, 2), "", str.substring(4));
-	    }
-	    char ch4 = str.charAt(4);
-	    if (ch3 < 'A' || ch3 > 'Z' || ch4 < 'A' || ch4 > 'Z') {
-		throw new IllegalArgumentException("Invalid locale format: " + str);
-	    }
-	    if (len == 5) {
-		return new Locale(str.substring(0, 2), str.substring(3, 5));
-	    } else {
-		if (str.charAt(5) != '_') {
-		    throw new IllegalArgumentException("Invalid locale format: " + str);
-		}
-		return new Locale(str.substring(0, 2), str.substring(3, 5), str.substring(6));
-	    }
-	}
+	return Locale.forLanguageTag(languageTag);
     }
 
     /**
-     * Converts a Java locale to a String.
+     * Converts a Java locale to a String. On null input returns the empty
+     * string (which corresponds to Java {@link Locale#ROOT})
      *
      * @see #languageTagToLocale(java.lang.String) fo the inverse operation
-     * @deprecated Now library targets Java >= 7, so use Locale.toLanguageTag()
-     *             instead.
      */
-    public static String localeToLanguageTag(Locale locale) {
+    public static String localeToLanguageTag(@Nullable Locale locale) {
 	if (locale == null) {
 	    LOG.warning("Found null locale, returning empty string (which corresponds to Locale.ROOT)");
 	    return "";
@@ -192,7 +126,7 @@ public final class OdtUtils {
      *
      * @deprecated Moved to
      *             {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotDirtyUrl(java.lang.String, java.lang.Object) } @
-     * param url the URL to check
+     *             param url the URL to check
      * @param prependedErrorMessage
      *            the exception message to use if the check fails; will be
      *            converted to a string using String.valueOf(Object) and
@@ -227,9 +161,10 @@ public final class OdtUtils {
      *
      * @deprecated Moved to
      *             {@link eu.trentorise.opendata.commons.validation.Preconditions#checkNotEmpty(java.lang.String, java.lang.Object) } @
-     * param prependedErrorMessage the exception message to use if the check
-     * fails; will be converted to a string using String.valueOf(Object) and
-     * prepended to more specific error messages.
+     *             param prependedErrorMessage the exception message to use if
+     *             the check fails; will be converted to a string using
+     *             String.valueOf(Object) and prepended to more specific error
+     *             messages.
      *
      * @throws IllegalArgumentException
      *             if provided string fails validation
