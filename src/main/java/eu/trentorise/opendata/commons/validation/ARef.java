@@ -16,7 +16,8 @@
 package eu.trentorise.opendata.commons.validation;
 
 import com.google.common.base.Preconditions;
-import eu.trentorise.opendata.commons.SimpleStyle;
+
+import eu.trentorise.opendata.commons.BuilderStylePublic;
 import java.io.Serializable;
 import org.immutables.value.Value;
 
@@ -28,7 +29,7 @@ import org.immutables.value.Value;
  * @author David Leoni
  */
 @Value.Immutable
-@SimpleStyle
+@BuilderStylePublic
 abstract class ARef implements Serializable {
 
     /**
@@ -38,64 +39,82 @@ abstract class ARef implements Serializable {
      */
     @Value.Default
     public String getDocumentId() {
-        return "";
+	return "";
     }
 
     /**
      * The row index in the physical file (starting from 0), in case the file of
-     * reference is in text format. In case paramter is not set -1 is returned.
+     * reference is in text format. In case parameter is not set -1 is returned.
      */
     @Value.Default
     public long getPhysicalRow() {
-        return -1;
+	return -1;
     }
 
     /**
      * The column index in the physical file (starting from 0), in case the file
-     * of reference is in text format. In case paramter is not set -1 is
+     * of reference is in text format. In case parameter is not set -1 is
      * returned.
      */
     @Value.Default
     public long getPhysicalColumn() {
-        return -1;
+	return -1;
     }
 
     /**
-     * A reference to one or more elements expressed as a
+     * A reference to one or more elements inside the document with id
+     * {@link #getDocumentId() documentId}, expressed as a
      * {@link eu.trentorise.opendata.traceprov.path.TracePath TracePath}. By
-     * default returns '*'
+     * default it is '*'.
      *
      */
     @Value.Default
     public String getTracePath() {
-        return "*";
+	return "*";
     }
 
     @Value.Check
     protected void check() {
-        Preconditions.checkState(getTracePath().trim().length() > 0, "Found empty jsonpath!");
-        Preconditions.checkState(getPhysicalRow() >= -1, "physical row should be grater or equal to -1, found instead %s ", getPhysicalRow());
-        Preconditions.checkState(getPhysicalColumn() >= -1, "physical column should be grater or equal to -1, found instead %s ", getPhysicalColumn());
+	Preconditions.checkState(getTracePath().trim().length() > 0, "Found empty jsonpath!");
+	Preconditions.checkState(getPhysicalRow() >= -1,
+		"physical row should be grater or equal to -1, found instead %s ", getPhysicalRow());
+	Preconditions.checkState(getPhysicalColumn() >= -1,
+		"physical column should be grater or equal to -1, found instead %s ", getPhysicalColumn());
     }
 
     /**
-     * Creates a reference in jsonPath format.
+     * Creates a reference out of a {@link #ATracePath TracePath} format.
      *
-     * @param jsonPath A reference to one or more elements expressed as a
-     * JsonPath. See
-     * <a href="https://github.com/jayway/JsonPath" target="_blank">JSONPath
-     * syntax</a>
+     * @param jsonPath
+     *            A reference to one or more elements expressed as a JsonPath.
+     *            See
+     *            <a href="https://github.com/jayway/JsonPath" target="_blank">
+     *            JSONPath syntax</a>
      *
      */
-    public static Ref of(String jsonPath) {
-        return Ref.of("", -1, -1, jsonPath);
+    public static Ref of(String tracePath) {
+	return Ref.builder().setTracePath(tracePath).build();
     }
 
     /**
-     * Returns singleton with '*' as jsonpath.
+     * Builds an uri for the reference like this: {@link #getDocumentId()
+     * documentId}#{@link #getTracePath() tracePath};
+     * 
+     * If any of the two components is empty, the '#' is omitted
+     * 
+     * @throws IllegalStateException
+     *             if both documentid and tracepath are empty.
      */
-    public static Ref of() {
-        return Ref.of("", -1, -1, "$");
+    public String uri() {
+	if (getDocumentId().isEmpty() && getTracePath().isEmpty()) {
+	    throw new IllegalStateException("Can't create an empty uri!");
+	}
+	if (getDocumentId().isEmpty()) {
+	    return getTracePath();
+	} else if (getTracePath().isEmpty()) {
+	    return getDocumentId();
+	} else {
+	    return getDocumentId() + "#" + getTracePath();
+	}
     }
-
 }
