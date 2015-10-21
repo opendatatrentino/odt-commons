@@ -70,12 +70,12 @@ public class ValidationTest {
     @Test
     public void testValidation() {
 
-        assertEquals("*", ValidationError.of().getRef().getTracePath());
+        assertEquals("", ValidationError.of().getRef().getTracePath());
         
         ValidationError.of(Ref.of(), ErrorLevel.SEVERE, "0", "", ImmutableMap.of("", ""));
         
-        assertEquals("$", ValidationError.of(Ref.of("$"), ErrorLevel.INFO, "0", "").getRef().getTracePath());
-        assertEquals("*", ValidationError.of((Ref) null, ErrorLevel.INFO, "0", "").getRef().getTracePath());        
+        assertEquals("$", ValidationError.of(Ref.ofPath("$"), ErrorLevel.INFO, "0", "").getRef().getTracePath());
+        assertEquals("", ValidationError.of((Ref) null, ErrorLevel.INFO, "0", "").getRef().getTracePath());        
         
         ValidationError v1 = ValidationError.of(Ref.of(), ErrorLevel.INFO, "0", "a{0}c", "0", "b");
         
@@ -99,8 +99,8 @@ public class ValidationTest {
     public void testEquals(){
         assertFalse(ValidationError.of().equals(""));
         assertFalse(ValidationError.of().equals(null));
-        assertEquals(ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, "1", "a{x}", "x",3).hashCode(), 
-                   ValidationError.of(Ref.of("a"), ErrorLevel.SEVERE, "1", "a{x}", "x",3).hashCode());                
+        assertEquals(ValidationError.of(Ref.ofPath("a"), ErrorLevel.SEVERE, "1", "a{x}", "x",3).hashCode(), 
+                   ValidationError.of(Ref.ofPath("a"), ErrorLevel.SEVERE, "1", "a{x}", "x",3).hashCode());                
         
     }    
 }

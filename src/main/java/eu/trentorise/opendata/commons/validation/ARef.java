@@ -18,6 +18,8 @@ package eu.trentorise.opendata.commons.validation;
 import com.google.common.base.Preconditions;
 
 import eu.trentorise.opendata.commons.BuilderStylePublic;
+import eu.trentorise.opendata.commons.internal.joda.time.field.OffsetDateTimeField;
+
 import java.io.Serializable;
 import org.immutables.value.Value;
 
@@ -65,17 +67,18 @@ abstract class ARef implements Serializable {
      * A reference to one or more elements inside the document with id
      * {@link #getDocumentId() documentId}, expressed as a
      * {@link eu.trentorise.opendata.traceprov.path.TracePath TracePath}. By
-     * default it is '*'.
+     * default it is the empty string (which we assume selects everything, along
+     * with '*').
      *
      */
     @Value.Default
     public String getTracePath() {
-	return "*";
+	return "";
     }
 
     @Value.Check
     protected void check() {
-	Preconditions.checkState(getTracePath().trim().length() > 0, "Found empty jsonpath!");
+	// todo need decent TracePath checking
 	Preconditions.checkState(getPhysicalRow() >= -1,
 		"physical row should be grater or equal to -1, found instead %s ", getPhysicalRow());
 	Preconditions.checkState(getPhysicalColumn() >= -1,
@@ -83,7 +86,8 @@ abstract class ARef implements Serializable {
     }
 
     /**
-     * Creates a reference out of a {@link #ATracePath TracePath} format.
+     * Creates a reference out of a {@link #ATracePath TracePath} format. The
+     * reference is supposed to point to an unknown document.
      *
      * @param jsonPath
      *            A reference to one or more elements expressed as a JsonPath.
@@ -91,9 +95,22 @@ abstract class ARef implements Serializable {
      *            <a href="https://github.com/jayway/JsonPath" target="_blank">
      *            JSONPath syntax</a>
      *
+     * @see #ofDocumentId(String)
      */
-    public static Ref of(String tracePath) {
+    public static Ref ofPath(String tracePath) {
 	return Ref.builder().setTracePath(tracePath).build();
+    }
+
+    /**
+     * Creates a reference to a document.
+     *
+     * @param documentId
+     *            an identifier for a document (possibly an IRI).
+     * 
+     * @see #ofPath(String)
+     */
+    public static Ref ofDocumentId(String documentId) {
+	return Ref.builder().setDocumentId(documentId).build();
     }
 
     /**
@@ -106,12 +123,12 @@ abstract class ARef implements Serializable {
      *             if both documentid and tracepath are empty.
      */
     public String uri() {
-	if (getDocumentId().isEmpty() && getTracePath().isEmpty()) {
+	if (getDocumentId().isEmpty() && (getTracePath().isEmpty())) {
 	    throw new IllegalStateException("Can't create an empty uri!");
 	}
 	if (getDocumentId().isEmpty()) {
 	    return getTracePath();
-	} else if (getTracePath().isEmpty()) {
+	} else if (getTracePath().isEmpty() || getTracePath().equals("*")) {
 	    return getDocumentId();
 	} else {
 	    return getDocumentId() + "#" + getTracePath();
