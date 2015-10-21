@@ -18,7 +18,6 @@ package eu.trentorise.opendata.commons.validation;
 import com.google.common.base.Preconditions;
 
 import eu.trentorise.opendata.commons.BuilderStylePublic;
-import eu.trentorise.opendata.commons.internal.joda.time.field.OffsetDateTimeField;
 
 import java.io.Serializable;
 import org.immutables.value.Value;
