@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright 2015 Trento Rise  (trentorise.eu) 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,28 +16,34 @@
 package eu.trentorise.opendata.commons;
 
 /**
- * Generic Odt Commons runtime exception
- *
- * @author David Leoni
+ * A runtime exception to raise when something is not found.
+ * 
+ * @author David Leoni <david.leoni@unitn.it>
  */
 public class OdtException extends RuntimeException {
-
-    private OdtException() {
+    
+    private OdtException(){
         super();
     }
-
+    
     /**
-     * Creates the exception with the provided message.
+     * Creates the OdtParseException using the provided throwable
      */
-    public OdtException(String msg) {
-        super(msg);
+    public OdtException(Throwable tr) {
+        super(tr);
     }
 
     /**
-     * Creates the exception with the provided message and throwable.
+     * Creates the OdtParseException using the provided message and throwable
      */
     public OdtException(String msg, Throwable tr) {
         super(msg, tr);
     }
 
+    /**
+     * Creates the OdtParseException using the provided message
+     */
+    public OdtException(String msg) {
+        super(msg);
+    }
 }

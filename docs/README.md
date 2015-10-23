@@ -79,6 +79,7 @@ Building a `Dict`:
 ```
 
 
+
 ### Logging
 
 Odt-Commons uses native Java logging system (JUL). If you also use JUL in your application and want to see Odt-Commons logs, you can take inspiration from [odt-commons test logging properties](src/test/resources/odt.commons.logging.properties).  If you have an application which uses SLF4J logging system, you can route logging with <a href="http://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j" target="_blank">JUL to SLF4J bridge</a>, just remember <a href="http://stackoverflow.com/questions/9117030/jul-to-slf4j-bridge" target="_blank"> to programmatically install it first. </a>

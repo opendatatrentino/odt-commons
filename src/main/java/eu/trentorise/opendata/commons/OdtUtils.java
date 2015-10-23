@@ -26,7 +26,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.text.ParseException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,6 +37,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * Utility funtions shared by Open Data in Trentino projects.
@@ -310,6 +314,7 @@ public final class OdtUtils {
      *
      * @return map of param name : [args]
      * @throws IllegalArgumentException
+     * @since 1.1
      */
     public static Multimap<String, String> parseUrlParams(String url) {
 	URL u;
@@ -346,6 +351,7 @@ public final class OdtUtils {
      *
      * @param newObject
      *            Must be an immutable object.
+     * @since 1.1            
      */
     public static <K, V> ImmutableMap<K, V> putKey(Map<K, V> map, K key, V newObject) {
 	ImmutableMap.Builder<K, V> mapb = ImmutableMap.builder();
@@ -358,5 +364,20 @@ public final class OdtUtils {
 	mapb.put(key, newObject);
 	return mapb.build();
     }
-
+ 
+    /**
+     * @deprecated experimental, try to avoid using it for now
+     * @since 1.1
+     * @throws OdtParseException
+     */
+    static Date parseIso8061(String s){
+	// todo need to try all parsers!
+	
+	try {
+	    return DateFormatUtils.ISO_DATETIME_FORMAT.parse(s);
+	} catch (ParseException ex) {
+	    throw new OdtParseException(ex);
+	}
+    }
+    
 }
