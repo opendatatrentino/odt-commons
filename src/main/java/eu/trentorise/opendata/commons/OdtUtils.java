@@ -39,6 +39,7 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 /**
  * Utility funtions shared by Open Data in Trentino projects.
@@ -46,12 +47,17 @@ import org.apache.commons.lang3.time.DateFormatUtils;
  * @author David Leoni <david.leoni@unitn.it>
  */
 public final class OdtUtils {
-
+        
     /**
      * Tolerance for probabilities
      */
     public static final double TOLERANCE = 0.001;
 
+    /**
+     * Used for unparseable dates and other stuff.
+     */
+    public static final String UNPARSEABLE = "unparseable:"; 
+    
     private static final Logger LOG = Logger.getLogger(OdtUtils.class.getName());
 
     /**
@@ -351,7 +357,7 @@ public final class OdtUtils {
      *
      * @param newObject
      *            Must be an immutable object.
-     * @since 1.1            
+     * @since 1.1
      */
     public static <K, V> ImmutableMap<K, V> putKey(Map<K, V> map, K key, V newObject) {
 	ImmutableMap.Builder<K, V> mapb = ImmutableMap.builder();
@@ -364,20 +370,54 @@ public final class OdtUtils {
 	mapb.put(key, newObject);
 	return mapb.build();
     }
- 
+    
+    private static final FastDateFormat ISO_YEAR_FORMAT
+    = FastDateFormat.getInstance("yyyy");
+    
+    private static final FastDateFormat ISO_YEAR_MONTH_FORMAT
+    = FastDateFormat.getInstance("yyyy-MM");
+
     /**
      * @deprecated experimental, try to avoid using it for now
      * @since 1.1
      * @throws OdtParseException
      */
-    static Date parseIso8061(String s){
-	// todo need to try all parsers!
+    // todo this parser is horrible
+    static Date parseIso8061(String s) {
+		  	
+	try {
+	    return DateFormatUtils.ISO_DATE_TIME_ZONE_FORMAT.parse(s);
+	} catch (ParseException ex) {
+	}
 	
 	try {
 	    return DateFormatUtils.ISO_DATETIME_FORMAT.parse(s);
 	} catch (ParseException ex) {
-	    throw new OdtParseException(ex);
 	}
+	
+	try {
+	    return DateFormatUtils.ISO_DATE_TIME_ZONE_FORMAT.parse(s);
+	} catch (ParseException ex) {
+	}
+	
+	try {
+	    return DateFormatUtils.ISO_DATE_FORMAT.parse(s);
+	} catch (ParseException ex) {
+	}
+	
+	try {
+	    return ISO_YEAR_MONTH_FORMAT.parse(s);
+	} catch (ParseException ex) {
+	}
+	
+	try {
+	    return ISO_YEAR_FORMAT.parse(s);
+	} catch (ParseException ex) {
+	}
+	
+	// todo week dates, ordinal dates
+	
+	throw new OdtParseException("Couldn't parse date as ISO8061. Unparseable date was:" + s);
     }
-    
+
 }

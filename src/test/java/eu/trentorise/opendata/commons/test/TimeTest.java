@@ -6,37 +6,29 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import eu.trentorise.opendata.commons.PeriodOfTime;
-import eu.trentorise.opendata.commons.PrecisePeriodOfTime;
 
 public class TimeTest {
-    
-    @Test
-    public void testPeriodOfTime(){
-	
-	assertEquals("a" + PeriodOfTime.SEP + "b", 
-		PeriodOfTime.of("a", "b").getRawString());
-	PeriodOfTime.of("a", "");
-	PeriodOfTime.of("", "b");
-	PeriodOfTime.of("2007-04-05T14:30", "2007-04-05T14:30");
-	
-    }
+   
 
     @Test
-    public void testPrecisePeriodOfTime(){	
+    public void testPeriodOfTime(){	
 	
-	// PrecisePeriodOfTime.of("2010", "2015");
-	PrecisePeriodOfTime.of("2007-04-05T14:30:00", "2007-04-05T15:30:00");
+	assertEquals("2010" + PeriodOfTime.SEP + "2015", 
+		PeriodOfTime.of("2010", "2015").getRawString());
+	PeriodOfTime.of("2007-04-05T14:30:00", "2007-04-05T15:30:00");
+	
+	PeriodOfTime.of("2010-10", "2015-11");
 	
 	try {
-	    PrecisePeriodOfTime.of("2007-04-05T15:30:00", "2007-04-05T14:30:00");	    
-	    Assert.fail("Shouldn't arrive here!");
+	    PeriodOfTime.of("2007-04-05T15:30:00", "2007-04-05T14:30:00");	    
+	    Assert.fail("Shouldn't be able to create interval with end happining before start!");
 	} catch (IllegalStateException ex){
 	    
 	}
 	
-	assertEquals("?/?", PrecisePeriodOfTime.of().toString());	
-	assertEquals("/", PrecisePeriodOfTime.of("", "").toString());	
+	assertEquals("?/?", PeriodOfTime.of().toFormattedString());	
+	assertEquals("/", PeriodOfTime.of("", "").toFormattedString());	
 	
     }
-
+    
 }

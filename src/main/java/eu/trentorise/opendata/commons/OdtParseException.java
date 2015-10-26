@@ -5,6 +5,7 @@ public class OdtParseException extends OdtException {
  
     /**
      * Creates the OdtParseException using the provided throwable
+     * @since 1.1
      */
     public OdtParseException(Throwable tr) {
         super(tr);
