@@ -34,7 +34,7 @@ import org.immutables.value.Value;
 abstract class ARef implements Serializable {
 
     /**
-     * An identifier (possibly an IRI) for the original document. In case the
+     * An identifier (possibly but not necessarily an IRI) for the original document. In case the
      * data was obtained through a query the id could be the endpoint address
      * with the query parameters.
      */
@@ -63,8 +63,8 @@ abstract class ARef implements Serializable {
     }
 
     /**
-     * A reference to one or more elements inside the document with id
-     * {@link #getDocumentId() documentId}, expressed as a
+     * A reference to one or more elements inside the document identified by
+     * {@link #getDocumentId() documentId}. The reference is expressed as a
      * {@link eu.trentorise.opendata.traceprov.path.TracePath TracePath}. By
      * default it is the empty string (which we assume selects everything, along
      * with '*').
