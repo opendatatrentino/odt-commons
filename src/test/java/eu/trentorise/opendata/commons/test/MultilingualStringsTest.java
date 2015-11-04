@@ -48,7 +48,8 @@ public class MultilingualStringsTest {
         assertFalse(Dict.of("hello").isEmpty());
         assertTrue(Dict.of().locales().isEmpty());        
         assertEquals(Dict.of("a").string(Locale.ROOT), "a");        
-                
+        assertEquals(Dict.of("a").str(Locale.ROOT), "a");        
+        
         assertEquals(ImmutableList.of("a", "a", "b"),
                      Dict.builder().put("a").put("a","b").build().strings(Locale.ROOT));
         
@@ -82,10 +83,13 @@ public class MultilingualStringsTest {
         
         assertEquals(LocalizedString.of(Locale.ITALIAN, "a"), 
                      Dict.of(Locale.ITALIAN, "a").anyString(Locale.CHINESE));
-        
+        assertEquals(LocalizedString.of(Locale.ITALIAN, "a"), 
+                Dict.of(Locale.ITALIAN, "a").some(Locale.CHINESE));
+   
         
         assertEquals(LocalizedString.of(), Dict.of().anyString(Locale.ITALIAN));
-
+        assertEquals(LocalizedString.of(), Dict.of().some(Locale.ITALIAN));
+        
         assertEquals(Dict.of("b", "b"),
                      Dict.builder().put(Dict.of("b")).put(Dict.of("b")).build());
 
@@ -97,7 +101,9 @@ public class MultilingualStringsTest {
         assertEquals(Dict.of(Locale.ROOT, "a", "b"), Dict.of(ImmutableList.of("a", "b")));
         assertEquals(Dict.of(Locale.ITALIAN, ImmutableList.of("a")), Dict.of(LocalizedString.of(Locale.ITALIAN, "a")));
         assertEquals(ImmutableList.of(), Dict.of().strings(Locale.FRENCH));
+        assertEquals(ImmutableList.of(), Dict.of().get(Locale.FRENCH));
         assertEquals("", Dict.of().string(Locale.FRENCH));
+        assertEquals("", Dict.of().get(Locale.FRENCH));
         
         assertEquals(Dict.of().with(Dict.of(Locale.ITALIAN, "a")), 
                      Dict.of().with(Locale.ITALIAN, ImmutableList.of("a")));
@@ -212,6 +218,7 @@ public class MultilingualStringsTest {
         LocalizedString localizedString = LocalizedString.of("string with unknwon language");
         
         assert Locale.ROOT.equals(localizedString.getLocale());
+        assert Locale.ROOT.equals(localizedString.loc());
         
         // we are null hostile:
         try {
@@ -233,6 +240,9 @@ public class MultilingualStringsTest {
         assert "hello again".equals(myDict.strings(Locale.ENGLISH).get(1)); 
         assert "ciao".equals(myDict.string(Locale.ITALIAN)); 
                 
+        assert "hello".equals(myDict.str(Locale.ENGLISH));
+        assert "hello again".equals(myDict.get(Locale.ENGLISH).get(1)); 
+        assert "ciao".equals(myDict.str(Locale.ITALIAN));
     }
     
     
