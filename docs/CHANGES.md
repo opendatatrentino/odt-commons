@@ -8,6 +8,7 @@ todo date
 
 - fixed 
 - todo put other stuff 
+- little trial
 
 ### 1.0.3
 
