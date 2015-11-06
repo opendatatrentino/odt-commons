@@ -6,9 +6,9 @@
 
 November 6th, 2015
 
-* moved functions from OdtUtils to validation.Preconditions class
+* moved checks from OdtUtils to validation.Preconditions class
 * added Preconditions.checkScore
-* shortened method names in Dict (get, some, str) and LocalizedString (str, loc)
+* shortened method names in LocalizedString (str, loc) end Dict (get, some, str)
 * added APeriodOfTime
 * added OdtParseException
 * added OdtUtils.format, parseIso8061, parseUrlParams, putKey

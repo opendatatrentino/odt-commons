@@ -21,6 +21,8 @@ public class TimeTest {
         PeriodOfTime.of("2007-04-05T14:30:00", "2007-04-05T15:30:00");
 
         PeriodOfTime.of("2010-10", "2015-11");
+        
+        PeriodOfTime.of("the year 2015");
 
         try {
             PeriodOfTime.of("2007-04-05T15:30:00", "2007-04-05T14:30:00");

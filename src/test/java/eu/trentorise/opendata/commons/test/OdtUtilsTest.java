@@ -184,9 +184,13 @@ public class OdtUtilsTest {
     public void testPutKey() {
         ImmutableMap<String, Integer> m = ImmutableMap.of("a", 1);
 
-        ImmutableMap<String, Integer> newM = OdtUtils.putKey(m, "a", 2);
-
-        assertEquals(new Integer(2), newM.get("a"));
+        ImmutableMap<String, Integer> newM1 = OdtUtils.putKey(m, "a", 2);
+        assertEquals(new Integer(2), newM1.get("a"));
+        
+        ImmutableMap<String, Integer> newM2 = OdtUtils.putKey(m, "b", 2);
+        assertEquals(new Integer(1), newM2.get("a"));
+        assertEquals(new Integer(2), newM2.get("b"));
+        
     }
 
 }

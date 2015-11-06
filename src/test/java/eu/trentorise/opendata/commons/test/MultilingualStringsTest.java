@@ -16,6 +16,7 @@
 package eu.trentorise.opendata.commons.test;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import eu.trentorise.opendata.commons.Dict;
 import eu.trentorise.opendata.commons.LocalizedString;
@@ -41,6 +42,16 @@ public class MultilingualStringsTest {
         OdtConfig.init(MultilingualStringsTest.class);
     }  
        
+    @Test
+    public void testLocalizedString(){
+        assertEquals("a", LocalizedString.of(Locale.ITALIAN, "a").getString());
+        assertEquals("a", LocalizedString.of(Locale.ITALIAN, "a").str());
+        
+        assertEquals(Locale.ITALIAN, LocalizedString.of(Locale.ITALIAN, "a").getLocale());
+        assertEquals(Locale.ITALIAN, LocalizedString.of(Locale.ITALIAN, "a").loc());
+        
+    }
+    
     @Test
     public void testDict() {
         assertTrue(Dict.of().isEmpty());
@@ -86,6 +97,15 @@ public class MultilingualStringsTest {
         assertEquals(LocalizedString.of(Locale.ITALIAN, "a"), 
                 Dict.of(Locale.ITALIAN, "a").some(Locale.CHINESE));
    
+        assertEquals(LocalizedString.of(Locale.FRENCH, "b"), 
+                Dict.of(Locale.ITALIAN, "a")
+                .with(Locale.FRENCH, "b")
+                .anyString(Lists.newArrayList(Locale.FRENCH)));
+        assertEquals(LocalizedString.of(Locale.FRENCH, "b"), 
+                Dict.of(Locale.ITALIAN, "a")
+                .with(Locale.FRENCH, "b")
+                .some(Lists.newArrayList(Locale.FRENCH)));
+        
         
         assertEquals(LocalizedString.of(), Dict.of().anyString(Locale.ITALIAN));
         assertEquals(LocalizedString.of(), Dict.of().some(Locale.ITALIAN));

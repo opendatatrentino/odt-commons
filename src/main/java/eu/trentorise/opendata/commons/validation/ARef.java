@@ -34,13 +34,13 @@ import org.immutables.value.Value;
 abstract class ARef implements Serializable {
 
     /**
-     * An identifier (possibly but not necessarily an IRI) for the original document. In case the
-     * data was obtained through a query the id could be the endpoint address
-     * with the query parameters.
+     * An identifier (possibly but not necessarily an IRI) for the original
+     * document. In case the data was obtained through a query the id could be
+     * the endpoint address with the query parameters.
      */
     @Value.Default
     public String getDocumentId() {
-	return "";
+        return "";
     }
 
     /**
@@ -49,7 +49,7 @@ abstract class ARef implements Serializable {
      */
     @Value.Default
     public long getPhysicalRow() {
-	return -1;
+        return -1;
     }
 
     /**
@@ -59,7 +59,7 @@ abstract class ARef implements Serializable {
      */
     @Value.Default
     public long getPhysicalColumn() {
-	return -1;
+        return -1;
     }
 
     /**
@@ -72,21 +72,22 @@ abstract class ARef implements Serializable {
      */
     @Value.Default
     public String getTracePath() {
-	return "";
+        return "";
     }
 
     @Value.Check
     protected void check() {
-	// todo need decent TracePath checking
-	Preconditions.checkState(getPhysicalRow() >= -1,
-		"physical row should be grater or equal to -1, found instead %s ", getPhysicalRow());
-	Preconditions.checkState(getPhysicalColumn() >= -1,
-		"physical column should be grater or equal to -1, found instead %s ", getPhysicalColumn());
+        // todo need decent TracePath checking
+        Preconditions.checkState(getPhysicalRow() >= -1,
+                "physical row should be grater or equal to -1, found instead %s ", getPhysicalRow());
+        Preconditions.checkState(getPhysicalColumn() >= -1,
+                "physical column should be grater or equal to -1, found instead %s ", getPhysicalColumn());
     }
 
     /**
-     * Creates a reference out of a {@link #ATracePath TracePath} format. The
-     * reference is supposed to point to an unknown document.
+     * Creates a reference out of a
+     * {@link eu.trentorise.opendata.traceprov.path.ATracePath TracePath}
+     * format. The path is considered relative to an unspecified document.
      *
      * @param jsonPath
      *            A reference to one or more elements expressed as a JsonPath.
@@ -97,7 +98,9 @@ abstract class ARef implements Serializable {
      * @see #ofDocumentId(String)
      */
     public static Ref ofPath(String tracePath) {
-	return Ref.builder().setTracePath(tracePath).build();
+        return Ref.builder()
+                  .setTracePath(tracePath)
+                  .build();
     }
 
     /**
@@ -109,7 +112,9 @@ abstract class ARef implements Serializable {
      * @see #ofPath(String)
      */
     public static Ref ofDocumentId(String documentId) {
-	return Ref.builder().setDocumentId(documentId).build();
+        return Ref.builder()
+                  .setDocumentId(documentId)
+                  .build();
     }
 
     /**
@@ -122,15 +127,15 @@ abstract class ARef implements Serializable {
      *             if both documentid and tracepath are empty.
      */
     public String uri() {
-	if (getDocumentId().isEmpty() && (getTracePath().isEmpty())) {
-	    throw new IllegalStateException("Can't create an empty uri!");
-	}
-	if (getDocumentId().isEmpty()) {
-	    return getTracePath();
-	} else if (getTracePath().isEmpty() || getTracePath().equals("*")) {
-	    return getDocumentId();
-	} else {
-	    return getDocumentId() + "#" + getTracePath();
-	}
+        if (getDocumentId().isEmpty() && (getTracePath().isEmpty())) {
+            throw new IllegalStateException("Can't create an empty uri!");
+        }
+        if (getDocumentId().isEmpty()) {
+            return getTracePath();
+        } else if (getTracePath().isEmpty() || getTracePath().equals("*")) {
+            return getDocumentId();
+        } else {
+            return getDocumentId() + "#" + getTracePath();
+        }
     }
 }
