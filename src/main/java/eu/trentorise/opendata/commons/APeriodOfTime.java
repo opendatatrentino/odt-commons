@@ -11,8 +11,8 @@ import com.google.common.base.Preconditions;
  * A time interval, which may be open, closed, completely or partially unknown.
  *
  * Implements dct:PeriodOfTime, adapting it to possibly dirty data. Known dates
- * are stored in ISO 8061 format. Original unclean/unparseable data can be stored in
- * {@link #getRawString()}
+ * are stored in ISO 8061 format. Original unclean/unparseable data can be
+ * stored in {@link #getRawString()}
  * 
  * @see APeriodOfTime
  * @since 1.1
@@ -38,7 +38,7 @@ public abstract class APeriodOfTime {
      */
     @Value.Default
     public String getStartDate() {
-	return "?";
+        return "?";
     }
 
     /**
@@ -53,7 +53,7 @@ public abstract class APeriodOfTime {
      */
     @Value.Default
     public String getEndDate() {
-	return "?";
+        return "?";
     }
 
     /**
@@ -64,29 +64,9 @@ public abstract class APeriodOfTime {
      */
     @Value.Default
     public String getRawString() {
-	return "";
+        return "";
     }
 
-    /**
-     * Checks provided string is either a date in ISO8061 format, or empty or a
-     * question mark. If so returns a trimmed version of it, otherwise throws
-     * exception.
-     * 
-     * @throws IllegalArgumentException
-     */
-    private static String checkIso8061(@Nullable String s) {
-	String newDate = Preconditions.checkNotNull(s).trim();
-	if (!(newDate.isEmpty() || newDate.equals('?'))) {
-
-	    try {
-		OdtUtils.parseIso8061(newDate);
-	    } catch (OdtParseException ex) {
-		throw new IllegalArgumentException(ex);
-	    }
-
-	}
-	return newDate;
-    }
 
     /**
      * Checks provided string is empty, a question mark, or a date in ISO8061
@@ -102,22 +82,23 @@ public abstract class APeriodOfTime {
      */
     @Nullable
     private static Date parseDate(@Nullable String s, boolean start) {
-	String newDateString = Preconditions.checkNotNull(s).trim();
+        String newDateString = Preconditions.checkNotNull(s)
+                                            .trim();
 
-	if (newDateString.equals("?")) {
-	    if (start) {
-		return new Date(Long.MIN_VALUE);
+        if (newDateString.equals("?")) {
+            if (start) {
+                return new Date(Long.MIN_VALUE);
 
-	    } else {
-		return new Date(Long.MAX_VALUE);
-	    }
-	}
+            } else {
+                return new Date(Long.MAX_VALUE);
+            }
+        }
 
-	if (newDateString.isEmpty()) {
-	    return null;
-	}
+        if (newDateString.isEmpty()) {
+            return null;
+        }
 
-	return OdtUtils.parseIso8061(newDateString);
+        return OdtUtils.parseIso8061(newDateString);
 
     }
 
@@ -127,18 +108,18 @@ public abstract class APeriodOfTime {
      * 
      */
     public static boolean isRealDate(Date date, boolean start) {
-	long val = start ? Long.MIN_VALUE : Long.MAX_VALUE;
-	return date != null && date.getTime() != val;
+        long val = start ? Long.MIN_VALUE : Long.MAX_VALUE;
+        return date != null && date.getTime() != val;
     }
 
     @Value.Check
     protected void check() {
-	Date start = parseDate(getStartDate(), true);
-	Date end = parseDate(getEndDate(), false);
-	if (isRealDate(start, true) && isRealDate(end, false)) {
-	    Preconditions.checkState(end.getTime() - start.getTime() >= 0,
-		    "Start date %s is greater than end date %s! ", start, end);
-	}
+        Date start = parseDate(getStartDate(), true);
+        Date end = parseDate(getEndDate(), false);
+        if (isRealDate(start, true) && isRealDate(end, false)) {
+            Preconditions.checkState(end.getTime() - start.getTime() >= 0,
+                    "Start date %s is greater than end date %s! ", start, end);
+        }
     }
 
     /**
@@ -170,11 +151,11 @@ public abstract class APeriodOfTime {
      * @see #getRawString()
      */
     public String toFormattedString() {
-	return getStartDate() + "/" + getEndDate();
+        return getStartDate() + "/" + getEndDate();
     }
 
     public static String joinRawDates(String startDate, String endDate) {
-	return startDate + SEP + endDate;
+        return startDate + SEP + endDate;
     }
 
     /**
@@ -185,7 +166,7 @@ public abstract class APeriodOfTime {
      *            a temporal interval with unknown formatting
      */
     public static PeriodOfTime of(String rawString) {
-	return PeriodOfTime.of("?", "?", rawString);
+        return PeriodOfTime.of("?", "?", rawString);
     }
 
     /**
@@ -199,6 +180,6 @@ public abstract class APeriodOfTime {
      *            an ISO8061 date
      */
     public static PeriodOfTime of(String startDate, String endDate) {
-	return PeriodOfTime.of(startDate, endDate, joinRawDates(startDate, endDate));
+        return PeriodOfTime.of(startDate, endDate, joinRawDates(startDate, endDate));
     }
 }

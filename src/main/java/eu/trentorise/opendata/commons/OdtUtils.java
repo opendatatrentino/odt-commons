@@ -42,7 +42,7 @@ import org.apache.commons.lang3.time.FastDateFormat;
  * @author David Leoni <david.leoni@unitn.it>
  */
 public final class OdtUtils {
-        
+
     /**
      * Tolerance for probabilities
      */
@@ -51,8 +51,8 @@ public final class OdtUtils {
     /**
      * Used for unparseable dates and other stuff.
      */
-    public static final String UNPARSEABLE = "unparseable:"; 
-    
+    public static final String UNPARSEABLE = "unparseable:";
+
     private static final Logger LOG = Logger.getLogger(OdtUtils.class.getName());
 
     /**
@@ -76,11 +76,11 @@ public final class OdtUtils {
      */
     public static Locale languageTagToLocale(@Nullable String languageTag) {
 
-	if (languageTag == null) {
-	    LOG.warning("Found null locale, returning Locale.ROOT");
-	    return Locale.ROOT;
-	}
-	return Locale.forLanguageTag(languageTag);
+        if (languageTag == null) {
+            LOG.warning("Found null locale, returning Locale.ROOT");
+            return Locale.ROOT;
+        }
+        return Locale.forLanguageTag(languageTag);
     }
 
     /**
@@ -90,11 +90,11 @@ public final class OdtUtils {
      * @see #languageTagToLocale(java.lang.String) fo the inverse operation
      */
     public static String localeToLanguageTag(@Nullable Locale locale) {
-	if (locale == null) {
-	    LOG.warning("Found null locale, returning empty string (which corresponds to Locale.ROOT)");
-	    return "";
-	}
-	return locale.getLanguage();
+        if (locale == null) {
+            LOG.warning("Found null locale, returning empty string (which corresponds to Locale.ROOT)");
+            return "";
+        }
+        return locale.getLanguage();
     }
 
     /**
@@ -104,24 +104,24 @@ public final class OdtUtils {
      * @param url
      */
     public static String addSlash(String url) {
-	checkNotNull(url, "invalid url!");
-	if (url.endsWith("/")) {
-	    return url;
-	} else {
-	    return url + "/";
-	}
+        checkNotNull(url, "invalid url!");
+        if (url.endsWith("/")) {
+            return url;
+        } else {
+            return url + "/";
+        }
     }
 
     /**
      * Returns the provided url with all trailing slash at the end removed.
      */
     public static String removeTrailingSlash(String url) {
-	checkNotNull(url, "invalid url!");
-	String tempUrl = url.trim();
-	while (tempUrl.endsWith("/")) {
-	    tempUrl = tempUrl.substring(0, tempUrl.length() - 1);
-	}
-	return tempUrl;
+        checkNotNull(url, "invalid url!");
+        String tempUrl = url.trim();
+        while (tempUrl.endsWith("/")) {
+            tempUrl = tempUrl.substring(0, tempUrl.length() - 1);
+        }
+        return tempUrl;
     }
 
     /**
@@ -144,20 +144,21 @@ public final class OdtUtils {
      *
      */
     public static String checkNotDirtyUrl(@Nullable String url, @Nullable Object prependedErrorMessage) {
-	checkNotEmpty(url, prependedErrorMessage);
+        checkNotEmpty(url, prependedErrorMessage);
 
-	if (url.equalsIgnoreCase("null")) {
-	    throw new IllegalArgumentException(String.valueOf(prependedErrorMessage)
-		    + " -- Reason: Found URL with string \"" + url + "\" as content!");
-	}
+        if (url.equalsIgnoreCase("null")) {
+            throw new IllegalArgumentException(String.valueOf(prependedErrorMessage)
+                    + " -- Reason: Found URL with string \"" + url + "\" as content!");
+        }
 
-	// todo delete this is a too radical checker...
-	if (url.toLowerCase().endsWith("/null")) {
-	    throw new IllegalArgumentException(
-		    String.valueOf(prependedErrorMessage) + " -- Reason: Found URL ending with /\"null\": " + url);
-	}
+        // todo delete this is a too radical checker...
+        if (url.toLowerCase()
+               .endsWith("/null")) {
+            throw new IllegalArgumentException(
+                    String.valueOf(prependedErrorMessage) + " -- Reason: Found URL ending with /\"null\": " + url);
+        }
 
-	return url;
+        return url;
     }
 
     /**
@@ -177,12 +178,12 @@ public final class OdtUtils {
      * @return the non-empty string that was validated
      */
     public static String checkNotEmpty(String string, @Nullable Object prependedErrorMessage) {
-	checkArgument(string != null, "%s -- Reason: Found null string.", prependedErrorMessage);
-	if (string.length() == 0) {
-	    throw new IllegalArgumentException(
-		    String.valueOf(prependedErrorMessage) + " -- Reason: Found empty string.");
-	}
-	return string;
+        checkArgument(string != null, "%s -- Reason: Found null string.", prependedErrorMessage);
+        if (string.length() == 0) {
+            throw new IllegalArgumentException(
+                    String.valueOf(prependedErrorMessage) + " -- Reason: Found empty string.");
+        }
+        return string;
     }
 
     /**
@@ -203,20 +204,20 @@ public final class OdtUtils {
      * @return a non-null non-empty collection
      */
     public static <T> Collection<T> checkNotEmpty(@Nullable Collection<T> coll,
-	    @Nullable Object prependedErrorMessage) {
-	checkArgument(coll != null, "%s -- Reason: Found null collection.", prependedErrorMessage);
-	if (coll.isEmpty()) {
-	    throw new IllegalArgumentException(
-		    String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection.");
-	}
-	return coll;
+            @Nullable Object prependedErrorMessage) {
+        checkArgument(coll != null, "%s -- Reason: Found null collection.", prependedErrorMessage);
+        if (coll.isEmpty()) {
+            throw new IllegalArgumentException(
+                    String.valueOf(prependedErrorMessage) + " -- Reason: Found empty collection.");
+        }
+        return coll;
     }
 
     /**
      * Returns true if provided string is non null and non empty .
      */
     public static boolean isNotEmpty(@Nullable String string) {
-	return string != null && string.length() != 0;
+        return string != null && string.length() != 0;
     }
 
     /**
@@ -231,24 +232,24 @@ public final class OdtUtils {
      */
     public static long parseNumericalId(String prefix, String url) {
 
-	checkNotNull(prefix, "prefix can't be null!");
-	checkNotEmpty(url, "Invalid url!");
+        checkNotNull(prefix, "prefix can't be null!");
+        checkNotEmpty(url, "Invalid url!");
 
-	String s;
-	if (prefix.length() > 0) {
-	    int pos = url.indexOf(prefix);
-	    if (pos != 0) {
-		throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + url);
-	    }
-	    s = url.substring(prefix.length());
-	} else {
-	    s = url;
-	}
-	try {
-	    return Long.parseLong(s);
-	} catch (NumberFormatException ex) {
-	    throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + url, ex);
-	}
+        String s;
+        if (prefix.length() > 0) {
+            int pos = url.indexOf(prefix);
+            if (pos != 0) {
+                throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + url);
+            }
+            s = url.substring(prefix.length());
+        } else {
+            s = url;
+        }
+        try {
+            return Long.parseLong(s);
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("Invalid URL for prefix " + prefix + ": " + url, ex);
+        }
 
     }
 
@@ -275,38 +276,38 @@ public final class OdtUtils {
      * @since 1.1
      */
     public static String format(String template, @Nullable Object... args) {
-	if (template == null) {
-	    LOG.warning("Found null template while formatting, converting it to \"null\"");
-	}
-	template = String.valueOf(template); // null -> "null"
+        if (template == null) {
+            LOG.warning("Found null template while formatting, converting it to \"null\"");
+        }
+        template = String.valueOf(template); // null -> "null"
 
-	// start substituting the arguments into the '%s' placeholders
-	StringBuilder builder = new StringBuilder(template.length() + 16 * args.length);
-	int templateStart = 0;
-	int i = 0;
-	while (i < args.length) {
-	    int placeholderStart = template.indexOf("%s", templateStart);
-	    if (placeholderStart == -1) {
-		break;
-	    }
-	    builder.append(template.substring(templateStart, placeholderStart));
-	    builder.append(args[i++]);
-	    templateStart = placeholderStart + 2;
-	}
-	builder.append(template.substring(templateStart));
+        // start substituting the arguments into the '%s' placeholders
+        StringBuilder builder = new StringBuilder(template.length() + 16 * args.length);
+        int templateStart = 0;
+        int i = 0;
+        while (i < args.length) {
+            int placeholderStart = template.indexOf("%s", templateStart);
+            if (placeholderStart == -1) {
+                break;
+            }
+            builder.append(template.substring(templateStart, placeholderStart));
+            builder.append(args[i++]);
+            templateStart = placeholderStart + 2;
+        }
+        builder.append(template.substring(templateStart));
 
-	// if we run out of placeholders, append the extra args in square braces
-	if (i < args.length) {
-	    builder.append(" [");
-	    builder.append(args[i++]);
-	    while (i < args.length) {
-		builder.append(", ");
-		builder.append(args[i++]);
-	    }
-	    builder.append(']');
-	}
+        // if we run out of placeholders, append the extra args in square braces
+        if (i < args.length) {
+            builder.append(" [");
+            builder.append(args[i++]);
+            while (i < args.length) {
+                builder.append(", ");
+                builder.append(args[i++]);
+            }
+            builder.append(']');
+        }
 
-	return builder.toString();
+        return builder.toString();
     }
 
     /**
@@ -318,31 +319,32 @@ public final class OdtUtils {
      * @since 1.1
      */
     public static Multimap<String, String> parseUrlParams(String url) {
-	URL u;
-	try {
-	    u = new URL(url);
-	} catch (MalformedURLException ex) {
-	    throw new IllegalArgumentException("Ill formed url!", ex);
-	}
-	Multimap<String, String> queryPairs = LinkedListMultimap.create();
-	final String[] pairs = u.getQuery().split("&");
+        URL u;
+        try {
+            u = new URL(url);
+        } catch (MalformedURLException ex) {
+            throw new IllegalArgumentException("Ill formed url!", ex);
+        }
+        Multimap<String, String> queryPairs = LinkedListMultimap.create();
+        final String[] pairs = u.getQuery()
+                                .split("&");
 
-	try {
-	    for (String pair : pairs) {
-		final int idx = pair.indexOf("=");
+        try {
+            for (String pair : pairs) {
+                final int idx = pair.indexOf("=");
 
-		final String key;
+                final String key;
 
-		key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), "UTF-8") : pair;
+                key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), "UTF-8") : pair;
 
-		final String value = idx > 0 && pair.length() > idx + 1
-			? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : "";
-		queryPairs.put(key, value);
-	    }
-	    return queryPairs;
-	} catch (UnsupportedEncodingException ex) {
-	    throw new IllegalArgumentException("Encoding not supported!", ex);
-	}
+                final String value = idx > 0 && pair.length() > idx + 1
+                        ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : "";
+                queryPairs.put(key, value);
+            }
+            return queryPairs;
+        } catch (UnsupportedEncodingException ex) {
+            throw new IllegalArgumentException("Encoding not supported!", ex);
+        }
     }
 
     /**
@@ -355,22 +357,20 @@ public final class OdtUtils {
      * @since 1.1
      */
     public static <K, V> ImmutableMap<K, V> putKey(Map<K, V> map, K key, V newObject) {
-	ImmutableMap.Builder<K, V> mapb = ImmutableMap.builder();
+        ImmutableMap.Builder<K, V> mapb = ImmutableMap.builder();
 
-	for (K k : map.keySet()) {
-	    if (!k.equals(key)) {
-		mapb.put(k, map.get(k));
-	    }
-	}
-	mapb.put(key, newObject);
-	return mapb.build();
+        for (K k : map.keySet()) {
+            if (!k.equals(key)) {
+                mapb.put(k, map.get(k));
+            }
+        }
+        mapb.put(key, newObject);
+        return mapb.build();
     }
-    
-    private static final FastDateFormat ISO_YEAR_FORMAT
-    = FastDateFormat.getInstance("yyyy");
-    
-    private static final FastDateFormat ISO_YEAR_MONTH_FORMAT
-    = FastDateFormat.getInstance("yyyy-MM");
+
+    private static final FastDateFormat ISO_YEAR_FORMAT = FastDateFormat.getInstance("yyyy");
+
+    private static final FastDateFormat ISO_YEAR_MONTH_FORMAT = FastDateFormat.getInstance("yyyy-MM");
 
     /**
      * @deprecated experimental, try to avoid using it for now
@@ -378,41 +378,41 @@ public final class OdtUtils {
      * @throws OdtParseException
      */
     // todo this parser is horrible
-    static Date parseIso8061(String s) {
-		  	
-	try {
-	    return DateFormatUtils.ISO_DATE_TIME_ZONE_FORMAT.parse(s);
-	} catch (ParseException ex) {
-	}
-	
-	try {
-	    return DateFormatUtils.ISO_DATETIME_FORMAT.parse(s);
-	} catch (ParseException ex) {
-	}
-	
-	try {
-	    return DateFormatUtils.ISO_DATE_TIME_ZONE_FORMAT.parse(s);
-	} catch (ParseException ex) {
-	}
-	
-	try {
-	    return DateFormatUtils.ISO_DATE_FORMAT.parse(s);
-	} catch (ParseException ex) {
-	}
-	
-	try {
-	    return ISO_YEAR_MONTH_FORMAT.parse(s);
-	} catch (ParseException ex) {
-	}
-	
-	try {
-	    return ISO_YEAR_FORMAT.parse(s);
-	} catch (ParseException ex) {
-	}
-	
-	// todo week dates, ordinal dates
-	
-	throw new OdtParseException("Couldn't parse date as ISO8061. Unparseable date was:" + s);
+    public static Date parseIso8061(String s) {
+
+        try {
+            return DateFormatUtils.ISO_DATE_TIME_ZONE_FORMAT.parse(s);
+        } catch (ParseException ex) {
+        }
+
+        try {
+            return DateFormatUtils.ISO_DATETIME_FORMAT.parse(s);
+        } catch (ParseException ex) {
+        }
+
+        try {
+            return DateFormatUtils.ISO_DATE_TIME_ZONE_FORMAT.parse(s);
+        } catch (ParseException ex) {
+        }
+
+        try {
+            return DateFormatUtils.ISO_DATE_FORMAT.parse(s);
+        } catch (ParseException ex) {
+        }
+
+        try {
+            return ISO_YEAR_MONTH_FORMAT.parse(s);
+        } catch (ParseException ex) {
+        }
+
+        try {
+            return ISO_YEAR_FORMAT.parse(s);
+        } catch (ParseException ex) {
+        }
+
+        // todo week dates, ordinal dates
+
+        throw new OdtParseException("Couldn't parse date as ISO8061. Unparseable date was:" + s);
     }
 
 }

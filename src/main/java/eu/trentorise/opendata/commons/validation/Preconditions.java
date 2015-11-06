@@ -16,7 +16,11 @@
 package eu.trentorise.opendata.commons.validation;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.common.collect.Iterables;
+
+import eu.trentorise.opendata.commons.OdtParseException;
 import eu.trentorise.opendata.commons.OdtUtils;
 import javax.annotation.Nullable;
 
@@ -28,6 +32,8 @@ import javax.annotation.Nullable;
  * @since 1.1
  */
 public final class Preconditions {
+    
+    private Preconditions(){}
 
     /**
      * Checks if provided URL is to be considered 'dirty'. Method may use some
@@ -256,4 +262,27 @@ public final class Preconditions {
         return array;
     }
 
+    
+    /**
+     * Checks provided string is either a date in ISO8061 format, or empty or a
+     * question mark. If so returns a trimmed version of it, otherwise throws
+     * exception.
+     * 
+     * @deprecated this is experimental, Don't use it if possible
+     * @throws IllegalArgumentException
+     */
+    private static String checkIso8061(@Nullable String s) {
+        String newDate = checkNotNull(s)
+                                      .trim();
+        if (!(newDate.isEmpty() || newDate.equals('?'))) {
+
+            try {
+                OdtUtils.parseIso8061(newDate);
+            } catch (OdtParseException ex) {
+                throw new IllegalArgumentException(ex);
+            }
+
+        }
+        return newDate;
+    }
 }
