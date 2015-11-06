@@ -24,7 +24,7 @@ public abstract class APeriodOfTime {
     /**
      * Separator between two dates in {@link #getRawString()}
      */
-    public static String SEP = "@joined@";
+    public static final String SEP = "@joined@";
 
     /**
      * The start date and time, in ISO8061 format. An empty value indicates the

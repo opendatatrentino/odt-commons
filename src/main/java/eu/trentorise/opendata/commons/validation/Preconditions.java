@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
  *
  * @since 1.1
  */
-public class Preconditions {
+public final class Preconditions {
 
     /**
      * Checks if provided URL is to be considered 'dirty'. Method may use some
