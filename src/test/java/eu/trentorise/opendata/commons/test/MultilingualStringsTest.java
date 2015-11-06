@@ -103,7 +103,7 @@ public class MultilingualStringsTest {
         assertEquals(ImmutableList.of(), Dict.of().strings(Locale.FRENCH));
         assertEquals(ImmutableList.of(), Dict.of().get(Locale.FRENCH));
         assertEquals("", Dict.of().string(Locale.FRENCH));
-        assertEquals("", Dict.of().get(Locale.FRENCH));
+        assertEquals("", Dict.of().str(Locale.FRENCH));
         
         assertEquals(Dict.of().with(Dict.of(Locale.ITALIAN, "a")), 
                      Dict.of().with(Locale.ITALIAN, ImmutableList.of("a")));
