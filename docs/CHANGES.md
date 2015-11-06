@@ -6,7 +6,7 @@
 
 November 6th, 2015
 
-* moved functions from OdtUtils to validation.Precondtiions class
+* moved functions from OdtUtils to validation.Preconditions class
 * added Preconditions.checkScore
 * shortened method names in Dict (get, some, str) and LocalizedString (str, loc)
 * added APeriodOfTime

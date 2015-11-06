@@ -21,9 +21,7 @@ import com.google.common.collect.Multimap;
 import eu.trentorise.opendata.commons.BuildInfo;
 import eu.trentorise.opendata.commons.OdtConfig;
 import eu.trentorise.opendata.commons.OdtUtils;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -50,16 +48,19 @@ public class OdtUtilsTest {
         assertEquals(Locale.ITALIAN, OdtUtils.languageTagToLocale(OdtUtils.localeToLanguageTag(Locale.ITALIAN)));
         try {
             Locale.forLanguageTag(null);
-        }  catch(NullPointerException ex){
-            
-        }        
+        } catch (NullPointerException ex) {
+
+        }
     }
 
     @Test
     public void testBuildInfo() {
-        BuildInfo buildInfo = OdtConfig.of(OdtConfig.class).getBuildInfo();
-        assertTrue(buildInfo.getScmUrl().length() > 0);
-        assertTrue(buildInfo.getVersion().length() > 0);
+        BuildInfo buildInfo = OdtConfig.of(OdtConfig.class)
+                                       .getBuildInfo();
+        assertTrue(buildInfo.getScmUrl()
+                            .length() > 0);
+        assertTrue(buildInfo.getVersion()
+                            .length() > 0);
 
     }
 
@@ -72,32 +73,28 @@ public class OdtUtilsTest {
         try {
             OdtUtils.parseNumericalId("", "");
             Assert.fail();
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
 
         }
 
         try {
             OdtUtils.parseNumericalId("a", "123");
             Assert.fail();
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
 
         }
 
         try {
             OdtUtils.parseNumericalId("a", "ab");
             Assert.fail();
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
 
         }
 
         try {
             OdtUtils.parseNumericalId("a", "bb");
             Assert.fail();
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
 
         }
 
@@ -121,32 +118,28 @@ public class OdtUtilsTest {
         try {
             OdtUtils.checkNotDirtyUrl(null, "");
             Assert.fail("Shouldn't arrive here!");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
 
         }
 
         try {
             OdtUtils.checkNotDirtyUrl("", "");
             Assert.fail("Shouldn't arrive here!");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
 
         }
 
         try {
             OdtUtils.checkNotDirtyUrl("null", "");
             Assert.fail("Shouldn't arrive here!");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
 
         }
 
         try {
             OdtUtils.checkNotDirtyUrl("adfasdf/null", "");
             Assert.fail("Shouldn't arrive here!");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
 
         }
 
@@ -164,7 +157,8 @@ public class OdtUtilsTest {
     public void testParseUrlParams() {
         Multimap<String, String> m = OdtUtils.parseUrlParams("http://blabla.com/?a=1&b=2&b=3");
 
-        assertEquals(2, m.keySet().size());
+        assertEquals(2, m.keySet()
+                         .size());
         assertEquals(ImmutableList.of("1"), m.get("a"));
         assertEquals(ImmutableList.of("2", "3"), m.get("b"));
     }
@@ -173,8 +167,7 @@ public class OdtUtilsTest {
     public void testParseUrlParamsWrongUrl() {
         try {
             OdtUtils.parseUrlParams("bla");
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
 
         }
     }
@@ -182,18 +175,18 @@ public class OdtUtilsTest {
     @Test
     public void testParseUrlParamsEmptyParam() {
         Multimap<String, String> m = OdtUtils.parseUrlParams("http://blabla.com/?a=&b=2");
-        assertEquals(2, m.keySet().size());
+        assertEquals(2, m.keySet()
+                         .size());
         assertEquals(ImmutableList.of(""), m.get("a"));
     }
 
     @Test
-    public void testPutKey(){
-	ImmutableMap<String, Integer> m = ImmutableMap.of("a", 1);
-	
-	ImmutableMap<String, Integer> newM = OdtUtils.putKey(m, "a",2);
-	
-	assertEquals(new Integer(2), newM.get("a"));
+    public void testPutKey() {
+        ImmutableMap<String, Integer> m = ImmutableMap.of("a", 1);
+
+        ImmutableMap<String, Integer> newM = OdtUtils.putKey(m, "a", 2);
+
+        assertEquals(new Integer(2), newM.get("a"));
     }
-    
-    
+
 }
