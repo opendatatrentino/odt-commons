@@ -41,7 +41,7 @@ import org.apache.commons.lang3.time.FastDateFormat;
  *
  * @author David Leoni <david.leoni@unitn.it>
  */
-public final class OdtUtils {
+public final class TodUtils {
 
     /**
      * Tolerance for probabilities
@@ -53,14 +53,14 @@ public final class OdtUtils {
      */
     public static final String UNPARSEABLE = "unparseable:";
 
-    private static final Logger LOG = Logger.getLogger(OdtUtils.class.getName());
+    private static final Logger LOG = Logger.getLogger(TodUtils.class.getName());
 
     /**
-     * Odt Commons build properties path.
+     * Tod Commons build properties path.
      */
-    public static final String BUILD_PROPERTIES_PATH = "odt.commons.build.properties";
+    public static final String BUILD_PROPERTIES_PATH = "tod.commons.build.properties";
 
-    private OdtUtils() {
+    private TodUtils() {
     }
 
     /**
@@ -72,7 +72,7 @@ public final class OdtUtils {
      * can happen quite often, so we use this method instead.
      * 
      * @see Locale#forLanguageTag(String)
-     * @see #localeToLanguageTag(Locale) for the inverse operation
+     * @see #localeToLanguageTag(Locale) localeToLanguageTag(Locale) for the inverse operation
      */
     public static Locale languageTagToLocale(@Nullable String languageTag) {
 
@@ -87,7 +87,7 @@ public final class OdtUtils {
      * Converts a Java locale to a String. On null input returns the empty
      * string (which corresponds to Java {@link Locale#ROOT})
      *
-     * @see #languageTagToLocale(java.lang.String) fo the inverse operation
+     * @see #languageTagToLocale(java.lang.String) #languageTagToLocale(java.lang.String) for the inverse operation
      */
     public static String localeToLanguageTag(@Nullable Locale locale) {
         if (locale == null) {
@@ -103,12 +103,13 @@ public final class OdtUtils {
      *
      * @param url
      */
-    public static String addSlash(String url) {
+    public static String addSlash(String url) {        
         checkNotNull(url, "invalid url!");
-        if (url.endsWith("/")) {
-            return url;
+        String trimmedUrl = url.trim();
+        if (trimmedUrl.endsWith("/")) {
+            return trimmedUrl;
         } else {
-            return url + "/";
+            return trimmedUrl + "/";
         }
     }
 
@@ -375,7 +376,7 @@ public final class OdtUtils {
     /**
      * @deprecated experimental, try to avoid using it for now
      * @since 1.1
-     * @throws OdtParseException
+     * @throws TodParseException
      */
     // todo this parser is horrible
     public static Date parseIso8061(String s) {
@@ -412,7 +413,7 @@ public final class OdtUtils {
 
         // todo week dates, ordinal dates
 
-        throw new OdtParseException("Couldn't parse date as ISO8061. Unparseable date was:" + s);
+        throw new TodParseException("Couldn't parse date as ISO8061. Unparseable date was:" + s);
     }
 
 }

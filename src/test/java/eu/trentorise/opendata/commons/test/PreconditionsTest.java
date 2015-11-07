@@ -16,8 +16,8 @@
 package eu.trentorise.opendata.commons.test;
 
 import com.google.common.collect.ImmutableList;
-import eu.trentorise.opendata.commons.OdtConfig;
-import eu.trentorise.opendata.commons.OdtUtils;
+import eu.trentorise.opendata.commons.TodConfig;
+import eu.trentorise.opendata.commons.TodUtils;
 import eu.trentorise.opendata.commons.validation.Preconditions;
 import org.junit.Assert;
 import static org.junit.Assert.assertTrue;
@@ -33,21 +33,21 @@ public class PreconditionsTest {
     
     @BeforeClass
     public static  void setUpClass() {        
-        OdtConfig.init(OdtUtilsTest.class);
+        TodConfig.init(TodUtilsTest.class);
     }  
     
 
     @Test
     public void testChecker() {
         try {
-            OdtUtils.checkNotEmpty((String) null, "my string");
+            TodUtils.checkNotEmpty((String) null, "my string");
             Assert.fail();
         }
         catch (IllegalArgumentException ex) {
 
         }
         try {
-            OdtUtils.checkNotEmpty("", "my string");
+            TodUtils.checkNotEmpty("", "my string");
             Assert.fail();
         }
         catch (IllegalArgumentException ex) {
@@ -55,14 +55,14 @@ public class PreconditionsTest {
         }
 
         try {
-            OdtUtils.checkNotEmpty(ImmutableList.of(), "my string");
+            TodUtils.checkNotEmpty(ImmutableList.of(), "my string");
             Assert.fail();
         }
         catch (IllegalArgumentException ex) {
 
         }
 
-        OdtUtils.checkNotEmpty(ImmutableList.of("a"), "my string");
+        TodUtils.checkNotEmpty(ImmutableList.of("a"), "my string");
 
         try {
             // not that ints wouldn't be picked by the method. See http://stackoverflow.com/questions/5405673/java-varags-method-param-list-vs-array            

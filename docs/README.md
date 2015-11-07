@@ -1,9 +1,9 @@
 <p class="jedoc-to-strip">
 WARNING: THIS IS ONLY A TEMPLATE FOR THE DOCUMENTATION. <br/>
-RELEASE DOCS ARE ON THE <a href="http://opendatatrentino.github.io/odt-commons/" target="_blank">PROJECT WEBSITE</a>
+RELEASE DOCS ARE ON THE <a href="http://opendatatrentino.github.io/tod-commons/" target="_blank">PROJECT WEBSITE</a>
 </p>
 
-Odt Commons implements basic utilities for
+Tod Commons implements basic utilities for
 
 * logging
 * building info
@@ -11,16 +11,17 @@ Odt Commons implements basic utilities for
 * immutability
 * multilingual strings such as `LocalizedString` and `Dict`
 * validation
+* time representation
 
 
 ### Maven
 
-Odt Commons is available on Maven Central. To use it, put this in the dependencies section of your _pom.xml_:
+Tod Commons is available on Maven Central. To use it, put this in the dependencies section of your _pom.xml_:
 
 ```
     <dependency>
         <groupId>eu.trentorise.opendata</groupId>
-        <artifactId>odt-commons</artifactId>
+        <artifactId>tod-commons</artifactId>
         <version>#{version}</version>
     </dependency>
 ```
@@ -29,7 +30,7 @@ In case updates are available, version numbers follows <a href="http://semver.or
 
 ### Building objects
 
-Most objects in odt-commons are immutable, and make heavy use of <a href="https://code.google.com/p/guava-libraries/wiki/ImmutableCollectionsExplained" target="_blank"> Guava immutable collections </a>. In odt-commons, wherever you see an abstract class called `ASomething` or `AbstractSomething`, there will always be an immutable class `Something` implementing it.
+Most objects in tod-commons are immutable, and make heavy use of <a href="https://code.google.com/p/guava-libraries/wiki/ImmutableCollectionsExplained" target="_blank"> Guava immutable collections </a>. In tod-commons, wherever you see an abstract class called `ASomething` or `AbstractSomething`, there will always be an immutable class `Something` implementing it.
 
 
 
@@ -79,9 +80,8 @@ Building a `Dict`:
 ```
 
 
-
 ### Logging
 
-Odt-Commons uses native Java logging system (JUL). If you also use JUL in your application and want to see Odt-Commons logs, you can take inspiration from [odt-commons test logging properties](src/test/resources/odt.commons.logging.properties).  If you have an application which uses SLF4J logging system, you can route logging with <a href="http://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j" target="_blank">JUL to SLF4J bridge</a>, just remember <a href="http://stackoverflow.com/questions/9117030/jul-to-slf4j-bridge" target="_blank"> to programmatically install it first. </a>
+Tod-Commons uses native Java logging system (JUL). If you also use JUL in your application and want to see Tod-Commons logs, you can take inspiration from [tod-commons test logging properties](src/test/resources/tod.commons.logging.properties).  If you have an application which uses SLF4J logging system, you can route logging with <a href="http://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j" target="_blank">JUL to SLF4J bridge</a>, just remember <a href="http://stackoverflow.com/questions/9117030/jul-to-slf4j-bridge" target="_blank"> to programmatically install it first. </a>
 
 

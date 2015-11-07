@@ -1,18 +1,25 @@
 
-## Odt Commons Release Notes
+## Tod Commons Release Notes
 
 
 ### 1.1.0
 
-November 6th, 2015
+November 7th, 2015
 
-* moved checks from OdtUtils to validation.Preconditions class
-* added Preconditions.checkScore
-* shortened method names in LocalizedString (str, loc) end Dict (get, some, str)
-* added APeriodOfTime
-* added OdtParseException
-* added OdtUtils.format, parseIso8061, parseUrlParams, putKey
-* added odt-eclipse-format-style.xml
+- renamed from odt-commons to tod-commons
+- changed groupid from eu.trentorise.opendata.commons to eu.trentorise.opendata
+- upgraded to tod-super-pom-1.3.0
+- introduced Apache commons-lang dependency (shaded)
+- moved checks from TodUtils to validation.Preconditions class
+- added validation.ARef
+- added Preconditions.checkScore and experimental checkIso8061
+- shortened method names in LocalizedString (str, loc) end Dict (get, some, str)
+- added:
+	* APeriodOfTime
+	* TodParseException
+	* TodUtils.format, parseIso8061, parseUrlParams, putKey
+	* tod-eclipse-format-style.xml
+	* made ASemVersion not public
 
 
 ### 1.0.3
@@ -21,7 +28,7 @@ November 6th, 2015
 
 * Now BuilderStyle and SimpleStyle accept both A* and Abstract*
 * added BuilderStylePublic
-* upgraded to odt-super-pom-1.2.0
+* upgraded to tod-super-pom-1.2.0
 
 ### 1.0.2
 
@@ -29,11 +36,11 @@ November 6th, 2015
 
 * Adopted new josman-maven-plugin for generating website
 * Upgraded Immutables to 2.0.9
-* Upgraded to odt-super-pom-1.0.17
+* Upgraded to tod-super-pom-1.0.17
 
 ### 1.0.1
 
-* Adopted new parent odt-super-pom
+* Adopted new parent tod-super-pom
 
 ### 1.0.0
 

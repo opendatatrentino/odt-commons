@@ -19,8 +19,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Multimap;
 import eu.trentorise.opendata.commons.BuildInfo;
-import eu.trentorise.opendata.commons.OdtConfig;
-import eu.trentorise.opendata.commons.OdtUtils;
+import eu.trentorise.opendata.commons.TodConfig;
+import eu.trentorise.opendata.commons.TodUtils;
 import java.util.Locale;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
@@ -33,19 +33,19 @@ import org.junit.Test;
  *
  * @author David Leoni
  */
-public class OdtUtilsTest {
+public class TodUtilsTest {
 
     @BeforeClass
     public static void setUpClass() {
-        OdtConfig.init(OdtUtilsTest.class);
+        TodConfig.init(TodUtilsTest.class);
     }
 
     @Test
     public void testLanguageTag() {
         // we want gracious null handling
-        assertEquals(Locale.ROOT, OdtUtils.languageTagToLocale(null));
-        assertEquals("", OdtUtils.localeToLanguageTag(null));
-        assertEquals(Locale.ITALIAN, OdtUtils.languageTagToLocale(OdtUtils.localeToLanguageTag(Locale.ITALIAN)));
+        assertEquals(Locale.ROOT, TodUtils.languageTagToLocale(null));
+        assertEquals("", TodUtils.localeToLanguageTag(null));
+        assertEquals(Locale.ITALIAN, TodUtils.languageTagToLocale(TodUtils.localeToLanguageTag(Locale.ITALIAN)));
         try {
             Locale.forLanguageTag(null);
         } catch (NullPointerException ex) {
@@ -55,7 +55,7 @@ public class OdtUtilsTest {
 
     @Test
     public void testBuildInfo() {
-        BuildInfo buildInfo = OdtConfig.of(OdtConfig.class)
+        BuildInfo buildInfo = TodConfig.of(TodConfig.class)
                                        .getBuildInfo();
         assertTrue(buildInfo.getScmUrl()
                             .length() > 0);
@@ -67,32 +67,32 @@ public class OdtUtilsTest {
     @Test
     public void testIdParser() {
 
-        assertEquals(1, OdtUtils.parseNumericalId("", "1"));
-        assertEquals(1, OdtUtils.parseNumericalId("a", "a1"));
+        assertEquals(1, TodUtils.parseNumericalId("", "1"));
+        assertEquals(1, TodUtils.parseNumericalId("a", "a1"));
 
         try {
-            OdtUtils.parseNumericalId("", "");
+            TodUtils.parseNumericalId("", "");
             Assert.fail();
         } catch (IllegalArgumentException ex) {
 
         }
 
         try {
-            OdtUtils.parseNumericalId("a", "123");
+            TodUtils.parseNumericalId("a", "123");
             Assert.fail();
         } catch (IllegalArgumentException ex) {
 
         }
 
         try {
-            OdtUtils.parseNumericalId("a", "ab");
+            TodUtils.parseNumericalId("a", "ab");
             Assert.fail();
         } catch (IllegalArgumentException ex) {
 
         }
 
         try {
-            OdtUtils.parseNumericalId("a", "bb");
+            TodUtils.parseNumericalId("a", "bb");
             Assert.fail();
         } catch (IllegalArgumentException ex) {
 
@@ -103,59 +103,59 @@ public class OdtUtilsTest {
     @Test
     public void addRemoveSlash() {
 
-        assertEquals("a/", OdtUtils.addSlash("a"));
-        assertEquals("a/", OdtUtils.addSlash("a/"));
-        assertEquals("a", OdtUtils.removeTrailingSlash("a/"));
-        assertEquals("a", OdtUtils.removeTrailingSlash("a//"));
+        assertEquals("a/", TodUtils.addSlash("a"));
+        assertEquals("a/", TodUtils.addSlash("a/"));
+        assertEquals("a", TodUtils.removeTrailingSlash("a/"));
+        assertEquals("a", TodUtils.removeTrailingSlash("a//"));
 
-        assertEquals("a", OdtUtils.removeTrailingSlash(OdtUtils.addSlash("a")));
-        assertEquals("a", OdtUtils.removeTrailingSlash(OdtUtils.addSlash("a/")));
+        assertEquals("a", TodUtils.removeTrailingSlash(TodUtils.addSlash("a")));
+        assertEquals("a", TodUtils.removeTrailingSlash(TodUtils.addSlash("a/")));
     }
 
     @Test
     public void testCheckNotDirtyUrl() {
 
         try {
-            OdtUtils.checkNotDirtyUrl(null, "");
+            TodUtils.checkNotDirtyUrl(null, "");
             Assert.fail("Shouldn't arrive here!");
         } catch (IllegalArgumentException ex) {
 
         }
 
         try {
-            OdtUtils.checkNotDirtyUrl("", "");
+            TodUtils.checkNotDirtyUrl("", "");
             Assert.fail("Shouldn't arrive here!");
         } catch (IllegalArgumentException ex) {
 
         }
 
         try {
-            OdtUtils.checkNotDirtyUrl("null", "");
+            TodUtils.checkNotDirtyUrl("null", "");
             Assert.fail("Shouldn't arrive here!");
         } catch (IllegalArgumentException ex) {
 
         }
 
         try {
-            OdtUtils.checkNotDirtyUrl("adfasdf/null", "");
+            TodUtils.checkNotDirtyUrl("adfasdf/null", "");
             Assert.fail("Shouldn't arrive here!");
         } catch (IllegalArgumentException ex) {
 
         }
 
-        assertEquals("a", OdtUtils.checkNotDirtyUrl("a", "msg"));
+        assertEquals("a", TodUtils.checkNotDirtyUrl("a", "msg"));
     }
 
     @Test
     public void testIsNotEmpty() {
-        assertFalse(OdtUtils.isNotEmpty(null));
-        assertFalse(OdtUtils.isNotEmpty(""));
-        assertTrue(OdtUtils.isNotEmpty("a"));
+        assertFalse(TodUtils.isNotEmpty(null));
+        assertFalse(TodUtils.isNotEmpty(""));
+        assertTrue(TodUtils.isNotEmpty("a"));
     }
 
     @Test
     public void testParseUrlParams() {
-        Multimap<String, String> m = OdtUtils.parseUrlParams("http://blabla.com/?a=1&b=2&b=3");
+        Multimap<String, String> m = TodUtils.parseUrlParams("http://blabla.com/?a=1&b=2&b=3");
 
         assertEquals(2, m.keySet()
                          .size());
@@ -166,7 +166,7 @@ public class OdtUtilsTest {
     @Test
     public void testParseUrlParamsWrongUrl() {
         try {
-            OdtUtils.parseUrlParams("bla");
+            TodUtils.parseUrlParams("bla");
         } catch (IllegalArgumentException ex) {
 
         }
@@ -174,7 +174,7 @@ public class OdtUtilsTest {
 
     @Test
     public void testParseUrlParamsEmptyParam() {
-        Multimap<String, String> m = OdtUtils.parseUrlParams("http://blabla.com/?a=&b=2");
+        Multimap<String, String> m = TodUtils.parseUrlParams("http://blabla.com/?a=&b=2");
         assertEquals(2, m.keySet()
                          .size());
         assertEquals(ImmutableList.of(""), m.get("a"));
@@ -184,10 +184,10 @@ public class OdtUtilsTest {
     public void testPutKey() {
         ImmutableMap<String, Integer> m = ImmutableMap.of("a", 1);
 
-        ImmutableMap<String, Integer> newM1 = OdtUtils.putKey(m, "a", 2);
+        ImmutableMap<String, Integer> newM1 = TodUtils.putKey(m, "a", 2);
         assertEquals(new Integer(2), newM1.get("a"));
         
-        ImmutableMap<String, Integer> newM2 = OdtUtils.putKey(m, "b", 2);
+        ImmutableMap<String, Integer> newM2 = TodUtils.putKey(m, "b", 2);
         assertEquals(new Integer(1), newM2.get("a"));
         assertEquals(new Integer(2), newM2.get("b"));
         

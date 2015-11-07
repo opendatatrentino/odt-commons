@@ -33,6 +33,8 @@ import org.immutables.value.Value;
 @BuilderStylePublic
 abstract class ARef implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * An identifier (possibly but not necessarily an IRI) for the original
      * document. In case the data was obtained through a query the id could be
@@ -65,9 +67,10 @@ abstract class ARef implements Serializable {
     /**
      * A reference to one or more elements inside the document identified by
      * {@link #getDocumentId() documentId}. The reference is expressed as a
-     * {@link eu.trentorise.opendata.traceprov.path.TracePath TracePath}. By
-     * default it is the empty string (which we assume selects everything, along
-     * with '*').
+     * <a href=
+     * "https://github.com/opendatatrentino/traceprov/blob/master/src/main/java/eu/trentorise/opendata/traceprov/path/ATracePath.java"
+     * target="_blank"> TracePath </a>. By default it is the empty string (which
+     * we assume selects everything, along with '*').
      *
      */
     @Value.Default
@@ -85,15 +88,15 @@ abstract class ARef implements Serializable {
     }
 
     /**
-     * Creates a reference out of a
-     * {@link eu.trentorise.opendata.traceprov.path.ATracePath TracePath}
-     * format. The path is considered relative to an unspecified document.
+     * Creates a reference out of a <a href=
+     * "https://github.com/opendatatrentino/traceprov/blob/master/src/main/java/eu/trentorise/opendata/traceprov/path/ATracePath.java"
+     * target="_blank"> TracePath </a> format. The path is considered relative
+     * to an unspecified document.
      *
-     * @param jsonPath
-     *            A reference to one or more elements expressed as a JsonPath.
-     *            See
-     *            <a href="https://github.com/jayway/JsonPath" target="_blank">
-     *            JSONPath syntax</a>
+     * @param tracePath
+     *            A reference to one or more elements expressed as <a href=
+     *            "https://github.com/opendatatrentino/traceprov/blob/master/src/main/java/eu/trentorise/opendata/traceprov/path/ATracePath.java"
+     *            target="_blank"> TracePath </a>
      *
      * @see #ofDocumentId(String)
      */

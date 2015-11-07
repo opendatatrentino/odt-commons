@@ -20,7 +20,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import eu.trentorise.opendata.commons.Dict;
 import eu.trentorise.opendata.commons.LocalizedString;
-import eu.trentorise.opendata.commons.OdtConfig;
+import eu.trentorise.opendata.commons.TodConfig;
 import java.util.Arrays;
 import java.util.Locale;
 import org.junit.Assert;
@@ -39,7 +39,7 @@ public class MultilingualStringsTest {
 
     @BeforeClass
     public static  void setUpClass() {        
-        OdtConfig.init(MultilingualStringsTest.class);
+        TodConfig.init(MultilingualStringsTest.class);
     }  
        
     @Test

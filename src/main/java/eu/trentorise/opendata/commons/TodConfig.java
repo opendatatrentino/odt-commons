@@ -33,17 +33,17 @@ import javax.annotation.Nullable;
  *
  * @author David Leoni
  */
-public final class OdtConfig {
+public final class TodConfig {
 
-    public static final String LOG_PROPERTIES_PATH = "odt.commons.logging.properties";
+    public static final String LOG_PROPERTIES_PATH = "tod.commons.logging.properties";
 
     public static final String LOG_PROPERTIES_CONF_PATH = "conf/" + LOG_PROPERTIES_PATH;
 
-    public static final String BUILD_PROPERTIES_PATH = "odt.commons.build.properties";
+    public static final String BUILD_PROPERTIES_PATH = "tod.commons.build.properties";
 
-    private static final Logger LOG = Logger.getLogger(OdtConfig.class.getName());
+    private static final Logger LOG = Logger.getLogger(TodConfig.class.getName());
 
-    private static final Map<Class, OdtConfig> INSTANCES = new HashMap();
+    private static final Map<Class, TodConfig> INSTANCES = new HashMap();
 
     private static boolean loggingConfigured = false;
 
@@ -52,7 +52,7 @@ public final class OdtConfig {
     @Nullable
     private BuildInfo buildInfo;
 
-    private OdtConfig() {
+    private TodConfig() {
         this.referenceClass = this.getClass();
     }
 
@@ -62,7 +62,7 @@ public final class OdtConfig {
      *
      * @param clazz
      */
-    private OdtConfig(Class clazz) {
+    private TodConfig(Class clazz) {
         this.referenceClass = clazz;        
     }
 
@@ -85,7 +85,7 @@ public final class OdtConfig {
                         props.load(stream);
                     }
                     catch (IOException ex) {
-                        throw new OdtException("Couldn't load " + BUILD_PROPERTIES_PATH + " file in resources of package containing class " + referenceClass.getSimpleName() + "  !!", ex);
+                        throw new TodException("Couldn't load " + BUILD_PROPERTIES_PATH + " file in resources of package containing class " + referenceClass.getSimpleName() + "  !!", ex);
                     }
                 }
                 buildInfo = BuildInfo.builder()
@@ -148,7 +148,7 @@ public final class OdtConfig {
                     }
                     inputStream = referenceClass.getResourceAsStream("/" + LOG_PROPERTIES_PATH);
                     path = url.toURI().getPath();
-                    configured = OdtConfig.class.getSimpleName() + ": configured logging with " + path;
+                    configured = TodConfig.class.getSimpleName() + ": configured logging with " + path;
                 }
                 LogManager.getLogManager().readConfiguration(inputStream);
 
@@ -173,25 +173,25 @@ public final class OdtConfig {
     }
 
     /**
-     * Inits OdtConfig by loading the log config using the provided class as
+     * Inits TodConfig by loading the log config using the provided class as
      * reference for locating it. For more info on search paths see
      * {@link #loadLogConfig(java.lang.Class)}.
      *
-     * @return the OdtConfig instance for method chaining.
+     * @return the TodConfig instance for method chaining.
      */
-    public static OdtConfig init(Class clazz) {
-        OdtConfig ret = OdtConfig.of(clazz);
-        OdtConfig.loadLogConfig(clazz);
+    public static TodConfig init(Class clazz) {
+        TodConfig ret = TodConfig.of(clazz);
+        TodConfig.loadLogConfig(clazz);
         return ret;
     }
 
     /**
-     * Returns an OdtConfig using reference class to locate config resources.
+     * Returns an TodConfig using reference class to locate config resources.
      */
-    public static synchronized OdtConfig of(Class clazz) {
+    public static synchronized TodConfig of(Class clazz) {
         checkNotNull(clazz);
         if (!INSTANCES.containsKey(clazz)) {
-            INSTANCES.put(clazz, new OdtConfig(clazz));
+            INSTANCES.put(clazz, new TodConfig(clazz));
         }
         return INSTANCES.get(clazz);
     }

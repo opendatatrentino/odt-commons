@@ -20,7 +20,7 @@ import org.immutables.value.Value;
 
 /**
  * Simple class to model a semantic version, see
- * <a href="http://semver.org">semver.org</a>. This class is used to generate
+ * <a href="http://semver.org" target="_blank">semver.org</a>. This class is used to generate
  * the immutable {@link eu.trentorise.opendata.commons.SemVersion}.
  *
  *
@@ -28,7 +28,7 @@ import org.immutables.value.Value;
  */
 @Value.Immutable
 @SimpleStyle
-public abstract class ASemVersion implements Serializable {
+abstract class ASemVersion implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

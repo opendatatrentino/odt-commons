@@ -16,7 +16,7 @@
 package eu.trentorise.opendata.commons.test;
 
 import com.google.common.collect.ImmutableList;
-import eu.trentorise.opendata.commons.OdtConfig;
+import eu.trentorise.opendata.commons.TodConfig;
 import eu.trentorise.opendata.commons.test.codegen.AFatClass;
 import eu.trentorise.opendata.commons.test.codegen.ComplexFat;
 import eu.trentorise.opendata.commons.test.codegen.FatClass;
@@ -36,7 +36,7 @@ public class CodeGenTest {
     
     @BeforeClass
     public static void setUpClass() {        
-        OdtConfig.init(CodeGenTest.class);
+        TodConfig.init(CodeGenTest.class);
     }
 
     @Test

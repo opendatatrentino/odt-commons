@@ -21,7 +21,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
-import eu.trentorise.opendata.commons.OdtConfig;
+import eu.trentorise.opendata.commons.TodConfig;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
@@ -34,7 +34,7 @@ public class GuavaMultimapTest {
     
     @BeforeClass
     public static  void setUpClass() {        
-         OdtConfig.init(GuavaMultimapTest.class);
+         TodConfig.init(GuavaMultimapTest.class);
     } 
             
     @Test

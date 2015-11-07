@@ -15,7 +15,7 @@
  */
 package eu.trentorise.opendata.commons.test;
 
-import eu.trentorise.opendata.commons.OdtConfig;
+import eu.trentorise.opendata.commons.TodConfig;
 import eu.trentorise.opendata.commons.SemVersion;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
@@ -30,7 +30,7 @@ public class VersionTest {
     
     @BeforeClass
     public static void setUpClass() {        
-        OdtConfig.init(VersionTest.class);
+        TodConfig.init(VersionTest.class);
     }  
         
     @Test

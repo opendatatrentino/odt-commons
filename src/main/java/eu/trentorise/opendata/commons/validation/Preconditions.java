@@ -20,12 +20,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.collect.Iterables;
 
-import eu.trentorise.opendata.commons.OdtParseException;
-import eu.trentorise.opendata.commons.OdtUtils;
+import eu.trentorise.opendata.commons.TodParseException;
+import eu.trentorise.opendata.commons.TodUtils;
 import javax.annotation.Nullable;
 
 /**
- * Static convenience methods for OdtCommons that help a method or constructor
+ * Static convenience methods for TodCommons that help a method or constructor
  * check whether it was invoked correctly (whether its <i>preconditions</i> have
  * been met). Takes inspiration from {@link com.google.common.base.Preconditions}.
  *
@@ -113,7 +113,7 @@ public final class Preconditions {
             String string,
             @Nullable String errorMessageTemplate,
             @Nullable Object... errorMessageArgs) {
-        String formattedMessage = OdtUtils.format(errorMessageTemplate, errorMessageArgs);
+        String formattedMessage = TodUtils.format(errorMessageTemplate, errorMessageArgs);
         checkArgument(string != null, "%s -- Reason: Found null string.", formattedMessage);
         if (string.length() == 0) {
             throw new IllegalArgumentException(formattedMessage + " -- Reason: Found empty string.");
@@ -124,8 +124,8 @@ public final class Preconditions {
     /**
      * Checks the provided score is within valid bounds
      *
-     * @param score must be between -{@link #TOLERANCE} ≤ score ≤ 1 + {@link
-     * #TOLERANCE}
+     * @param score must be between -{@link TodUtils#TOLERANCE} ≤ score ≤ 1 + {@link
+     * TodUtils#TOLERANCE}
      *
      * @param prependedErrorMessage the exception message to use if the check
      * fails; will be converted to a string using String.valueOf(Object) and
@@ -138,7 +138,7 @@ public final class Preconditions {
     public static double checkScore(double score, @Nullable Object prependedErrorMessage) {
 
         if (score < 0.0) {
-            if (score > -OdtUtils.TOLERANCE) {
+            if (score > -TodUtils.TOLERANCE) {
                 return 0.0;
             } else {
                 throw new IllegalArgumentException("Score must be greater or equal than zero, found instead: " + score);
@@ -146,7 +146,7 @@ public final class Preconditions {
         }
 
         if (score >= 1.0) {
-            if (score < 1.0 + OdtUtils.TOLERANCE) {
+            if (score < 1.0 + TodUtils.TOLERANCE) {
                 return 1.0;
             } else {
                 throw new IllegalArgumentException("Score must be less than or equal than 1.0, found instead: " + score);
@@ -221,7 +221,7 @@ public final class Preconditions {
     public static <T> Iterable<T> checkNotEmpty(@Nullable Iterable<T> iterable,
             @Nullable String errorMessageTemplate,
             @Nullable Object... errorMessageArgs) {
-        String formattedMessage = OdtUtils.format(errorMessageTemplate, errorMessageArgs);
+        String formattedMessage = TodUtils.format(errorMessageTemplate, errorMessageArgs);
 
         checkArgument(iterable != null, "%s -- Reason: Found null iterable.", formattedMessage);
         if (Iterables.isEmpty(iterable)) {
@@ -253,7 +253,7 @@ public final class Preconditions {
     public static <T> T[] checkNotEmpty(@Nullable T[] array,
             @Nullable String errorMessageTemplate,
             @Nullable Object... errorMessageArgs) {
-        String formattedMessage = OdtUtils.format(errorMessageTemplate, errorMessageArgs);
+        String formattedMessage = TodUtils.format(errorMessageTemplate, errorMessageArgs);
 
         checkArgument(array != null, "%s -- Reason: Found null iterable.", formattedMessage);
         if (array.length == 0) {
@@ -277,8 +277,8 @@ public final class Preconditions {
         if (!(newDate.isEmpty() || newDate.equals('?'))) {
 
             try {
-                OdtUtils.parseIso8061(newDate);
-            } catch (OdtParseException ex) {
+                TodUtils.parseIso8061(newDate);
+            } catch (TodParseException ex) {
                 throw new IllegalArgumentException(ex);
             }
 

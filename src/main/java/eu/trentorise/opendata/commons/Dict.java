@@ -34,7 +34,11 @@ import javax.annotation.concurrent.NotThreadSafe;
  * case the first one is the preferred. Never pass null objects to methods, use
  * empty objects (such as empty String "", unknown Locale {@link Locale#ROOT},
  * etc...) instead.
- *
+ * 
+ * <p>
+ * To create {@code Dict} instances use {@code of(...)} methods.
+ * </p>
+ * 
  * @author David Leoni <david.leoni@unitn.it>
  */
 @ParametersAreNonnullByDefault
@@ -63,12 +67,16 @@ public final class Dict implements Serializable {
     /**
      * Constructs a Dict with with the provided string(s) in the given locale
      *
-     * @param strings a non-null string
-     * @param locale if locale is unknown use {@link Locale#ROOT}
+     * @param strings
+     *            a non-null string
+     * @param locale
+     *            if locale is unknown use {@link Locale#ROOT}
      */
     public static Dict of(Locale locale, String... strings) {
         Dict ret = new Dict();
-        ret.strings = ImmutableListMultimap.<Locale, String>builder().putAll(locale, strings).build();
+        ret.strings = ImmutableListMultimap.<Locale, String> builder()
+                                           .putAll(locale, strings)
+                                           .build();
         return ret;
     }
 
@@ -83,7 +91,8 @@ public final class Dict implements Serializable {
      * Constructs a Dict with with the provided string(s). Strings will be under
      * unknown locale {@link Locale#ROOT}.
      *
-     * @param strings non-null strings
+     * @param strings
+     *            non-null strings
      */
     public static Dict of(String... strings) {
         return of(Locale.ROOT, strings);
@@ -93,7 +102,8 @@ public final class Dict implements Serializable {
      * Constructs a Dict with the provided strings. Strings will be under
      * unknown locale {@link Locale#ROOT}
      *
-     * @param strings a non-null list of non-null strings
+     * @param strings
+     *            a non-null list of non-null strings
      */
     public static Dict of(Iterable<String> strings) {
         return of(Locale.ROOT, strings);
@@ -102,12 +112,16 @@ public final class Dict implements Serializable {
     /**
      * Constructs a Dict with the strings in the provided locale
      *
-     * @param strings a non-null list of non-null strings
-     * @param locale if locale is unknown use {@link Locale#ROOT}
+     * @param strings
+     *            a non-null list of non-null strings
+     * @param locale
+     *            if locale is unknown use {@link Locale#ROOT}
      */
     public static Dict of(Locale locale, Iterable<String> strings) {
         Dict ret = new Dict();
-        ret.strings = ImmutableListMultimap.<Locale, String>builder().putAll(locale, strings).build();
+        ret.strings = ImmutableListMultimap.<Locale, String> builder()
+                                           .putAll(locale, strings)
+                                           .build();
         return ret;
     }
 
@@ -115,7 +129,7 @@ public final class Dict implements Serializable {
      * Constructs a Dict with the provided localized string
      */
     public static Dict of(LocalizedString localizedString) {
-        return Dict.of(localizedString.getLocale(), localizedString.getString());
+        return Dict.of(localizedString.loc(), localizedString.str());
     }
 
     private Dict(Builder dictBuilder) {
@@ -125,9 +139,10 @@ public final class Dict implements Serializable {
     /**
      * Gets the translations in the given locale.
      *
-     * @param locale the language of the desired translations
+     * @param locale
+     *            the language of the desired translations
      * @return the strings in the given locale if present. If no string is
-     * present an empty list is returned.
+     *         present an empty list is returned.
      *
      * @see #get(java.util.Locale)
      * @since 1.1
@@ -141,9 +156,10 @@ public final class Dict implements Serializable {
      *
      * @deprecated use {@link #get(java.util.Locale) instead}
      *
-     * @param locale the language of the desired translations
+     * @param locale
+     *            the language of the desired translations
      * @return the strings in the given locale if present. If no string is
-     * present an empty list is returned.
+     *         present an empty list is returned.
      *
      * @see #string(java.util.Locale)
      */
@@ -155,9 +171,10 @@ public final class Dict implements Serializable {
      * Gets the first translation in the given locale. Superceeds
      * {@link #string(java.util.Locale)}
      * 
-     * @param locale the language of the desired translation
+     * @param locale
+     *            the language of the desired translation
      * @return the string in the given locale if present. If no string is
-     * present the empty string is returned.
+     *         present the empty string is returned.
      *
      * @since 1.1
      */
@@ -173,11 +190,12 @@ public final class Dict implements Serializable {
     /**
      * Gets the first translation in the given locale.
      *
-     * @deprecated use {@link #str(java.util.Locale)  instead}
+     * @deprecated use {@link #str(java.util.Locale) instead}
      *
-     * @param locale the language of the desired translation
+     * @param locale
+     *            the language of the desired translation
      * @return the string in the given locale if present. If no string is
-     * present the empty string is returned.
+     *         present the empty string is returned.
      */
     public String string(Locale locale) {
         return str(locale);
@@ -211,16 +229,18 @@ public final class Dict implements Serializable {
      * Both text and translations to check are lowercased according to their
      * locale.
      *
-     * @param text the text to search for
+     * @param text
+     *            the text to search for
      * @return true if text is contained in any of the translations, false
-     * otherwise
+     *         otherwise
      */
     public boolean contains(String text) {
         Preconditions.checkNotNull(text);
         for (Locale loc : locales()) {
             String lowText = text.toLowerCase(loc);
             for (String t : strings.get(loc)) {
-                if (t.toLowerCase(loc).contains(lowText)) {
+                if (t.toLowerCase(loc)
+                     .contains(lowText)) {
                     return true;
                 }
             }
@@ -232,8 +252,9 @@ public final class Dict implements Serializable {
      * Returns the first non empty string in the given locale. If it can't find
      * it, an empty string is returned.
      *
-     * @param locale the locale of the desired tranlsation. If unknown, use
-     * {@link Locale#ROOT}.
+     * @param locale
+     *            the locale of the desired tranlsation. If unknown, use
+     *            {@link Locale#ROOT}.
      */
     public String nonEmptyString(Locale locale) {
         Preconditions.checkNotNull(locale);
@@ -253,10 +274,11 @@ public final class Dict implements Serializable {
      * languages.
      *
      * @return A string in the first available language from the list of
-     * provided locales. If no translation is available, in order, defaults to
-     * English and then whatever it can find in the list of translations. Empty
-     * strings are discarded. If no valid translation is available at all,
-     * returns {@link LocalizedString#of()}.
+     *         provided locales. If no translation is available, in order,
+     *         defaults to English and then whatever it can find in the list of
+     *         translations. Empty strings are discarded. If no valid
+     *         translation is available at all, returns
+     *         {@link LocalizedString#of()}.
      *
      * @deprecated use {@link #some(java.lang.Iterable)} instead
      */
@@ -277,8 +299,6 @@ public final class Dict implements Serializable {
         return some(Arrays.asList(locales));
     }
 
-    
-
     /**
      *
      * Tries its best to return a meaningful string in one of the provided
@@ -287,10 +307,11 @@ public final class Dict implements Serializable {
      * Superceeds {@link #anyString(java.lang.Iterable) }.
      *
      * @return A string in the first available language from the list of
-     * provided locales. If no translation is available, in order, defaults to
-     * English and then whatever it can find in the list of translations. Empty
-     * strings are discarded. If no valid translation is available at all,
-     * returns {@link LocalizedString#of()}.
+     *         provided locales. If no translation is available, in order,
+     *         defaults to English and then whatever it can find in the list of
+     *         translations. Empty strings are discarded. If no valid
+     *         translation is available at all, returns
+     *         {@link LocalizedString#of()}.
      *
      * @since 1.1
      */
@@ -335,12 +356,17 @@ public final class Dict implements Serializable {
      * Returns a new dictionary with provided array of strings with the same
      * locale. Strings will be appended to existing ones for the same locale.
      *
-     * @param locale the locale of the strings
-     * @param strings the strings in the given locale
+     * @param locale
+     *            the locale of the strings
+     * @param strings
+     *            the strings in the given locale
      *
      */
     public Dict with(Locale locale, String... strings) {
-        return Dict.builder().put(this).put(locale, strings).build();
+        return Dict.builder()
+                   .put(this)
+                   .put(locale, strings)
+                   .build();
     }
 
     /**
@@ -349,11 +375,15 @@ public final class Dict implements Serializable {
      * locale unknown locale {@link Locale#ROOT}. Strings will be appended to
      * existing ones with unknown locale.
      *
-     * @param strings the strings in the given locale
+     * @param strings
+     *            the strings in the given locale
      *
      */
     public Dict with(String... strings) {
-        return Dict.builder().put(this).put(Locale.ROOT, strings).build();
+        return Dict.builder()
+                   .put(this)
+                   .put(Locale.ROOT, strings)
+                   .build();
     }
 
     /**
@@ -361,12 +391,17 @@ public final class Dict implements Serializable {
      * Returns a new dictionary with provided array of strings with the same
      * locale. Strings will be appended to existing ones for the same locale.
      *
-     * @param locale the locale of the strings
-     * @param strings the strings in the given locale
+     * @param locale
+     *            the locale of the strings
+     * @param strings
+     *            the strings in the given locale
      *
      */
     public Dict with(Locale locale, Iterable<String> strings) {
-        return Dict.builder().put(this).put(locale, strings).build();
+        return Dict.builder()
+                   .put(this)
+                   .put(locale, strings)
+                   .build();
     }
 
     /**
@@ -377,15 +412,20 @@ public final class Dict implements Serializable {
      *
      */
     public Dict with(Dict dict) {
-        return Dict.builder().put(this).put(dict).build();
+        return Dict.builder()
+                   .put(this)
+                   .put(dict)
+                   .build();
     }
 
     /**
      * Returns a string with msg padded with white spaces from the left until
      * maxLength is reached
      *
-     * @param msg the message to pad with spaces
-     * @param maxLength length after which msg is truncated
+     * @param msg
+     *            the message to pad with spaces
+     * @param maxLength
+     *            length after which msg is truncated
      * @return the padded msg
      */
     private static String padLeft(String msg, int maxLength) {
@@ -413,15 +453,17 @@ public final class Dict implements Serializable {
         private Builder() {
         }
 
-        private ImmutableListMultimap.Builder<Locale, String> stringsBuilder = ImmutableListMultimap.<Locale, String>builder();
+        private ImmutableListMultimap.Builder<Locale, String> stringsBuilder = ImmutableListMultimap.<Locale, String> builder();
 
         /**
          * Stores an array of values with the same locale in the built
          * dictionary. Strings will be appended to existing ones for the same
          * locale.
          *
-         * @param locale the locale of the string
-         * @param strings the string in the given locale
+         * @param locale
+         *            the locale of the string
+         * @param strings
+         *            the string in the given locale
          * @return {@code this} builder for chained invocation
          */
         public Builder put(Locale locale, String... strings) {
@@ -441,8 +483,10 @@ public final class Dict implements Serializable {
          * dictionary. Strings will be appended to existing ones for the same
          * locale.
          *
-         * @param locale the locale of the string
-         * @param strings strings in the given locale
+         * @param locale
+         *            the locale of the string
+         * @param strings
+         *            strings in the given locale
          * @return {@code this} builder for chained invocation
          */
         public Builder put(Locale locale, Iterable<String> strings) {
@@ -513,7 +557,7 @@ public final class Dict implements Serializable {
         sb.append("{\n");
         for (Locale loc : strings.keySet()) {
             sb.append(padLeft(loc.toString(), PADDING))
-                    .append(": [");
+              .append(": [");
             boolean first = true;
             for (String t : strings.get(loc)) {
                 if (first) {
@@ -536,7 +580,7 @@ public final class Dict implements Serializable {
      */
     public static Dict of(Multimap<Locale, String> multimap) {
         Dict ret = new Dict();
-        ret.strings = ImmutableListMultimap.<Locale, String>copyOf(multimap);
+        ret.strings = ImmutableListMultimap.<Locale, String> copyOf(multimap);
         return ret;
     }
 
@@ -564,7 +608,7 @@ public final class Dict implements Serializable {
     public static Dict ofLocalizedStrings(Iterable<LocalizedString> localizedStrings) {
         Dict.Builder dictb = Dict.builder();
         for (LocalizedString st : localizedStrings) {
-            dictb.put(st.getLocale(), st.getString());
+            dictb.put(st.loc(), st.str());
         }
         return dictb.build();
     }
@@ -576,7 +620,7 @@ public final class Dict implements Serializable {
         ImmutableList.Builder<LocalizedString> retb = ImmutableList.builder();
 
         for (Locale locale : locales()) {
-            for (String s : strings(locale)) {
+            for (String s : get(locale)) {
                 retb.add(LocalizedString.of(locale, s));
             }
         }

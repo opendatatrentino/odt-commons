@@ -20,30 +20,30 @@ package eu.trentorise.opendata.commons;
  * 
  * @author David Leoni <david.leoni@unitn.it>
  */
-public class OdtException extends RuntimeException {
+public class TodException extends RuntimeException {
     
-    private OdtException(){
+    private TodException(){
         super();
     }
     
     /**
-     * Creates the OdtParseException using the provided throwable
+     * Creates the TodParseException using the provided throwable
      */
-    public OdtException(Throwable tr) {
+    public TodException(Throwable tr) {
         super(tr);
     }
 
     /**
-     * Creates the OdtParseException using the provided message and throwable
+     * Creates the TodParseException using the provided message and throwable
      */
-    public OdtException(String msg, Throwable tr) {
+    public TodException(String msg, Throwable tr) {
         super(msg, tr);
     }
 
     /**
-     * Creates the OdtParseException using the provided message
+     * Creates the TodParseException using the provided message
      */
-    public OdtException(String msg) {
+    public TodException(String msg) {
         super(msg);
     }
 }

@@ -16,7 +16,7 @@
 package eu.trentorise.opendata.commons.test;
 
 import eu.trentorise.opendata.commons.BuildInfo;
-import eu.trentorise.opendata.commons.OdtConfig;
+import eu.trentorise.opendata.commons.TodConfig;
 import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,20 +25,20 @@ import org.junit.Test;
  *
  * @author David Leoni
  */
-public class OdtConfigTest {
+public class TodConfigTest {
     
     @BeforeClass
     public static  void setUpClass() {        
-        OdtConfig.init(OdtConfigTest.class);
+        TodConfig.init(TodConfigTest.class);
     }
 
     @Test
     public void testConfig() {
-        BuildInfo buildInfo = OdtConfig.of(OdtConfigTest.class).getBuildInfo();
+        BuildInfo buildInfo = TodConfig.of(TodConfigTest.class).getBuildInfo();
         assertTrue(buildInfo.getScmUrl().length() > 0);
         assertTrue(buildInfo.getVersion().length() > 0);
-        assertTrue(OdtConfig.isLoggingConfigured());
-        assertTrue(OdtConfig.of(this.getClass()).getBuildInfo().getScmUrl().length() > 0);                
+        assertTrue(TodConfig.isLoggingConfigured());
+        assertTrue(TodConfig.of(this.getClass()).getBuildInfo().getScmUrl().length() > 0);                
     }
     
     
