@@ -88,7 +88,7 @@
 				<artifactId>maven-enforcer-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>eu.trentorise.opendata</groupId>
+				<groupId>eu.trentorise.opendata.josman</groupId>
 				<artifactId>josman-maven-plugin</artifactId>
 				<!--  better using old version so we can release -->
 				<version>0.6.1</version>
