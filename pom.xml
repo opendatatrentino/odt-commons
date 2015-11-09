@@ -90,6 +90,8 @@
 			<plugin>
 				<groupId>eu.trentorise.opendata</groupId>
 				<artifactId>josman-maven-plugin</artifactId>
+				<!--  better using old version so we can release -->
+				<version>0.6.1</version>
 			</plugin>
 			<plugin>
 				<groupId>com.github.github</groupId>
