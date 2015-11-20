@@ -27,6 +27,7 @@ import org.immutables.value.Value;
  *
  * @author David Leoni
  * @see SimpleStyle
+ * @see BuilderStyle
  */
 @Value.Style(get = {"is*", "get*"},
         init = "set*",        

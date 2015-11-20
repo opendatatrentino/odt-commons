@@ -25,17 +25,24 @@ import org.immutables.value.Value;
  * Annotated abstract class (let's suppose it's named {@code AMyClass}) will be
  * used as template for generating a corresponding immutable class named
  * {@code MyClass}. Annotated class is supposed to have few fields, thus no
- * builder will be generated. Immutable class will have public visibility.
+ * builder will be generated. 
  *
+ *<p>
  * This annotation will configure
- * <a href="http://immutables.github.io/">Immutables</a> to expect the annotated
- * class to have bean style getters. Also, generated immutable objects will all
- * have an empty object retrievable with a method of the form MyClass.of().
- *
- * <b>NOTE:</b> Annotated abstract class name MUST begin with 'A' or 'Abstract'
- *
+ * <a href="http://immutables.github.io/">Immutables</a> to: 
+ * <ul>
+ * <li> expect that the annotated class has bean style getters</li>
+ * <li> generate an empty object retrievable with a method of the form {@code MyClass.of()}. </li>
+ * <li> generate an immutable class with public visibility. </li> 
+ * </ul>
+ * </p>
+ * <p>
+ *  <b>NOTE:</b> Annotated abstract class name <strong>MUST</strong> begin with 'A' or 'Abstract'
+ * </p>
  * @author David Leoni
- * @see SimpleStyle
+ * @see BuilderStyle
+ * @see BuilderStylePublic
+ * 
  */
 @Value.Style(get = {"is*", "get*"},
         init = "set*",

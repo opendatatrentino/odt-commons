@@ -22,28 +22,34 @@ import java.lang.annotation.Target;
 import org.immutables.value.Value;
 
 /**
- * Annotated abstract class (let's suppose it's named {@code AMyClass}) will be used as
- * template for generating a corresponding immutable class named {@code MyClass}, along
- * with a builder to create instances of it.
- *
+ * Annotated abstract class (let's suppose it's named {@code AMyClass}) will be
+ * used as template for generating a corresponding immutable class named
+ * {@code MyClass}, along with a builder to create instances of it.
+ * 
+ * <p>
  * This annotation will configure
- * <a href="http://immutables.github.io/">Immutables</a> to expect the annotated
- * class to have bean style getters. Also, generated immutable objects will all
- * have an empty object retrievable with a method of the form MyClass.of().
- * Immutable class will have same visibility as the abstract one. The generated
- * builder will have bean-style setters.
- *
- * <b>NOTE:</b> Annotated abstract class name MUST begin with 'A' or 'Abstract'
- *
+ * <a href="http://immutables.github.io/">Immutables</a> to:
+ * <ul>
+ * <li>expect the annotated class to have bean style getters</li>
+ * <li>generate an empty object retrievable with a method of the form
+ * {@code MyClass.of()}.</li>
+ * <li>generate a builder with bean-style setters.</li>
+ * <li>use the same visibility in the immutable implementation as the abstract
+ * one. See {@link BuilderStylePublic} to force public visibility.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * <b>NOTE:</b> Annotated abstract class name <strong>MUST</strong> begin with
+ * 'A' or 'Abstract'
+ * </p>
+ * 
  * @author David Leoni
  * @see SimpleStyle
+ * @see BuilderStylePublic
  */
-@Value.Style(get = {"is*", "get*"},
-        init = "set*",        
-        typeAbstract = {"Abstract*", "A*"},
-        typeImmutable = "",
-        defaults = @Value.Immutable(singleton = true))
-@Target({ElementType.TYPE, ElementType.PACKAGE, ElementType.ANNOTATION_TYPE})
+@Value.Style(get = { "is*", "get*" }, init = "set*", typeAbstract = { "Abstract*",
+        "A*" }, typeImmutable = "", defaults = @Value.Immutable(singleton = true) )
+@Target({ ElementType.TYPE, ElementType.PACKAGE, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.SOURCE)
 public @interface BuilderStyle {
 }
