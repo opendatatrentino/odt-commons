@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.collect.Iterables;
 
 import eu.trentorise.opendata.commons.TodUtils;
-import exceptions.TodParseException;
+import eu.trentorise.opendata.commons.exceptions.TodParseException;
 
 import javax.annotation.Nullable;
 

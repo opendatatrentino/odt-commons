@@ -9,7 +9,7 @@ todo date
 BREAKING CHANGES: 
 
 - renamed NotFoundException -> TodNotFoundException
-- moved exceptions to 'exceptions' package
+- moved eu.trentorise.opendata.commons.exceptions to 'eu.trentorise.opendata.commons.exceptions' package
 
 ### 1.1.0
 

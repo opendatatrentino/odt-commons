@@ -24,7 +24,7 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 
-import exceptions.TodParseException;
+import eu.trentorise.opendata.commons.exceptions.TodParseException;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;

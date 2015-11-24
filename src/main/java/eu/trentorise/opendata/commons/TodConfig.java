@@ -28,8 +28,8 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
-import exceptions.TodException;
-import exceptions.TodNotFoundException;
+import eu.trentorise.opendata.commons.exceptions.TodException;
+import eu.trentorise.opendata.commons.exceptions.TodNotFoundException;
 
 /**
  * Class for configuration and JUL logging initalization.

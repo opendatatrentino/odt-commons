@@ -1,4 +1,4 @@
-package exceptions;
+package eu.trentorise.opendata.commons.exceptions;
 
 public class TodParseException extends TodException {
     

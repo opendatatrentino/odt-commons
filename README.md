@@ -8,7 +8,7 @@ RELEASE DOCS ARE ON THE <a href="http://opendatatrentino.github.io/tod-commons/"
 Java utilities common to several Open Data in Trentino projects. Contains basic facilities to manage:
 
 * logging
-* exceptions
+* eu.trentorise.opendata.commons.exceptions
 * building info
 * immutability
 * multilingual strings
