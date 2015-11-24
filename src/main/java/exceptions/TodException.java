@@ -13,36 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package eu.trentorise.opendata.commons;
+package exceptions;
 
 /**
- * A runtime exception to raise when something is not found.
+ * A generic runtime exception. 
  * 
  * @author David Leoni <david.leoni@unitn.it>
  */
 public class TodException extends RuntimeException {
     
-    private TodException(){
+    private static final long serialVersionUID = 1L;
+
+    protected TodException(){
         super();
     }
     
-    /**
-     * Creates the TodParseException using the provided throwable
-     */
     public TodException(Throwable tr) {
         super(tr);
     }
 
-    /**
-     * Creates the TodParseException using the provided message and throwable
-     */
     public TodException(String msg, Throwable tr) {
         super(msg, tr);
     }
 
-    /**
-     * Creates the TodParseException using the provided message
-     */
     public TodException(String msg) {
         super(msg);
     }

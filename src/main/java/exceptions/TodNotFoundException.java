@@ -13,37 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package eu.trentorise.opendata.commons;
+package exceptions;
 
 /**
  * A runtime exception to raise when something is not found.
  * 
  * @author David Leoni <david.leoni@unitn.it>
  */
-public class NotFoundException extends IllegalStateException {
+public class TodNotFoundException extends TodException {
     
-    private NotFoundException(){
+    private static final long serialVersionUID = 1L;
+
+    private TodNotFoundException(){
         super();
     }
     
     /**
      * Creates the NotFoundException using the provided throwable
      */
-    public NotFoundException(Throwable tr) {
+    public TodNotFoundException(Throwable tr) {
         super(tr);
     }
 
     /**
      * Creates the NotFoundException using the provided message and throwable
      */
-    public NotFoundException(String msg, Throwable tr) {
+    public TodNotFoundException(String msg, Throwable tr) {
         super(msg, tr);
     }
 
     /**
      * Creates the NotFoundException using the provided message
      */
-    public NotFoundException(String msg) {
+    public TodNotFoundException(String msg) {
         super(msg);
     }
 }

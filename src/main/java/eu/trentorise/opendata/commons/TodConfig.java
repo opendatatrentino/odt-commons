@@ -28,6 +28,9 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
 
+import exceptions.TodException;
+import exceptions.TodNotFoundException;
+
 /**
  * Class for configuration and JUL logging initalization.
  *
@@ -79,7 +82,7 @@ public final class TodConfig {
                 InputStream stream = referenceClass.getResourceAsStream("/" + BUILD_PROPERTIES_PATH);
                 Properties props = new Properties();
                 if (stream == null) {
-                    throw new NotFoundException("Couldn't find " + BUILD_PROPERTIES_PATH + " file in resources of package containing class " + referenceClass.getSimpleName() + "  !!");
+                    throw new TodNotFoundException("Couldn't find " + BUILD_PROPERTIES_PATH + " file in resources of package containing class " + referenceClass.getSimpleName() + "  !!");
                 } else {
                     try {
                         props.load(stream);

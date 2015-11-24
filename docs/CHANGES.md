@@ -2,6 +2,15 @@
 ## Tod Commons Release Notes
 
 
+### 2.0.0
+
+todo date
+
+BREAKING CHANGES: 
+
+- renamed NotFoundException -> TodNotFoundException
+- moved exceptions to 'exceptions' package
+
 ### 1.1.0
 
 November 9th, 2015
