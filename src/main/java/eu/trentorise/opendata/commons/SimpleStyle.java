@@ -31,7 +31,7 @@ import org.immutables.value.Value;
  * This annotation will configure
  * <a href="http://immutables.github.io/">Immutables</a> to: 
  * <ul>
- * <li> expect that the annotated class has bean style getters</li>
+ * <li> expect the annotated class to have bean style getters</li>
  * <li> generate an empty object retrievable with a method of the form {@code MyClass.of()}. </li>
  * <li> generate an immutable class with public visibility. </li> 
  * </ul>
